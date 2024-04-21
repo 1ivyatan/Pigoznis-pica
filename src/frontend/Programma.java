@@ -1,5 +1,7 @@
 package frontend;
 
+import java.io.File;
+
 import picerija.Datubaze;
 
 public class Programma {
@@ -15,5 +17,13 @@ public class Programma {
 	/* metodes */
 	public static void tuksotDb() {
 		db = new Datubaze();
+	}
+	
+	public static void atvertDb(File fails) throws Exception {
+		try {
+			db = new Datubaze(fails);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
 	}
 }
