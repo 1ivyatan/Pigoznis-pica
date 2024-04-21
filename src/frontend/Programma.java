@@ -14,6 +14,10 @@ public class Programma {
 		return izmaina;
 	}
 	
+	public static Datubaze getDb() {
+		return db;
+	}
+		
 	/* metodes */
 	public static void tuksotDb() {
 		db = new Datubaze();
@@ -22,6 +26,26 @@ public class Programma {
 	public static void atvertDb(File fails) throws Exception {
 		try {
 			db = new Datubaze(fails);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+	}
+	
+	public static void saglDb(File fails) throws Exception {
+		try {
+			if (fails != null) {
+				db.setFails(fails);
+			} else if (fails == null && db.getFails() == null) {
+				throw new Exception("Jāievada fails pirms sagalbāšanas");
+			}
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+	}
+	
+	public static void saglDb() throws Exception {
+		try {
+			db.saglabat();
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}

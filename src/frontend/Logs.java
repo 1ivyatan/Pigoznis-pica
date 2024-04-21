@@ -51,6 +51,33 @@ public class Logs extends JFrame {
 		}
 	}
 	
+	private static void sagalbatUi(boolean iznicinatFailu) {
+		if (iznicinatFailu) {
+			Programma.getDb().setFails(null);
+		}
+		
+		if (Programma.getDb().getFails() == null) {
+			int rez = izv.showSaveDialog(null);
+			if (rez == JFileChooser.APPROVE_OPTION) {
+				try {
+					Programma.saglDb(izv.getSelectedFile());
+					statusaTeksts.setText("Saglabāja datubāzi " + izv.getSelectedFile().getAbsolutePath());
+				} catch (Exception e) {
+					statusaTeksts.setText("Nevarēja saglabāt datubāzi " + izv.getSelectedFile().getAbsolutePath());
+					JOptionPane.showMessageDialog(logaPanelis, e.getMessage(), "Nevarēja saglabāt datubāzi", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		} else {
+			try {
+				Programma.saglDb();
+				statusaTeksts.setText("Saglabāja datubāzi " + izv.getSelectedFile().getAbsolutePath());
+			} catch (Exception e) {
+				statusaTeksts.setText("Nevarēja saglabāt datubāzi " + izv.getSelectedFile().getAbsolutePath());
+				JOptionPane.showMessageDialog(logaPanelis, e.getMessage(), "Nevarēja saglabāt datubāzi", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+	
 	/**
 	 * Launch the application.
 	 */
@@ -97,8 +124,17 @@ public class Logs extends JFrame {
 		JMenuItem topNavDatneAtvert = new JMenuItem("Atvērt");
 		topNavDatne.add(topNavDatneAtvert);
 		
+		JMenuItem topNavDatneSagl = new JMenuItem("Saglabāt");
+		topNavDatne.add(topNavDatneSagl);
+		
+		JMenuItem topNavDatneSaglKa = new JMenuItem("Saglabāt kā");
+		topNavDatne.add(topNavDatneSaglKa);
+		
 		JSeparator separator = new JSeparator();
 		topNavDatne.add(separator);
+		
+		JMenuItem topNavIziet = new JMenuItem("Iziet");
+		topNavDatne.add(topNavIziet);
 		logaPanelis = new JPanel();
 		logaPanelis.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -133,6 +169,11 @@ public class Logs extends JFrame {
 							Programma.tuksotDb();
 							statusaTeksts.setText("Izveidota datubāze");
 							break;
+						case 0: //y
+							sagalbatUi(false);
+							Programma.tuksotDb();
+							statusaTeksts.setText("Izveidota datubāze");
+							break;
 					}
 				} else {
 					Programma.tuksotDb();
@@ -150,12 +191,29 @@ public class Logs extends JFrame {
 					switch(JOptionPane.showConfirmDialog(logaPanelis, "Saglabāt šo datubāzi?")) {
 						case 1: //n
 							atvertUi();
-							
+							break;
+						case 0: //y
+							sagalbatUi(false);
+							atvertUi();
 							break;
 					}
 				} else {
 					atvertUi();
 				}
+			}
+		});
+		
+		topNavDatneSagl.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sagalbatUi(false);
+			}
+		});
+		
+		topNavDatneSaglKa.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sagalbatUi(true);
 			}
 		});
 	}
