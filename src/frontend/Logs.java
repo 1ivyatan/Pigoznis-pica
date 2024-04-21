@@ -60,8 +60,17 @@ public class Logs extends JFrame {
 			int rez = izv.showSaveDialog(null);
 			if (rez == JFileChooser.APPROVE_OPTION) {
 				try {
-					Programma.saglDb(izv.getSelectedFile());
-					statusaTeksts.setText("Saglabāja datubāzi " + izv.getSelectedFile().getAbsolutePath());
+					if (
+						izv.getFileFilter().equals(extFiltrs) && !izv.getSelectedFile().getAbsolutePath().endsWith("." + Resursi.failaExt)
+					) {
+						String vieta = izv.getSelectedFile().getAbsolutePath() + "." + Resursi.failaExt;
+						Programma.saglDb(vieta);
+						statusaTeksts.setText("Saglabāja datubāzi " + vieta);
+					} else {
+						Programma.saglDb(izv.getSelectedFile());
+						statusaTeksts.setText("Saglabāja datubāzi " + izv.getSelectedFile().getAbsolutePath());
+					}
+					
 				} catch (Exception e) {
 					statusaTeksts.setText("Nevarēja saglabāt datubāzi " + izv.getSelectedFile().getAbsolutePath());
 					JOptionPane.showMessageDialog(logaPanelis, e.getMessage(), "Nevarēja saglabāt datubāzi", JOptionPane.ERROR_MESSAGE);
@@ -70,9 +79,9 @@ public class Logs extends JFrame {
 		} else {
 			try {
 				Programma.saglDb();
-				statusaTeksts.setText("Saglabāja datubāzi " + izv.getSelectedFile().getAbsolutePath());
+				statusaTeksts.setText("Saglabāja datubāzi " + Programma.getDb().getFails().getAbsolutePath());
 			} catch (Exception e) {
-				statusaTeksts.setText("Nevarēja saglabāt datubāzi " + izv.getSelectedFile().getAbsolutePath());
+				statusaTeksts.setText("Nevarēja saglabāt datubāzi " + Programma.getDb().getFails().getAbsolutePath());
 				JOptionPane.showMessageDialog(logaPanelis, e.getMessage(), "Nevarēja saglabāt datubāzi", JOptionPane.ERROR_MESSAGE);
 			}
 		}

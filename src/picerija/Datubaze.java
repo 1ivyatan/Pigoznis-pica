@@ -37,8 +37,10 @@ public class Datubaze {
 			try {
 				FileOutputStream fos = new FileOutputStream(this.fails);
 				ObjectOutputStream oos = new ObjectOutputStream(fos);
+				oos.writeObject(this.db);
+				oos.close();
 			} catch (Exception e) {
-				
+				throw new Exception(e.getMessage());
 			}
 		}
 	}

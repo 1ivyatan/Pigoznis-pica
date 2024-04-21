@@ -35,7 +35,21 @@ public class Programma {
 		try {
 			if (fails != null) {
 				db.setFails(fails);
+				db.saglabat();
 			} else if (fails == null && db.getFails() == null) {
+				throw new Exception("Jāievada fails pirms sagalbāšanas");
+			}
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+	}
+	
+	public static void saglDb(String vieta) throws Exception {
+		try {
+			if (vieta != null) {
+				db.setFails(new File(vieta));
+				db.saglabat();
+			} else if (vieta == null && db.getFails() == null) {
 				throw new Exception("Jāievada fails pirms sagalbāšanas");
 			}
 		} catch (Exception e) {
