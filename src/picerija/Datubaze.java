@@ -45,6 +45,11 @@ public class Datubaze {
 		}
 	}
 	
+	public void aizvert() {
+		this.db = null;
+		this.fails = null;
+	}
+	
 	/* konstruktori */
 	public Datubaze() {
 		this.db = new Dati();

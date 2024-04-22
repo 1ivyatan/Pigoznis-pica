@@ -3,6 +3,7 @@ package frontend;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -23,6 +24,7 @@ import javax.swing.JLabel;
 import java.awt.FlowLayout;
 import javax.swing.border.BevelBorder;
 import javax.swing.JSeparator;
+import java.awt.Component;
 
 public class Logs extends JFrame {
 
@@ -36,7 +38,16 @@ public class Logs extends JFrame {
 	/* statuss */
 	private static JLabel statusaTeksts;
 	
-	/* atveršana */
+	/* ui slēdze */
+	private static ArrayList<Object> atspejojamieUi;
+	
+	/* db fails */
+	private static void jaunsUi() {
+		Programma.tuksotDb();
+		sledzeUi(true);
+		statusaTeksts.setText("Izveidota datubāze");
+	}
+	
 	private static void atvertUi() {
 		int rez = izv.showOpenDialog(null);
 		
@@ -44,6 +55,7 @@ public class Logs extends JFrame {
 			try {
 				Programma.atvertDb(izv.getSelectedFile());
 				statusaTeksts.setText("Atvēra datubāzi " + izv.getSelectedFile().getAbsolutePath());
+				sledzeUi(true);
 			} catch (Exception e) {
 				statusaTeksts.setText("Nevarēja atvērt datubāzi " + izv.getSelectedFile().getAbsolutePath());
 				JOptionPane.showMessageDialog(logaPanelis, e.getMessage(), "Nevarēja atvērt datubāzi", JOptionPane.ERROR_MESSAGE);
@@ -87,6 +99,18 @@ public class Logs extends JFrame {
 		}
 	}
 	
+	private static void aizvertUi() {
+		statusaTeksts.setText("Aizvērta datubāze" + ( (Programma.getDb().getFails() != null) ? " " + Programma.getDb().getFails().getAbsolutePath() : ""));
+		Programma.aizvertDb();
+		sledzeUi(false);
+	}
+	
+	private static void sledzeUi(boolean sledze) {
+		for (Object i : atspejojamieUi) {
+			((Component)i).setEnabled(sledze);
+		}
+	}
+	
 	/**
 	 * Launch the application.
 	 */
@@ -108,8 +132,6 @@ public class Logs extends JFrame {
 	 */
 	public Logs() {
 		/* ------   Db sagatavošana   ----------- */
-		Programma.tuksotDb();
-		
 		extFiltrs = new FileNameExtensionFilter("Picērijas datubāze (." + Resursi.failaExt + ")", Resursi.failaExt);
 
 		izv = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
@@ -117,7 +139,9 @@ public class Logs extends JFrame {
 		izv.addChoosableFileFilter(extFiltrs);
 		izv.setFileFilter(extFiltrs);
 		
-		/* logs */
+		/* --------- logs -------------- */
+		atspejojamieUi = new ArrayList<Object>();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
@@ -135,9 +159,15 @@ public class Logs extends JFrame {
 		
 		JMenuItem topNavDatneSagl = new JMenuItem("Saglabāt");
 		topNavDatne.add(topNavDatneSagl);
+		atspejojamieUi.add(topNavDatneSagl);
 		
 		JMenuItem topNavDatneSaglKa = new JMenuItem("Saglabāt kā");
 		topNavDatne.add(topNavDatneSaglKa);
+		atspejojamieUi.add(topNavDatneSaglKa);
+		
+		JMenuItem topNavDatneAizv = new JMenuItem("Aizvērt");
+		topNavDatne.add(topNavDatneAizv);
+		atspejojamieUi.add(topNavDatneAizv);
 		
 		JSeparator separator = new JSeparator();
 		topNavDatne.add(separator);
@@ -167,6 +197,9 @@ public class Logs extends JFrame {
 		prevPanelis.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		logaPanelis.add(prevPanelis, BorderLayout.CENTER);
 		
+		/* db */
+		jaunsUi();
+		
 		/* ------   Notikumi   ----------- */
 		/* Datne -> */
 		topNavDatneJauns.addActionListener(new ActionListener() {
@@ -175,19 +208,14 @@ public class Logs extends JFrame {
 				if (Programma.getIzmaina()) {
 					switch(JOptionPane.showConfirmDialog(logaPanelis, "Saglabāt šo datubāzi?")) {
 						case 1: //n
-							Programma.tuksotDb();
-							statusaTeksts.setText("Izveidota datubāze");
+							jaunsUi();
 							break;
 						case 0: //y
 							sagalbatUi(false);
-							Programma.tuksotDb();
-							statusaTeksts.setText("Izveidota datubāze");
+							jaunsUi();
 							break;
 					}
-				} else {
-					Programma.tuksotDb();
-					statusaTeksts.setText("Izveidota datubāze");
-				}
+				} else jaunsUi();
 				
 			}
 		});
@@ -223,6 +251,13 @@ public class Logs extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				sagalbatUi(true);
+			}
+		});
+		
+		topNavDatneAizv.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				aizvertUi();
 			}
 		});
 	}
