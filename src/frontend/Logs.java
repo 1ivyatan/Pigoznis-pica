@@ -27,9 +27,11 @@ import javax.swing.JSeparator;
 import java.awt.Component;
 
 public class Logs extends JFrame {
-
 	private static final long serialVersionUID = 1L;
+	
+	/* logs */
 	private static JPanel logaPanelis;
+	private static Logs ramis;
 	
 	/* izvēle */
 	private static JFileChooser izv;
@@ -40,12 +42,19 @@ public class Logs extends JFrame {
 	
 	/* ui slēdze */
 	private static ArrayList<Object> atspejojamieUi;
+	private static void setLogaNos() {
+		String nos = (Programma.getDb() != null && Programma.getDb().getFails() != null) ? Programma.getDb().getFails().getName() + " - ": "";
+		ramis.setTitle(nos + "Picērija");
+	}
 	
 	/* db fails */
-	private static void jaunsUi() {
+	private static void jaunsUi(boolean init) {
 		Programma.tuksotDb();
 		sledzeUi(true);
-		statusaTeksts.setText("Izveidota datubāze");
+		setLogaNos();
+		
+		if (init) statusaTeksts.setText("Sveicināti!");
+		else statusaTeksts.setText("Izveidota datubāze");
 	}
 	
 	private static void atvertUi() {
@@ -55,6 +64,7 @@ public class Logs extends JFrame {
 			try {
 				Programma.atvertDb(izv.getSelectedFile());
 				statusaTeksts.setText("Atvēra datubāzi " + izv.getSelectedFile().getAbsolutePath());
+				setLogaNos();
 				sledzeUi(true);
 			} catch (Exception e) {
 				statusaTeksts.setText("Nevarēja atvērt datubāzi " + izv.getSelectedFile().getAbsolutePath());
@@ -82,7 +92,7 @@ public class Logs extends JFrame {
 						Programma.saglDb(izv.getSelectedFile());
 						statusaTeksts.setText("Saglabāja datubāzi " + izv.getSelectedFile().getAbsolutePath());
 					}
-					
+					setLogaNos();
 				} catch (Exception e) {
 					statusaTeksts.setText("Nevarēja saglabāt datubāzi " + izv.getSelectedFile().getAbsolutePath());
 					JOptionPane.showMessageDialog(logaPanelis, e.getMessage(), "Nevarēja saglabāt datubāzi", JOptionPane.ERROR_MESSAGE);
@@ -103,6 +113,7 @@ public class Logs extends JFrame {
 		statusaTeksts.setText("Aizvērta datubāze" + ( (Programma.getDb().getFails() != null) ? " " + Programma.getDb().getFails().getAbsolutePath() : ""));
 		Programma.aizvertDb();
 		sledzeUi(false);
+		setLogaNos();
 	}
 	
 	private static void sledzeUi(boolean sledze) {
@@ -118,8 +129,12 @@ public class Logs extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Logs frame = new Logs();
-					frame.setVisible(true);
+					ramis = new Logs();
+
+					/* db */
+					jaunsUi(true);
+					
+					ramis.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -196,9 +211,6 @@ public class Logs extends JFrame {
 		JPanel prevPanelis = new JPanel();
 		prevPanelis.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		logaPanelis.add(prevPanelis, BorderLayout.CENTER);
-		
-		/* db */
-		jaunsUi();
 		
 		/* ------   Notikumi   ----------- */
 		/* Datne -> */
