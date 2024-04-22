@@ -220,14 +220,14 @@ public class Logs extends JFrame {
 				if (Programma.getIzmaina()) {
 					switch(JOptionPane.showConfirmDialog(logaPanelis, "Saglabāt šo datubāzi?")) {
 						case 1: //n
-							jaunsUi();
+							jaunsUi(false);
 							break;
 						case 0: //y
 							sagalbatUi(false);
-							jaunsUi();
+							jaunsUi(false);
 							break;
 					}
-				} else jaunsUi();
+				} else jaunsUi(false);
 				
 			}
 		});
