@@ -27,6 +27,9 @@ import java.awt.FlowLayout;
 import javax.swing.border.BevelBorder;
 import javax.swing.JSeparator;
 import java.awt.Component;
+import javax.swing.JTabbedPane;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 
 public class GramatvedLogs extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -230,6 +233,7 @@ public class GramatvedLogs extends JFrame {
 		statusaTeksts = new JLabel("Sviecināti");
 		statusaPanelis.add(statusaTeksts);
 		
+		/* izvēlne */
 		JPanel izvPanelis = new JPanel();
 		izvPanelis.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		logaPanelis.add(izvPanelis, BorderLayout.WEST);
@@ -237,10 +241,40 @@ public class GramatvedLogs extends JFrame {
 		
 		JPanel izvPogas = new JPanel();
 		izvPanelis.add(izvPogas, BorderLayout.SOUTH);
+		izvPogas.setLayout(new BoxLayout(izvPogas, BoxLayout.Y_AXIS));
+		
+		JPanel izvIzvRedPanelis = new JPanel();
+		izvPogas.add(izvIzvRedPanelis);
+		
+		JButton izvIzvPoga = new JButton("Jauns");
+		izvIzvRedPanelis.add(izvIzvPoga);
+		atspejojamieUi.add(izvIzvPoga);
+		
+		JButton izvRedigetPoga = new JButton("Rediģēt");
+		izvIzvRedPanelis.add(izvRedigetPoga);
+		atspejojamieUi.add(izvRedigetPoga);
+		
+		JPanel izvDzestInfoPanelis = new JPanel();
+		izvPogas.add(izvDzestInfoPanelis);
+		
+		JButton izvDzestPoga = new JButton("Dzēst");
+		izvDzestInfoPanelis.add(izvDzestPoga);
+		atspejojamieUi.add(izvDzestPoga);
+		
+		JButton izvInfoPoga = new JButton("Info");
+		izvDzestInfoPanelis.add(izvInfoPoga);
+		atspejojamieUi.add(izvInfoPoga);
 		
 		JPanel cilnIzvelne = new JPanel();
 		izvPanelis.add(cilnIzvelne, BorderLayout.CENTER);
+		cilnIzvelne.setLayout(new BorderLayout(0, 0));
 		
+		JTabbedPane cilnes = new JTabbedPane(JTabbedPane.TOP);
+		cilnIzvelne.add(cilnes);
+		
+		
+		
+		/* priekšskatījums */
 		JPanel prevPanelis = new JPanel();
 		prevPanelis.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		logaPanelis.add(prevPanelis, BorderLayout.CENTER);
