@@ -28,12 +28,12 @@ import javax.swing.border.BevelBorder;
 import javax.swing.JSeparator;
 import java.awt.Component;
 
-public class Logs extends JFrame {
+public class GramatvedLogs extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	/* logs */
 	private static JPanel logaPanelis;
-	private static Logs ramis;
+	private static GramatvedLogs ramis;
 	
 	/* izvēle */
 	private static JFileChooser izv;
@@ -139,7 +139,7 @@ public class Logs extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ramis = new Logs();
+					ramis = new GramatvedLogs();
 
 					/* db */
 					jaunsUi(true);
@@ -155,7 +155,7 @@ public class Logs extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Logs() {
+	public GramatvedLogs() {
 		/* ------   Db sagatavošana   ----------- */
 		extFiltrs = new FileNameExtensionFilter("Picērijas datubāze (." + Resursi.failaExt + ")", Resursi.failaExt);
 
