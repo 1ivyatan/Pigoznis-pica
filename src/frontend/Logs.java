@@ -235,7 +235,6 @@ public class Logs extends JFrame {
 		topNavDatneAtvert.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				if (Programma.getIzmaina()) {
 					switch(JOptionPane.showConfirmDialog(logaPanelis, "Saglabāt šo datubāzi?")) {
 						case 1: //n
@@ -246,9 +245,7 @@ public class Logs extends JFrame {
 							atvertUi();
 							break;
 					}
-				} else {
-					atvertUi();
-				}
+				} else atvertUi();
 			}
 		});
 		
@@ -269,7 +266,17 @@ public class Logs extends JFrame {
 		topNavDatneAizv.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				aizvertUi();
+				if (Programma.getIzmaina()) {
+					switch(JOptionPane.showConfirmDialog(logaPanelis, "Saglabāt šo datubāzi?")) {
+						case 1: //n
+							aizvertUi();
+							break;
+						case 0: //y
+							sagalbatUi(false);
+							aizvertUi();
+							break;
+					}
+				} else aizvertUi();
 			}
 		});
 	}

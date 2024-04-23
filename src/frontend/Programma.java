@@ -26,6 +26,7 @@ public class Programma {
 	/* metodes */
 	public static void aizvertDb() {
 		atverts = false;
+		izmaina = false;
 		db.aizvert();
 		db = null;
 	}
