@@ -49,9 +49,17 @@ public class GramatvedLogs extends JFrame {
 	private static ArrayList<Object> atspejojamieUi;
 	
 	private static void setLogaNos() {
-		String zvaigzne = (Programma.getDb() != null && Programma.getIzmaina()) ? "*" : "" ;
-		String nos = (Programma.getDb() != null && Programma.getDb().getFails() != null) ? Programma.getDb().getFails().getName() + " - ": Resursi.defDbNos + " - ";
-		ramis.setTitle(zvaigzne + nos + "Picērija");
+		String nos;
+
+		if (Programma.getDb() != null && Programma.getDb().getFails() != null) {
+			nos =  Programma.getDb().getFails().getName() + " - ";
+		} else if (Programma.getDb() == null) {
+			nos = "";
+		} else {
+			nos = Resursi.defDbNos + " - ";
+		}
+
+		ramis.setTitle(nos + "Picērija");
 	}
 	
 	/* db fails */
@@ -295,7 +303,6 @@ public class GramatvedLogs extends JFrame {
 							break;
 					}
 				} else jaunsUi(false);
-				
 			}
 		});
 		

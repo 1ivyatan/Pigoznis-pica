@@ -68,8 +68,15 @@ public class IestatLogs extends JDialog {
 		
 		JTextField valutaVert = new JTextField();
 		valutaVert.setColumns(10);
-		valutaVert.setText(Programma.getDb().getDati().getValutasSim());
+		valutaVert.setText(Programma.dbGetValutasSim());
 		valutaIest.add(valutaVert);
+		
+		JPanel status = new JPanel();
+		contentPanel.add(status, BorderLayout.SOUTH);
+		
+		status.add(statusTeksts);
+		
+		/* notikumi */
 		valutaVert.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void insertUpdate(DocumentEvent e) {
@@ -94,18 +101,11 @@ public class IestatLogs extends JDialog {
 				} else if (in.length() < 1 || ( in.isBlank() )) {
 					statusTeksts.setText("Valūta: jābūt vērtībai");
 				} else {
-					Programma.getDb().getDati().setValutasSim(in);
+					Programma.dbSetValutasSim(in);
 					statusTeksts.setText(" ");
 				}
 			}
 		});
-		
-		JPanel status = new JPanel();
-		contentPanel.add(status, BorderLayout.SOUTH);
-		
-		status.add(statusTeksts);
-		
-		/* notikumi */
 	}
 
 }

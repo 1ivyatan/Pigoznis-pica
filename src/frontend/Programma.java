@@ -42,6 +42,7 @@ public class Programma {
 			if (fails != null) {
 				db.setFails(fails);
 				db.saglabat();
+				izmaina = false;
 			} else if (fails == null && db.getFails() == null) {
 				throw new Exception("Jāievada fails pirms sagalbāšanas");
 			}
@@ -55,6 +56,7 @@ public class Programma {
 			if (vieta != null) {
 				db.setFails(new File(vieta));
 				db.saglabat();
+				izmaina = false;
 			} else if (vieta == null && db.getFails() == null) {
 				throw new Exception("Jāievada fails pirms sagalbāšanas");
 			}
@@ -66,8 +68,19 @@ public class Programma {
 	public static void saglDb() throws Exception {
 		try {
 			db.saglabat();
+			izmaina = false;
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
+	}
+	
+	/* DB METODES */
+	public static String dbGetValutasSim() {
+		return db.getDati().getValutasSim();
+	}
+	
+	public static void dbSetValutasSim(String valuta) {
+		db.getDati().setValutasSim(valuta);
+		izmaina = true;
 	}
 }
