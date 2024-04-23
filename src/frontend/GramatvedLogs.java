@@ -32,6 +32,7 @@ import java.awt.Dimension;
 import javax.swing.JTabbedPane;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import java.awt.CardLayout;
 
 public class GramatvedLogs extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -290,12 +291,34 @@ public class GramatvedLogs extends JFrame {
 		
 		JPanel pirkumuCilne = new JPanel();
 		cilnes.addTab("Pasūtījumi", null, pirkumuCilne, null);
+		pirkumuCilne.setLayout(new CardLayout(0, 0));
+		
+		JTabbedPane pirkumuCilnes = new JTabbedPane(JTabbedPane.BOTTOM);
+		pirkumuCilnes.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		pirkumuCilne.add(pirkumuCilnes, "name_17432651049000");
+		
+		JPanel pasutCilne = new JPanel();
+		pirkumuCilnes.addTab("Gaidošie", null, pasutCilne, null);
+		
+		JPanel pasutVestCilne = new JPanel();
+		pirkumuCilnes.addTab("Vēsture", null, pasutVestCilne, null);
 		
 		JPanel kontaktuCilne = new JPanel();
 		cilnes.addTab("Kontakti", null, kontaktuCilne, null);
+		kontaktuCilne.setLayout(new CardLayout(0, 0));
 		
 		JPanel picuCilne = new JPanel();
 		cilnes.addTab("Picas", null, picuCilne, null);
+		picuCilne.setLayout(new CardLayout(0, 0));
+		
+		JTabbedPane picuCilnes = new JTabbedPane(JTabbedPane.BOTTOM);
+		picuCilne.add(picuCilnes, "name_17765351404700");
+		
+		JPanel picuRecepCilne = new JPanel();
+		picuCilnes.addTab("Receptes", null, picuRecepCilne, null);
+		
+		JPanel picuSastavCilne = new JPanel();
+		picuCilnes.addTab("Sastāvdaļas", null, picuSastavCilne, null);
 		
 		
 		
