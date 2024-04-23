@@ -170,6 +170,7 @@ public class Logs extends JFrame {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
+		/* topnav */
 		JMenuBar topNav = new JMenuBar();
 		setJMenuBar(topNav);
 		
@@ -199,6 +200,21 @@ public class Logs extends JFrame {
 		
 		JMenuItem topNavIziet = new JMenuItem("Iziet");
 		topNavDatne.add(topNavIziet);
+		
+		JMenu topNavRediget = new JMenu("Rediģēt");
+		topNav.add(topNavRediget);
+		
+		JMenuItem topNavRedigetIest = new JMenuItem("Datubāzes iestatījumi");
+		topNavRediget.add(topNavRedigetIest);
+		atspejojamieUi.add(topNavRedigetIest);
+		
+		JMenu topNavPal = new JMenu("Palīdzība");
+		topNav.add(topNavPal);
+		
+		JMenuItem topNavPalPar = new JMenuItem("Par");
+		topNavPal.add(topNavPalPar);
+		
+		/* panelis */
 		logaPanelis = new JPanel();
 		logaPanelis.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -304,6 +320,16 @@ public class Logs extends JFrame {
 							break;
 					}
 				} else izietUi();
+			}
+		});
+		
+		/* rediģēt */
+		
+		/* palīdzība */
+		topNavPalPar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(ramis, "Picērija - piegāžu grāmatvedis\n2024-04", "Par", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		
