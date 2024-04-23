@@ -44,9 +44,11 @@ public class Logs extends JFrame {
 	
 	/* ui slēdze */
 	private static ArrayList<Object> atspejojamieUi;
+	
 	private static void setLogaNos() {
+		String zvaigzne = (Programma.getDb() != null && Programma.getIzmaina()) ? "*" : "" ;
 		String nos = (Programma.getDb() != null && Programma.getDb().getFails() != null) ? Programma.getDb().getFails().getName() + " - ": "";
-		ramis.setTitle(nos + "Picērija");
+		ramis.setTitle(zvaigzne + nos + "Picērija");
 	}
 	
 	/* db fails */
@@ -76,11 +78,7 @@ public class Logs extends JFrame {
 	}
 	
 	private static void sagalbatUi(boolean iznicinatFailu) {
-		if (iznicinatFailu) {
-			Programma.getDb().setFails(null);
-		}
-		
-		if (Programma.getDb().getFails() == null) {
+		if (iznicinatFailu || Programma.getDb().getFails() == null) {
 			int rez = izv.showSaveDialog(null);
 			if (rez == JFileChooser.APPROVE_OPTION) {
 				try {
@@ -311,6 +309,7 @@ public class Logs extends JFrame {
 		
 		/* loga notikumi */
 		addWindowListener(new WindowAdapter() {
+			@Override
 			public void windowClosing(WindowEvent e) {
 				if (Programma.getIzmaina()) {
 					switch(JOptionPane.showConfirmDialog(logaPanelis, "Saglabāt šo datubāzi?")) {
