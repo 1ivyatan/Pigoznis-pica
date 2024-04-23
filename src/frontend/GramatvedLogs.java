@@ -33,6 +33,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import java.awt.CardLayout;
+import javax.swing.JTextArea;
 
 public class GramatvedLogs extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -183,6 +184,7 @@ public class GramatvedLogs extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setMinimumSize(new Dimension(480, 360));
+		setSize(new Dimension(630, 440));
 		
 		/* topnav */
 		JMenuBar topNav = new JMenuBar();
@@ -320,12 +322,17 @@ public class GramatvedLogs extends JFrame {
 		JPanel picuSastavCilne = new JPanel();
 		picuCilnes.addTab("Sastāvdaļas", null, picuSastavCilne, null);
 		
-		
-		
 		/* priekšskatījums */
 		JPanel prevPanelis = new JPanel();
 		prevPanelis.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		logaPanelis.add(prevPanelis, BorderLayout.CENTER);
+		prevPanelis.setLayout(new CardLayout(0, 0));
+		
+		JTextArea prevTeksts = new JTextArea();
+		prevTeksts.setTabSize(4);
+		prevTeksts.setEditable(false);
+		prevPanelis.add(prevTeksts);
+		atspejojamieUi.add(prevTeksts);
 		
 		/* ------   Notikumi   ----------- */
 		/* Datne -> */
