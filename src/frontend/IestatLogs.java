@@ -1,14 +1,23 @@
 package frontend;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import picerija.Resursi;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 public class IestatLogs extends JDialog {
 	private static final long serialVersionUID = 1L;
@@ -31,27 +40,65 @@ public class IestatLogs extends JDialog {
 			+ " iestatījumi"
 		);
 		
-		setBounds(100, 100, 450, 300);
+		setMinimumSize(new Dimension(320, 180));
+		
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+		
+		/* UI */
+		contentPanel.setLayout(new BorderLayout(0, 0));
+		
+		JPanel status = new JPanel();
+		contentPanel.add(status, BorderLayout.SOUTH);
+		
+		JLabel statusTeksts = new JLabel(" ");
+		status.add(statusTeksts);
+		
+		JPanel iestPanelis = new JPanel();
+		contentPanel.add(iestPanelis, BorderLayout.CENTER);
+		
+		JPanel valutaIest = new JPanel();
+		iestPanelis.add(valutaIest);
+		
+		JLabel valutaNos = new JLabel("Valūta");
+		valutaIest.add(valutaNos);
+		
+		JTextField valutaVert = new JTextField();
+		valutaVert.setColumns(10);
+		valutaVert.setText(Programma.getDb().getDati().getValutasSim());
+		valutaIest.add(valutaVert);
+		
+		/* notikumi */
+		valutaVert.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				atjaunotValutu();
 			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				atjaunotValutu();
 			}
-		}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				atjaunotValutu();
+			}
+			
+			private void atjaunotValutu() {
+				String in = valutaVert.getText();
+				
+				if (in.length() > 10) {
+					statusTeksts.setText("Valūta: rakstzīmju skaitam jābut ne vairāk kā 10");
+				} else if (in.length() < 1 || ( in.isBlank() )) {
+					statusTeksts.setText("Valūta: jābūt vērtībai");
+				} else {
+					Programma.getDb().getDati().setValutasSim(in);
+					statusTeksts.setText(" ");
+				}
+			}
+		});
 	}
 
 }

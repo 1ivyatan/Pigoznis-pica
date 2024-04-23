@@ -9,13 +9,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
 
-class Dati implements Serializable {
-	private static final long serialVersionUID = 1L;
-	int h = 10;
-}
 
 public class Datubaze {
-	private Dati db = null;
+	private picerija.Dati db = null;
 	private File fails = null;
 	
 	/* s/getteri */
@@ -25,6 +21,10 @@ public class Datubaze {
 	
 	public File getFails() {
 		return this.fails;
+	}
+	
+	public Dati getDati() {
+		return this.db;
 	}
 	
 	/* metodes */
