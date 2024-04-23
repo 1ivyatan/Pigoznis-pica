@@ -3,8 +3,6 @@ package frontend;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -16,7 +14,6 @@ import javax.swing.event.DocumentListener;
 import picerija.Resursi;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 

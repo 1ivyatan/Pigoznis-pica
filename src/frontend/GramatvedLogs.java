@@ -27,6 +27,8 @@ import java.awt.FlowLayout;
 import javax.swing.border.BevelBorder;
 import javax.swing.JSeparator;
 import java.awt.Component;
+import java.awt.Dimension;
+
 import javax.swing.JTabbedPane;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -179,7 +181,7 @@ public class GramatvedLogs extends JFrame {
 		atspejojamieUi = new ArrayList<Object>();
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setMinimumSize(new Dimension(480, 360));
 		
 		/* topnav */
 		JMenuBar topNav = new JMenuBar();
@@ -252,9 +254,11 @@ public class GramatvedLogs extends JFrame {
 		izvPogas.setLayout(new BoxLayout(izvPogas, BoxLayout.Y_AXIS));
 		
 		JPanel izvIzvRedPanelis = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) izvIzvRedPanelis.getLayout();
+		flowLayout_1.setHgap(25);
 		izvPogas.add(izvIzvRedPanelis);
 		
-		JButton izvIzvPoga = new JButton("Jauns");
+		JButton izvIzvPoga = new JButton("Izveidot");
 		izvIzvRedPanelis.add(izvIzvPoga);
 		atspejojamieUi.add(izvIzvPoga);
 		
@@ -263,13 +267,15 @@ public class GramatvedLogs extends JFrame {
 		atspejojamieUi.add(izvRedigetPoga);
 		
 		JPanel izvDzestInfoPanelis = new JPanel();
+		FlowLayout flowLayout_2 = (FlowLayout) izvDzestInfoPanelis.getLayout();
+		flowLayout_2.setHgap(15);
 		izvPogas.add(izvDzestInfoPanelis);
 		
 		JButton izvDzestPoga = new JButton("Dzēst");
 		izvDzestInfoPanelis.add(izvDzestPoga);
 		atspejojamieUi.add(izvDzestPoga);
 		
-		JButton izvInfoPoga = new JButton("Info");
+		JButton izvInfoPoga = new JButton("Informācija");
 		izvDzestInfoPanelis.add(izvInfoPoga);
 		atspejojamieUi.add(izvInfoPoga);
 		
@@ -278,7 +284,18 @@ public class GramatvedLogs extends JFrame {
 		cilnIzvelne.setLayout(new BorderLayout(0, 0));
 		
 		JTabbedPane cilnes = new JTabbedPane(JTabbedPane.TOP);
+		cilnes.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		cilnIzvelne.add(cilnes);
+		atspejojamieUi.add(cilnes);
+		
+		JPanel pirkumuCilne = new JPanel();
+		cilnes.addTab("Pasūtījumi", null, pirkumuCilne, null);
+		
+		JPanel kontaktuCilne = new JPanel();
+		cilnes.addTab("Kontakti", null, kontaktuCilne, null);
+		
+		JPanel picuCilne = new JPanel();
+		cilnes.addTab("Picas", null, picuCilne, null);
 		
 		
 		
