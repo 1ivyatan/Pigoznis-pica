@@ -47,7 +47,7 @@ public class GramatvedLogs extends JFrame {
 	
 	private static void setLogaNos() {
 		String zvaigzne = (Programma.getDb() != null && Programma.getIzmaina()) ? "*" : "" ;
-		String nos = (Programma.getDb() != null && Programma.getDb().getFails() != null) ? Programma.getDb().getFails().getName() + " - ": "";
+		String nos = (Programma.getDb() != null && Programma.getDb().getFails() != null) ? Programma.getDb().getFails().getName() + " - ": Resursi.defDbNos + " - ";
 		ramis.setTitle(zvaigzne + nos + "Picērija");
 	}
 	
@@ -324,6 +324,14 @@ public class GramatvedLogs extends JFrame {
 		});
 		
 		/* rediģēt */
+		topNavRedigetIest.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {				
+				if (Programma.getDb() != null) {
+					IestatLogs.atvertIest();
+				}
+			}
+		});
 		
 		/* palīdzība */
 		topNavPalPar.addActionListener(new ActionListener() {

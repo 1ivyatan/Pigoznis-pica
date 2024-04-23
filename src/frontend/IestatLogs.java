@@ -9,10 +9,15 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 public class IestatLogs extends JDialog {
-
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 
+	public static void atvertIest() {
+		IestatLogs dialog = new IestatLogs();
+		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		dialog.setVisible(true);
+	}
+	
 	/**
 	 * Launch the application.
 	 */
@@ -30,6 +35,7 @@ public class IestatLogs extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
+	
 	public IestatLogs() {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
