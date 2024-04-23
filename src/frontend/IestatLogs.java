@@ -18,6 +18,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.JScrollPane;
 
 public class IestatLogs extends JDialog {
 	private static final long serialVersionUID = 1L;
@@ -35,31 +36,32 @@ public class IestatLogs extends JDialog {
 	 */
 	
 	public IestatLogs() {
+		setLocationRelativeTo(null);
+		
 		setTitle(
 			(Programma.getDb() != null && Programma.getDb().getFails() != null) ? Programma.getDb().getFails().getName() : (Resursi.defDbNos)
 			+ " iestatījumi"
 		);
 		
-		setMinimumSize(new Dimension(320, 180));
-		
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setMinimumSize(new Dimension(320, 180));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		
 		/* UI */
 		contentPanel.setLayout(new BorderLayout(0, 0));
-		
-		JPanel status = new JPanel();
-		contentPanel.add(status, BorderLayout.SOUTH);
-		
 		JLabel statusTeksts = new JLabel(" ");
-		status.add(statusTeksts);
 		
-		JPanel iestPanelis = new JPanel();
-		contentPanel.add(iestPanelis, BorderLayout.CENTER);
+		JScrollPane scrollIest = new JScrollPane();
+		contentPanel.add(scrollIest, BorderLayout.CENTER);
+		
+		JPanel iestPanel = new JPanel();
+		scrollIest.setViewportView(iestPanel);
+		iestPanel.setLayout(new BoxLayout(iestPanel, BoxLayout.Y_AXIS));
 		
 		JPanel valutaIest = new JPanel();
-		iestPanelis.add(valutaIest);
+		iestPanel.add(valutaIest);
 		
 		JLabel valutaNos = new JLabel("Valūta");
 		valutaIest.add(valutaNos);
@@ -68,8 +70,6 @@ public class IestatLogs extends JDialog {
 		valutaVert.setColumns(10);
 		valutaVert.setText(Programma.getDb().getDati().getValutasSim());
 		valutaIest.add(valutaVert);
-		
-		/* notikumi */
 		valutaVert.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void insertUpdate(DocumentEvent e) {
@@ -99,6 +99,13 @@ public class IestatLogs extends JDialog {
 				}
 			}
 		});
+		
+		JPanel status = new JPanel();
+		contentPanel.add(status, BorderLayout.SOUTH);
+		
+		status.add(statusTeksts);
+		
+		/* notikumi */
 	}
 
 }
