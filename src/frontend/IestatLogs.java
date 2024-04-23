@@ -14,23 +14,10 @@ public class IestatLogs extends JDialog {
 
 	public static void atvertIest() {
 		IestatLogs dialog = new IestatLogs();
+		dialog.setModal(true);
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		dialog.setVisible(true);
 	}
-	
-	/**
-	 * Launch the application.
-	 */
-	/*
-	public static void main(String[] args) {
-		try {
-			IestatLogs dialog = new IestatLogs();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}*/
 
 	/**
 	 * Create the dialog.
