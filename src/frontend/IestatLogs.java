@@ -8,6 +8,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import picerija.Resursi;
+
 public class IestatLogs extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -24,6 +26,11 @@ public class IestatLogs extends JDialog {
 	 */
 	
 	public IestatLogs() {
+		setTitle(
+			(Programma.getDb() != null && Programma.getDb().getFails() != null) ? Programma.getDb().getFails().getName() : (Resursi.defDbNos)
+			+ " iestatījumi"
+		);
+		
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
