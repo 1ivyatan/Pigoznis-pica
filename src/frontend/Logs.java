@@ -3,6 +3,8 @@ package frontend;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
@@ -116,6 +118,16 @@ public class Logs extends JFrame {
 		setLogaNos();
 	}
 	
+	private static void izietUi() {
+		if (Programma.getDb() != null) {
+			sledzeUi(false);
+			Programma.aizvertDb();
+		}
+		
+		ramis.dispose();
+		System.exit(0);
+	}
+	
 	private static void sledzeUi(boolean sledze) {
 		for (Object i : atspejojamieUi) {
 			((Component)i).setEnabled(sledze);
@@ -157,7 +169,7 @@ public class Logs extends JFrame {
 		/* --------- logs -------------- */
 		atspejojamieUi = new ArrayList<Object>();
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
 		JMenuBar topNav = new JMenuBar();
@@ -277,6 +289,40 @@ public class Logs extends JFrame {
 							break;
 					}
 				} else aizvertUi();
+			}
+		});
+		
+		topNavIziet.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (Programma.getIzmaina()) {
+					switch(JOptionPane.showConfirmDialog(logaPanelis, "Saglabāt šo datubāzi?")) {
+						case 1: //n
+							izietUi();
+							break;
+						case 0: //y
+							sagalbatUi(false);
+							izietUi();
+							break;
+					}
+				} else izietUi();
+			}
+		});
+		
+		/* loga notikumi */
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				if (Programma.getIzmaina()) {
+					switch(JOptionPane.showConfirmDialog(logaPanelis, "Saglabāt šo datubāzi?")) {
+						case 1: //n
+							izietUi();
+							break;
+						case 0: //y
+							sagalbatUi(false);
+							izietUi();
+							break;
+					}
+				} else izietUi();
 			}
 		});
 	}

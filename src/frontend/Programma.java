@@ -8,15 +8,10 @@ public class Programma {
 	/* datubāze */
 	private static Datubaze db = null;
 	private static boolean izmaina = false;
-	private static boolean atverts = true;
 	
 	/* s/geteri */
 	public static boolean getIzmaina() {
 		return izmaina;
-	}
-	
-	public static boolean getAtverts() {
-		return atverts;
 	}
 	
 	public static Datubaze getDb() {
@@ -25,7 +20,6 @@ public class Programma {
 		
 	/* metodes */
 	public static void aizvertDb() {
-		atverts = false;
 		izmaina = false;
 		db.aizvert();
 		db = null;
@@ -33,13 +27,11 @@ public class Programma {
 	
 	public static void tuksotDb() {
 		db = new Datubaze();
-		atverts = true;
 	}
 	
 	public static void atvertDb(File fails) throws Exception {
 		try {
 			db = new Datubaze(fails);
-			atverts = true;
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
