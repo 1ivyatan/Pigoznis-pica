@@ -233,6 +233,13 @@ public class GramatvedLogs extends JFrame {
 		JPanel izvPanelis = new JPanel();
 		izvPanelis.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		logaPanelis.add(izvPanelis, BorderLayout.WEST);
+		izvPanelis.setLayout(new BorderLayout(0, 0));
+		
+		JPanel izvPogas = new JPanel();
+		izvPanelis.add(izvPogas, BorderLayout.SOUTH);
+		
+		JPanel cilnIzvelne = new JPanel();
+		izvPanelis.add(cilnIzvelne, BorderLayout.CENTER);
 		
 		JPanel prevPanelis = new JPanel();
 		prevPanelis.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
