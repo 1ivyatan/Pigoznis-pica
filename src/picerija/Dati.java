@@ -7,7 +7,7 @@ public class Dati implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	/* saraksti */
-	private ArrayList<Object> kontakti;
+	private ArrayList<Kontakts> kontakti;
 	
 	public String[] getKontaktiStr() {
 		String[] ret = new String[this.kontakti.size()];
@@ -21,7 +21,7 @@ public class Dati implements Serializable {
 	private String valutasSim = "EUR";
 	
 	/* s/geteri */
-	public ArrayList<Object> getKontakti() {
+	public ArrayList<Kontakts> getKontakti() {
 		return this.kontakti;
 	}
 	
@@ -35,7 +35,7 @@ public class Dati implements Serializable {
 	
 	/* kons */
 	public Dati() {
-		this.kontakti = new ArrayList<Object>();
+		this.kontakti = new ArrayList<Kontakts>();
 		
 		// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 		this.kontakti.add(new Kontakts("Jaan"));

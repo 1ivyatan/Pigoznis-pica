@@ -79,7 +79,7 @@ public class GramatvedLogs extends JFrame {
 	
 	private static void setSarakstusUi(boolean wipe) {
 		if (!wipe) {
-			kontaktuSaraksts.setElementi(Programma.dbGetKontakti(), Programma.dbGetKontaktiStr());
+			kontaktuSaraksts.setElementi((Programma.dbGetKontaktiObj()), Programma.dbGetKontaktiStr());
 		} else {
 			kontaktuSaraksts.setElementi();
 		}

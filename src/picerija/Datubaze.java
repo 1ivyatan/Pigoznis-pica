@@ -38,6 +38,7 @@ public class Datubaze {
 				oos.writeObject(this.db);
 				oos.close();
 			} catch (Exception e) {
+				e.printStackTrace();
 				throw new Exception(e.getMessage());
 			}
 		}

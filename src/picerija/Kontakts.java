@@ -1,6 +1,6 @@
 package picerija;
 
-public class Kontakts {
+public class Kontakts implements java.io.Serializable {
 	private String vards;
 	
 	/* s/geteri */

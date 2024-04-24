@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import picerija.Datubaze;
-import picerija.Kontakts;
 
 public class Programma {
 	/* datubāze */
@@ -81,12 +80,18 @@ public class Programma {
 		return db.getDati().getValutasSim();
 	}
 	
-	public static ArrayList<Object> dbGetKontakti() {
-		return db.getDati().getKontakti();
-	}
-	
 	public static String[] dbGetKontaktiStr() {
 		return db.getDati().getKontaktiStr();
+	}
+	
+	public static ArrayList<Object> dbGetKontaktiObj() {
+		ArrayList<Object> ret = new ArrayList<Object>();
+		
+		for (int i = 0; i < db.getDati().getKontakti().size(); i++) {
+			ret.add(db.getDati().getKontakti().get(i));
+		}
+		
+		return ret;
 	}
 	
 	public static void dbSetValutasSim(String valuta) {
