@@ -9,6 +9,8 @@ import javax.swing.ListModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import picerija.Kontakts;
 
@@ -41,6 +43,7 @@ public class MeklejamSaraksts extends JPanel {
 		
 		/* ui */
 		this.saraksts.setModel(this.lietuNos);
+		this.saraksts.setSelectedIndex(0);
 	}
 	
 	public void setElementi() {
@@ -50,10 +53,6 @@ public class MeklejamSaraksts extends JPanel {
 		this.lietuNos = null;
 	}
 	
-	/**
-	 * Create the panel.
-	 */
-	//public MeklejamSaraksts(ArrayList<Object> lietas, String[] lietuNosaukumi) {
 	public MeklejamSaraksts() {
 		setLayout(new BorderLayout(0, 0));
 		
@@ -65,6 +64,17 @@ public class MeklejamSaraksts extends JPanel {
 		this.saraksts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		add(this.saraksts, BorderLayout.CENTER);
 
+		/* notikumi */
+		this.saraksts.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				System.out.println("yo!!!!!!!!!");
+				//System.out.println("y);
+
+			}
+			
+		});
 	}
 
 }
