@@ -7,28 +7,28 @@ import java.awt.BorderLayout;
 import java.util.ArrayList;
 
 import javax.swing.JTextField;
-import javax.swing.ListModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import picerija.DatiemSaraksts;
-import picerija.Kontakts;
 
 public class MeklejamSaraksts extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	/* elementi */
 	private JTextField mekletajs;
-	private JList saraksts;
+	private JList<String> saraksts;
 	
 	private JTextArea uiIzvade = null;
 	
 	/* saraksti */
-	private static ArrayList<Object> returnables = null;
-	private static DefaultListModel lietuNos = null;
+	private ArrayList<Object> returnables = null;
+	private DefaultListModel<String> lietuNos = null;
 
 	public void setEnabled(boolean sledze) {
 		this.mekletajs.setEnabled(sledze);
@@ -38,7 +38,7 @@ public class MeklejamSaraksts extends JPanel {
 	public void setElementi(ArrayList<Object> lietas, String[] lietuNosaukumi) {
 		this.returnables = lietas;
 		
-		this.lietuNos = new DefaultListModel();
+		this.lietuNos = new DefaultListModel<String>();
 		for (String i : lietuNosaukumi) {
 			this.lietuNos.addElement(i);
 		}
@@ -48,7 +48,7 @@ public class MeklejamSaraksts extends JPanel {
 	}
 	
 	public void setElementi() {
-		this.saraksts.setModel(new DefaultListModel());
+		this.saraksts.setModel(new DefaultListModel<String>());
 		
 		this.returnables = null;
 		this.lietuNos = null;
@@ -63,17 +63,53 @@ public class MeklejamSaraksts extends JPanel {
 		add(this.mekletajs, BorderLayout.NORTH);
 		this.mekletajs.setColumns(10);
 		
-		this.saraksts = new JList();
+		this.saraksts = new JList<String>();
 		this.saraksts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		add(this.saraksts, BorderLayout.CENTER);
 		
 		/* notikumi */
+		this.mekletajs.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				mekletSaraksta();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				mekletSaraksta();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				mekletSaraksta();
+			}
+			
+			private void mekletSaraksta() {
+				String ievade = mekletajs.getText();
+				
+				if (ievade.isEmpty()) {
+					saraksts.setModel(lietuNos);
+				} else {
+					DefaultListModel<String> rezultati = new DefaultListModel<String>();
+					
+					for (int i = 0; i < lietuNos.size(); i++) {
+						if (ievade.contains( lietuNos.get(i) )) {
+							rezultati.addElement(lietuNos.get(i));
+						}
+					}
+
+					saraksts.setModel(rezultati);
+				}
+			}
+		});
+		
 		this.saraksts.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting() && saraksts.getSelectedValue() != null) {
 					int idx = saraksts.getSelectedIndex();
 					uiIzvade.setText(((DatiemSaraksts) returnables.get(idx)).kaVirkne());
+					System.out.println(idx);
 				}
 			}
 		});

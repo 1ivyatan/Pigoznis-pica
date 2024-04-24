@@ -27,6 +27,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 
 import java.awt.FlowLayout;
+import java.awt.Insets;
+
 import javax.swing.border.BevelBorder;
 import javax.swing.JSeparator;
 import java.awt.Component;
@@ -356,6 +358,7 @@ public class GramatvedLogs extends JFrame {
 		prevPanelis.setLayout(new CardLayout(0, 0));
 		
 		JTextArea prevTeksts = new JTextArea();
+		prevTeksts.setMargin(new Insets(5, 5, 5, 5));
 		prevTeksts.setTabSize(4);
 		prevTeksts.setEditable(false);
 		prevPanelis.add(prevTeksts);
