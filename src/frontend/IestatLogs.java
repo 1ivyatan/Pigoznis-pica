@@ -28,10 +28,6 @@ public class IestatLogs extends JDialog {
 		dialog.setVisible(true);
 	}
 
-	/**
-	 * Create the dialog.
-	 */
-	
 	public IestatLogs() {
 		setLocationRelativeTo(null);
 		
