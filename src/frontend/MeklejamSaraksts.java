@@ -2,9 +2,15 @@ package frontend;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.util.ArrayList;
+
 import javax.swing.JTextField;
+import javax.swing.ListModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
+
+import picerija.Kontakts;
 
 public class MeklejamSaraksts extends JPanel {
 
@@ -13,16 +19,41 @@ public class MeklejamSaraksts extends JPanel {
 	/* elementi */
 	private JTextField mekletajs;
 	private JList saraksts;
+	
+	/* saraksti */
+	private static ArrayList<Object> returnables = null;
+	private static DefaultListModel lietuNos = null;
 
 	public void setEnabled(boolean sledze) {
 		this.mekletajs.setEnabled(sledze);
 		this.saraksts.setEnabled(sledze);
 	}
 	
+	public void setElementi(ArrayList<Object> lietas, String[] lietuNosaukumi) {
+		//if (lietas.isEmpty() || lietuNosaukumi.length < 1) {
+		//}
+		this.returnables = lietas;
+		
+		this.lietuNos = new DefaultListModel();
+		for (String i : lietuNosaukumi) {
+			this.lietuNos.addElement(i);
+		}
+		
+		/* ui */
+		this.saraksts.setModel(this.lietuNos);
+	}
+	
+	public void setElementi() {
+		this.saraksts.setModel(new DefaultListModel());
+		
+		this.returnables = null;
+		this.lietuNos = null;
+	}
+	
 	/**
 	 * Create the panel.
 	 */
-	//public MeklejamSaraksts(Object[] lietas, String[] lietuNosaukumi) {
+	//public MeklejamSaraksts(ArrayList<Object> lietas, String[] lietuNosaukumi) {
 	public MeklejamSaraksts() {
 		setLayout(new BorderLayout(0, 0));
 		

@@ -14,6 +14,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.JFileChooser;
 
+import picerija.Kontakts;
 import picerija.Resursi;
 
 import javax.swing.JMenuBar;
@@ -53,6 +54,9 @@ public class GramatvedLogs extends JFrame {
 	private static JFileChooser izv;
 	private static FileNameExtensionFilter extFiltrs;
 	
+	/* saraksti */
+	private static MeklejamSaraksts kontaktuSaraksts; 
+	
 	/* statuss */
 	private static JLabel statusaTeksts;
 	
@@ -73,9 +77,18 @@ public class GramatvedLogs extends JFrame {
 		ramis.setTitle(nos + "Picērija");
 	}
 	
+	private static void setSarakstusUi(boolean wipe) {
+		if (!wipe) {
+			kontaktuSaraksts.setElementi(Programma.dbGetKontakti(), Programma.dbGetKontaktiStr());
+		} else {
+			kontaktuSaraksts.setElementi();
+		}
+	}
+	
 	/* db fails */
 	private static void jaunsUi(boolean init) {
 		Programma.tuksotDb();
+		setSarakstusUi(false);
 		sledzeUi(true);
 		setLogaNos();
 		
@@ -90,6 +103,7 @@ public class GramatvedLogs extends JFrame {
 			try {
 				Programma.atvertDb(izv.getSelectedFile());
 				statusaTeksts.setText("Atvēra datubāzi " + izv.getSelectedFile().getAbsolutePath());
+				setSarakstusUi(false);
 				setLogaNos();
 				sledzeUi(true);
 			} catch (Exception e) {
@@ -135,12 +149,14 @@ public class GramatvedLogs extends JFrame {
 		statusaTeksts.setText("Aizvērta datubāze" + ( (Programma.getDb().getFails() != null) ? " " + Programma.getDb().getFails().getAbsolutePath() : ""));
 		Programma.aizvertDb();
 		sledzeUi(false);
+		setSarakstusUi(true);
 		setLogaNos();
 	}
 	
 	private static void izietUi() {
 		if (Programma.getDb() != null) {
 			sledzeUi(false);
+			setSarakstusUi(true);
 			Programma.aizvertDb();
 		}
 		
@@ -346,10 +362,9 @@ public class GramatvedLogs extends JFrame {
 		atspejojamieUi.add(prevTeksts);
 		
 		/* meklējamie */
-		MeklejamSaraksts kontaktuSaraksts = new MeklejamSaraksts(); 
+		kontaktuSaraksts = new MeklejamSaraksts();
 		kontaktuCilne.add(kontaktuSaraksts);
 		atspejojamieUi.add(kontaktuSaraksts);
-		
 		
 		/* ------   Notikumi   ----------- */
 		/* Datne -> */

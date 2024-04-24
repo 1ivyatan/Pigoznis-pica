@@ -3,34 +3,28 @@ package picerija;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-class Kontakts {
-	private String vards;
-	
-	/* s/geteri */
-	private String getVards() {
-		return this.vards;
-	}
-	
-	private void setVards(String jv) {
-		this.vards = jv;
-	}
-	
-	/* kons */
-	Kontakts(String vards) {
-		this.vards = vards;
-	}
-}
-
 public class Dati implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	/* saraksti */
-	private ArrayList<Kontakts> kontakti;
+	private ArrayList<Object> kontakti;
+	
+	public String[] getKontaktiStr() {
+		String[] ret = new String[this.kontakti.size()];
+		for (int i = 0; i < ret.length; i++) {
+			ret[i] = ((Kontakts) this.kontakti.get(i)).getVards();
+		}
+		return ret;
+	}
 	
 	/* mainīgie */
 	private String valutasSim = "EUR";
 	
 	/* s/geteri */
+	public ArrayList<Object> getKontakti() {
+		return this.kontakti;
+	}
+	
 	public String getValutasSim() {
 		return this.valutasSim;
 	}
@@ -39,4 +33,14 @@ public class Dati implements Serializable {
 		this.valutasSim = valuta;
 	}
 	
+	/* kons */
+	public Dati() {
+		this.kontakti = new ArrayList<Object>();
+		
+		// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+		this.kontakti.add(new Kontakts("Jaan"));
+		this.kontakti.add(new Kontakts("Pols"));
+		this.kontakti.add(new Kontakts("ttttttttt"));
+		// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	}
 }

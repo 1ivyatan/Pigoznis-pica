@@ -1,8 +1,10 @@
 package frontend;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import picerija.Datubaze;
+import picerija.Kontakts;
 
 public class Programma {
 	/* datubāze */
@@ -77,6 +79,14 @@ public class Programma {
 	/* DB METODES */
 	public static String dbGetValutasSim() {
 		return db.getDati().getValutasSim();
+	}
+	
+	public static ArrayList<Object> dbGetKontakti() {
+		return db.getDati().getKontakti();
+	}
+	
+	public static String[] dbGetKontaktiStr() {
+		return db.getDati().getKontaktiStr();
 	}
 	
 	public static void dbSetValutasSim(String valuta) {
