@@ -20,7 +20,7 @@ public class Kontakts extends DatiemSaraksts implements java.io.Serializable {
 	}
 	
 	/* kons */
-	Kontakts(String vards) {
+	public Kontakts(String vards) {
 		this.vards = vards;
 	}
 }

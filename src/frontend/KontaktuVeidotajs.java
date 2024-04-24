@@ -9,11 +9,15 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import picerija.Kontakts;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class KontaktuVeidotajs extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
+	
+	private static Kontakts kontakts = null;
 
 	public static Kontakts jaunsKontakts() {
 		KontaktuVeidotajs dialog = new KontaktuVeidotajs();
@@ -21,10 +25,11 @@ public class KontaktuVeidotajs extends JDialog {
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		dialog.setVisible(true);
 		
-		return null;
+		return kontakts;
 	}
 
 	public KontaktuVeidotajs() {
+		setTitle("Jauns kontakts");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
@@ -34,17 +39,22 @@ public class KontaktuVeidotajs extends JDialog {
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
+			
+			JButton okButton = new JButton("Saglabāt");
+			okButton.setActionCommand("OK");
+			buttonPane.add(okButton);
+			getRootPane().setDefaultButton(okButton);
+			
+			JButton cancelButton = new JButton("Atcelt");
+			cancelButton.setActionCommand("Cancel");
+			buttonPane.add(cancelButton);
+			
+			okButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					kontakts = new Kontakts("pārbaude");
+					dispose();
+				}
+			});
 		}
 	}
 

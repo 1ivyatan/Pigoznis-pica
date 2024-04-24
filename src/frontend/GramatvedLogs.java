@@ -481,7 +481,10 @@ public class GramatvedLogs extends JFrame {
 					}
 					
 					case 1: {		// kontakti
-						KontaktuVeidotajs.jaunsKontakts();
+						Kontakts jauns = KontaktuVeidotajs.jaunsKontakts(); 
+						if (jauns != null) {
+							
+						};
 						break;
 					}
 					
