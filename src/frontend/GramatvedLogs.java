@@ -362,7 +362,7 @@ public class GramatvedLogs extends JFrame {
 		atspejojamieUi.add(prevTeksts);
 		
 		/* meklējamie */
-		kontaktuSaraksts = new MeklejamSaraksts();
+		kontaktuSaraksts = new MeklejamSaraksts(prevTeksts);
 		kontaktuCilne.add(kontaktuSaraksts);
 		atspejojamieUi.add(kontaktuSaraksts);
 		

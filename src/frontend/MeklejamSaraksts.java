@@ -1,6 +1,8 @@
 package frontend;
 
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 
@@ -12,15 +14,17 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import picerija.DatiemSaraksts;
 import picerija.Kontakts;
 
 public class MeklejamSaraksts extends JPanel {
-
 	private static final long serialVersionUID = 1L;
 	
 	/* elementi */
 	private JTextField mekletajs;
 	private JList saraksts;
+	
+	private JTextArea uiIzvade = null;
 	
 	/* saraksti */
 	private static ArrayList<Object> returnables = null;
@@ -32,8 +36,6 @@ public class MeklejamSaraksts extends JPanel {
 	}
 	
 	public void setElementi(ArrayList<Object> lietas, String[] lietuNosaukumi) {
-		//if (lietas.isEmpty() || lietuNosaukumi.length < 1) {
-		//}
 		this.returnables = lietas;
 		
 		this.lietuNos = new DefaultListModel();
@@ -43,7 +45,6 @@ public class MeklejamSaraksts extends JPanel {
 		
 		/* ui */
 		this.saraksts.setModel(this.lietuNos);
-		this.saraksts.setSelectedIndex(0);
 	}
 	
 	public void setElementi() {
@@ -53,8 +54,10 @@ public class MeklejamSaraksts extends JPanel {
 		this.lietuNos = null;
 	}
 	
-	public MeklejamSaraksts() {
+	public MeklejamSaraksts(JTextArea izvade) {
 		setLayout(new BorderLayout(0, 0));
+		
+		this.uiIzvade = izvade;
 		
 		this.mekletajs = new JTextField();
 		add(this.mekletajs, BorderLayout.NORTH);
@@ -63,17 +66,16 @@ public class MeklejamSaraksts extends JPanel {
 		this.saraksts = new JList();
 		this.saraksts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		add(this.saraksts, BorderLayout.CENTER);
-
+		
 		/* notikumi */
 		this.saraksts.addListSelectionListener(new ListSelectionListener() {
-
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				System.out.println("yo!!!!!!!!!");
-				//System.out.println("y);
-
+				if (!e.getValueIsAdjusting() && saraksts.getSelectedValue() != null) {
+					int idx = saraksts.getSelectedIndex();
+					uiIzvade.setText(((DatiemSaraksts) returnables.get(idx)).kaVirkne());
+				}
 			}
-			
 		});
 	}
 
