@@ -346,9 +346,9 @@ public class GramatvedLogs extends JFrame {
 		atspejojamieUi.add(prevTeksts);
 		
 		/* meklējamie */
-		MeklejamSaraksts pasutSaraksts = new MeklejamSaraksts(); 
-		pasutCilne.add(pasutSaraksts);
-		atspejojamieUi.add(pasutSaraksts);
+		MeklejamSaraksts kontaktuSaraksts = new MeklejamSaraksts(); 
+		kontaktuCilne.add(kontaktuSaraksts);
+		atspejojamieUi.add(kontaktuSaraksts);
 		
 		
 		/* ------   Notikumi   ----------- */

@@ -22,6 +22,7 @@ public class MeklejamSaraksts extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	//public MeklejamSaraksts(Object[] lietas, String[] lietuNosaukumi) {
 	public MeklejamSaraksts() {
 		setLayout(new BorderLayout(0, 0));
 		
