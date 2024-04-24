@@ -5,6 +5,7 @@ import javax.swing.JTextArea;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.JTextField;
 import javax.swing.DefaultListModel;
@@ -29,7 +30,13 @@ public class MeklejamSaraksts extends JPanel {
 	/* saraksti */
 	private ArrayList<Object> returnables = null;
 	private DefaultListModel<String> lietuNos = null;
-
+	private int filtretieIdxi[];
+	
+	private void resetFiltretieIdx() {
+		for (int i = 0; i < filtretieIdxi.length; i++) filtretieIdxi[i] = i;
+	}
+	
+	/* metodes */
 	public void setEnabled(boolean sledze) {
 		this.mekletajs.setEnabled(sledze);
 		this.saraksts.setEnabled(sledze);
@@ -37,8 +44,11 @@ public class MeklejamSaraksts extends JPanel {
 	
 	public void setElementi(ArrayList<Object> lietas, String[] lietuNosaukumi) {
 		this.returnables = lietas;
-		
+
 		this.lietuNos = new DefaultListModel<String>();
+		this.filtretieIdxi = new int[lietas.size()];
+		resetFiltretieIdx();
+		
 		for (String i : lietuNosaukumi) {
 			this.lietuNos.addElement(i);
 		}
@@ -86,8 +96,10 @@ public class MeklejamSaraksts extends JPanel {
 			
 			private void mekletSaraksta() {
 				String ievade = mekletajs.getText().toLowerCase();
+				int filtraKursors = 0;
 				
 				if (ievade.isEmpty()) {
+					resetFiltretieIdx();
 					saraksts.setModel(lietuNos);
 				} else {
 					DefaultListModel<String> rezultati = new DefaultListModel<String>();
@@ -95,6 +107,8 @@ public class MeklejamSaraksts extends JPanel {
 					for (int i = 0; i < lietuNos.size(); i++) {
 						if (lietuNos.get(i).toLowerCase().contains(ievade)) {
 							rezultati.addElement(lietuNos.get(i));
+							filtretieIdxi[filtraKursors] = i;
+							filtraKursors++;
 						}
 					}
 
@@ -108,8 +122,7 @@ public class MeklejamSaraksts extends JPanel {
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting() && saraksts.getSelectedValue() != null) {
 					int idx = saraksts.getSelectedIndex();
-					uiIzvade.setText(((DatiemSaraksts) returnables.get(idx)).kaVirkne());
-					System.out.println(idx);
+					uiIzvade.setText(((DatiemSaraksts) returnables.get(filtretieIdxi[idx])).kaVirkne());
 				}
 			}
 		});
