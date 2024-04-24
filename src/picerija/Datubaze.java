@@ -38,7 +38,7 @@ public class Datubaze {
 				oos.writeObject(this.db);
 				oos.close();
 			} catch (Exception e) {
-				e.printStackTrace();
+				this.fails.delete();
 				throw new Exception(e.getMessage());
 			}
 		}
