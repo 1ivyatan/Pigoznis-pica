@@ -51,7 +51,7 @@ public class KontaktuVeidotajs extends JDialog {
 			
 			okButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					kontakts = new Kontakts("pārbaude");
+					kontakts = new Kontakts("pārbaude", "x", "s", "a");
 					dispose();
 				}
 			});
