@@ -85,7 +85,7 @@ public class MeklejamSaraksts extends JPanel {
 			}
 			
 			private void mekletSaraksta() {
-				String ievade = mekletajs.getText();
+				String ievade = mekletajs.getText().toLowerCase();
 				
 				if (ievade.isEmpty()) {
 					saraksts.setModel(lietuNos);
@@ -93,7 +93,7 @@ public class MeklejamSaraksts extends JPanel {
 					DefaultListModel<String> rezultati = new DefaultListModel<String>();
 					
 					for (int i = 0; i < lietuNos.size(); i++) {
-						if (ievade.contains( lietuNos.get(i) )) {
+						if (lietuNos.get(i).toLowerCase().contains(ievade)) {
 							rezultati.addElement(lietuNos.get(i));
 						}
 					}
