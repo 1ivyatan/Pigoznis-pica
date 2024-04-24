@@ -23,6 +23,8 @@ import javax.swing.JOptionPane;
 
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JList;
+
 import java.awt.FlowLayout;
 import javax.swing.border.BevelBorder;
 import javax.swing.JSeparator;
@@ -32,8 +34,13 @@ import java.awt.Dimension;
 import javax.swing.JTabbedPane;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.CardLayout;
 import javax.swing.JTextArea;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.AbstractListModel;
+import javax.swing.ListSelectionModel;
 
 public class GramatvedLogs extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -301,9 +308,11 @@ public class GramatvedLogs extends JFrame {
 		
 		JPanel pasutCilne = new JPanel();
 		pirkumuCilnes.addTab("Gaidošie", null, pasutCilne, null);
+		pasutCilne.setLayout(new CardLayout(0, 0));
 		
 		JPanel pasutVestCilne = new JPanel();
 		pirkumuCilnes.addTab("Vēsture", null, pasutVestCilne, null);
+		pasutVestCilne.setLayout(new CardLayout(0, 0));
 		
 		JPanel kontaktuCilne = new JPanel();
 		cilnes.addTab("Kontakti", null, kontaktuCilne, null);
@@ -318,9 +327,11 @@ public class GramatvedLogs extends JFrame {
 		
 		JPanel picuRecepCilne = new JPanel();
 		picuCilnes.addTab("Receptes", null, picuRecepCilne, null);
+		picuRecepCilne.setLayout(new CardLayout(0, 0));
 		
 		JPanel picuSastavCilne = new JPanel();
 		picuCilnes.addTab("Sastāvdaļas", null, picuSastavCilne, null);
+		picuSastavCilne.setLayout(new CardLayout(0, 0));
 		
 		/* priekšskatījums */
 		JPanel prevPanelis = new JPanel();
@@ -333,6 +344,12 @@ public class GramatvedLogs extends JFrame {
 		prevTeksts.setEditable(false);
 		prevPanelis.add(prevTeksts);
 		atspejojamieUi.add(prevTeksts);
+		
+		/* meklējamie */
+		MeklejamSaraksts pasutSaraksts = new MeklejamSaraksts(); 
+		pasutCilne.add(pasutSaraksts);
+		atspejojamieUi.add(pasutSaraksts);
+		
 		
 		/* ------   Notikumi   ----------- */
 		/* Datne -> */
