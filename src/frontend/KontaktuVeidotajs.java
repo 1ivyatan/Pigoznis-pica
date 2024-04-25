@@ -48,7 +48,7 @@ public class KontaktuVeidotajs extends JDialog {
 		talrunaIevade;
 		JTextArea piezimeIevade;
 		
-		setTitle("Jauns kontakts");
+		setTitle( (prev == null) ? "Jauns kontakts" : "Rediģēt kontaktu" );
 		setMinimumSize(new Dimension(225, 250));
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

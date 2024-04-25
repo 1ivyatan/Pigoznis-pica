@@ -80,16 +80,23 @@ public class Programma {
 	}
 	
 	/* DB METODES */
+	/* valūta */
 	public static String dbGetValutasSim() {
 		return db.getDati().getValutasSim();
 	}
 	
+	public static void dbSetValutasSim(String valuta) {
+		db.getDati().setValutasSim(valuta);
+		izmaina = true;
+	}
+	
+	/* kontakti */
 	public static String[] dbGetKontaktiStr() {
 		return db.getDati().getKontaktiStr();
 	}
 	
-	public static ArrayList<Object> dbGetKontaktiObj() {
-		ArrayList<Object> ret = new ArrayList<Object>();
+	public static ArrayList<DatiemSaraksts> dbGetKontaktiObj() {
+		ArrayList<DatiemSaraksts> ret = new ArrayList<DatiemSaraksts>();
 		
 		for (int i = 0; i < db.getDati().getKontakti().size(); i++) {
 			ret.add(db.getDati().getKontakti().get(i));
@@ -103,8 +110,8 @@ public class Programma {
 		izmaina = true;
 	}
 	
-	public static void dbSetValutasSim(String valuta) {
-		db.getDati().setValutasSim(valuta);
+	public static void dbEditKontakts(int idx, DatiemSaraksts nk) {
+		db.getDati().editKontaktsIdx(idx, (Kontakts)nk);
 		izmaina = true;
 	}
 }

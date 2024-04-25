@@ -21,10 +21,7 @@ public class Dati implements Serializable {
 	private String valutasSim = "EUR";
 	
 	/* s/geteri */
-	public ArrayList<Kontakts> getKontakti() {
-		return this.kontakti;
-	}
-	
+	/* valūta */
 	public String getValutasSim() {
 		return this.valutasSim;
 	}
@@ -33,8 +30,17 @@ public class Dati implements Serializable {
 		this.valutasSim = valuta;
 	}
 	
+	/* kontakts */
+	public ArrayList<Kontakts> getKontakti() {
+		return this.kontakti;
+	}
+	
 	public void addToKontakts(Kontakts nk) {
 		this.kontakti.add(nk);
+	}
+	
+	public void editKontaktsIdx(int idx, Kontakts nk) {
+		this.kontakti.set(idx, nk);
 	}
 	
 	/* kons */

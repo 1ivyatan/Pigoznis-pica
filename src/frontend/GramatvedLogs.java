@@ -491,7 +491,43 @@ public class GramatvedLogs extends JFrame {
 						if (jauns != null) {
 							Programma.dbAddKontakts(jauns);
 							kontaktuSaraksts.pievienotSaraksta(jauns);
+							statusaTeksts.setText("Izveidoja jaunu kontaktu");
 						};
+						break;
+					}
+					
+					case 2: {		// picas
+						
+						break;
+					}
+				}
+			}
+		});
+		
+		izvRedigetPoga.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switch (cilnes.getSelectedIndex()) {
+					case 0: {		// iepirkumi
+						
+						break;
+					}
+					
+					case 1: {		// kontakti
+						Kontakts izv = (Kontakts) kontaktuSaraksts.getSelObj();
+						
+						if (izv != null) {
+							Kontakts redigets = KontaktuVeidotajs.jaunsKontakts(izv);
+							if (redigets != null) {
+								int idx = kontaktuSaraksts.getSelIdx();
+								Programma.dbEditKontakts(idx, redigets);
+								
+								kontaktuSaraksts.atjaunotElementu(idx, redigets);
+								kontaktuSaraksts.atjaunotOut();
+								statusaTeksts.setText("Rediģēja kontaktu");
+							}
+						} else {
+							JOptionPane.showMessageDialog(ramis, "Jāatlasa kontaktu!", "!!!", JOptionPane.WARNING_MESSAGE);
+						}
 						break;
 					}
 					

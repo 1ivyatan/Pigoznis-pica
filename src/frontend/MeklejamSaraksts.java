@@ -28,7 +28,7 @@ public class MeklejamSaraksts extends JPanel {
 	private JTextArea uiIzvade = null;
 	
 	/* saraksti */
-	private ArrayList<Object> returnables = null;
+	private ArrayList<DatiemSaraksts> returnables = null;
 	private DefaultListModel<String> lietuNos = null;
 	private ArrayList<Integer> filtretieIdxi = null;
 	
@@ -46,15 +46,15 @@ public class MeklejamSaraksts extends JPanel {
 		this.saraksts.setEnabled(sledze);
 	}
 	
-	public void setElementi(ArrayList<Object> lietas) {
+	public void setElementi(ArrayList<DatiemSaraksts> lietas) {
 		this.returnables = lietas;
 
 		this.lietuNos = new DefaultListModel<String>();
 		this.filtretieIdxi = new ArrayList<Integer>();
 		resetFiltretieIdx(lietas.size());
 		
-		for (Object i : lietas) {
-			this.lietuNos.addElement(((DatiemSaraksts) i).nosaukums());
+		for (DatiemSaraksts i : lietas) {
+			this.lietuNos.addElement(i.nosaukums());
 		}
 		
 		/* ui */
@@ -68,11 +68,30 @@ public class MeklejamSaraksts extends JPanel {
 		this.lietuNos = null;
 	}
 	
+	public void atjaunotElementu(int idx, DatiemSaraksts jaunsElements) {
+		this.returnables.set(idx, jaunsElements);
+		this.lietuNos.set(idx, jaunsElements.nosaukums());
+	}
+	
 	public void pievienotSaraksta(DatiemSaraksts lieta) {
 		this.returnables.add(lieta);
-		this.lietuNos.addElement(((DatiemSaraksts) lieta).nosaukums());
+		this.lietuNos.addElement(lieta.nosaukums());
 		
 		this.filtretieIdxi.add(this.filtretieIdxi.size());
+	}
+	
+	public Object getSelObj() {
+		if (returnables.size() < 1) return null;
+		
+		int idx = saraksts.getSelectedIndex();
+		return ( returnables.get(filtretieIdxi.get(idx)));
+	}
+	
+	public int getSelIdx() {
+		if (returnables.size() < 1) return -1;
+		
+		int idx = saraksts.getSelectedIndex();
+		return filtretieIdxi.get(idx);
 	}
 	
 	public MeklejamSaraksts(JTextArea izvade) {
@@ -133,10 +152,17 @@ public class MeklejamSaraksts extends JPanel {
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting() && saraksts.getSelectedValue() != null) {
 					int idx = saraksts.getSelectedIndex();
-					uiIzvade.setText(((DatiemSaraksts) returnables.get(filtretieIdxi.get(idx))).kaVirkne());
+					uiIzvade.setText(( returnables.get(filtretieIdxi.get(idx))).kaVirkne());
 				}
 			}
 		});
+	}
+	
+	public void atjaunotOut() {
+		if (this.saraksts.getSelectedValue() != null) {
+			int idx = this.saraksts.getSelectedIndex();
+			this.uiIzvade.setText(( returnables.get(filtretieIdxi.get(idx))).kaVirkne());
+		}
 	}
 
 }
