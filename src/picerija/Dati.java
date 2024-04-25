@@ -33,6 +33,10 @@ public class Dati implements Serializable {
 		this.valutasSim = valuta;
 	}
 	
+	public void addToKontakts(Kontakts nk) {
+		this.kontakti.add(nk);
+	}
+	
 	/* kons */
 	public Dati() {
 		this.kontakti = new ArrayList<Kontakts>();

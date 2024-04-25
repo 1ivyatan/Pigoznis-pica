@@ -485,6 +485,7 @@ public class GramatvedLogs extends JFrame {
 					case 1: {		// kontakti
 						DatiemSaraksts jauns = KontaktuVeidotajs.jaunsKontakts(); 
 						if (jauns != null) {
+							Programma.dbAddKontakts(jauns);
 							kontaktuSaraksts.atjaunotInc(jauns);
 						};
 						break;

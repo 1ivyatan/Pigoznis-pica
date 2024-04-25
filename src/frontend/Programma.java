@@ -3,7 +3,9 @@ package frontend;
 import java.io.File;
 import java.util.ArrayList;
 
+import picerija.DatiemSaraksts;
 import picerija.Datubaze;
+import picerija.Kontakts;
 
 public class Programma {
 	/* datubāze */
@@ -92,6 +94,10 @@ public class Programma {
 		}
 		
 		return ret;
+	}
+	
+	public static void dbAddKontakts(DatiemSaraksts nk) {
+		db.getDati().addToKontakts((Kontakts)nk);
 	}
 	
 	public static void dbSetValutasSim(String valuta) {
