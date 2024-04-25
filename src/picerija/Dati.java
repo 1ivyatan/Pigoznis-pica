@@ -40,11 +40,5 @@ public class Dati implements Serializable {
 	/* kons */
 	public Dati() {
 		this.kontakti = new ArrayList<Kontakts>();
-		
-		// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-		this.kontakti.add(new Kontakts("Jaan", "x", "s", "a"));
-		this.kontakti.add(new Kontakts("Pols", "x", "s", "a"));
-		this.kontakti.add(new Kontakts("ttttttttt", "x", "s", "a"));
-		// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	}
 }

@@ -98,6 +98,7 @@ public class Programma {
 	
 	public static void dbAddKontakts(DatiemSaraksts nk) {
 		db.getDati().addToKontakts((Kontakts)nk);
+		izmaina = true;
 	}
 	
 	public static void dbSetValutasSim(String valuta) {

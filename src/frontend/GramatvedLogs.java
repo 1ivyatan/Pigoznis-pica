@@ -53,6 +53,7 @@ public class GramatvedLogs extends JFrame {
 	/* logs */
 	private static JPanel logaPanelis;
 	private static GramatvedLogs ramis;
+	private static JTextArea prevTeksts;
 	
 	/* izvēle */
 	private static JFileChooser izv;
@@ -152,6 +153,7 @@ public class GramatvedLogs extends JFrame {
 	private static void aizvertUi() {
 		statusaTeksts.setText("Aizvērta datubāze" + ( (Programma.getDb().getFails() != null) ? " " + Programma.getDb().getFails().getAbsolutePath() : ""));
 		Programma.aizvertDb();
+		prevTeksts.setText(null);
 		sledzeUi(false);
 		setSarakstusUi(true);
 		setLogaNos();
@@ -160,6 +162,7 @@ public class GramatvedLogs extends JFrame {
 	private static void izietUi() {
 		if (Programma.getDb() != null) {
 			sledzeUi(false);
+			prevTeksts.setText(null);
 			setSarakstusUi(true);
 			Programma.aizvertDb();
 		}
@@ -359,7 +362,7 @@ public class GramatvedLogs extends JFrame {
 		logaPanelis.add(prevPanelis, BorderLayout.CENTER);
 		prevPanelis.setLayout(new CardLayout(0, 0));
 		
-		JTextArea prevTeksts = new JTextArea();
+		prevTeksts = new JTextArea();
 		prevTeksts.setMargin(new Insets(5, 5, 5, 5));
 		prevTeksts.setTabSize(4);
 		prevTeksts.setEditable(false);
