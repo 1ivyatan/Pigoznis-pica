@@ -7,15 +7,8 @@ public class Dati implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	/* saraksti */
-	private ArrayList<Kontakts> kontakti;
-	
-	public String[] getKontaktiStr() {
-		String[] ret = new String[this.kontakti.size()];
-		for (int i = 0; i < ret.length; i++) {
-			ret[i] = ((Kontakts) this.kontakti.get(i)).getVards();
-		}
-		return ret;
-	}
+	private ArrayList<DatiemSaraksts> kontakti;
+	private ArrayList<DatiemSaraksts> sastavdalas;
 	
 	/* mainīgie */
 	private String valutasSim = "EUR";
@@ -31,7 +24,7 @@ public class Dati implements Serializable {
 	}
 	
 	/* kontakts */
-	public ArrayList<Kontakts> getKontakti() {
+	public ArrayList<DatiemSaraksts> getKontakti() {
 		return this.kontakti;
 	}
 	
@@ -47,8 +40,28 @@ public class Dati implements Serializable {
 		this.kontakti.remove(idx);
 	}
 	
+	/* sastāvdaļas */
+	public ArrayList<DatiemSaraksts> getSastavdalas() {
+		return this.sastavdalas;
+	}
+	
+	public void addToSastavdalas(Sastavdala nk) {
+		this.sastavdalas.add(nk);
+	}
+	
+	public void editSastavdalaIdx(int idx, Sastavdala nk) {
+		this.sastavdalas.set(idx, nk);
+	}
+	
+	public void removeSastavdalaIdx(int idx) {
+		this.sastavdalas.remove(idx);
+	}
+	
 	/* kons */
 	public Dati() {
-		this.kontakti = new ArrayList<Kontakts>();
+		this.kontakti = new ArrayList<DatiemSaraksts>();
+		this.sastavdalas = new ArrayList<DatiemSaraksts>();
+		
+		this.sastavdalas.add(new PicasMikla("ssss", 12, 30));
 	}
 }

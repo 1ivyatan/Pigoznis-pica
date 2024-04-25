@@ -80,6 +80,8 @@ public class Programma {
 	}
 	
 	/* DB METODES */
+	public static ArrayList<ArrayList<DatiemSaraksts>> dbSarUIam;
+	
 	/* valūta */
 	public static String dbGetValutasSim() {
 		return db.getDati().getValutasSim();
@@ -91,16 +93,6 @@ public class Programma {
 	}
 	
 	/* kontakti */
-	public static ArrayList<DatiemSaraksts> dbGetKontaktiObj() {
-		ArrayList<DatiemSaraksts> ret = new ArrayList<DatiemSaraksts>();
-		
-		for (int i = 0; i < db.getDati().getKontakti().size(); i++) {
-			ret.add(db.getDati().getKontakti().get(i));
-		}
-		
-		return ret;
-	}
-	
 	public static void dbAddKontakts(DatiemSaraksts nk) {
 		db.getDati().addToKontakts((Kontakts)nk);
 		izmaina = true;

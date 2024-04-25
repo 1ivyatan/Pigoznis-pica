@@ -59,14 +59,12 @@ public class GramatvedLogs extends JFrame {
 	private static JFileChooser izv;
 	private static FileNameExtensionFilter extFiltrs;
 	
-	/* saraksti */
-	private static MeklejamSaraksts kontaktuSaraksts; 
-	
 	/* statuss */
 	private static JLabel statusaTeksts;
 	
 	/* ui slēdze */
 	private static ArrayList<Object> atspejojamieUi;
+	private static ArrayList<MeklejamSaraksts> meklejamSaraksti;
 	
 	private static void setLogaNos() {
 		String nos;
@@ -84,21 +82,24 @@ public class GramatvedLogs extends JFrame {
 	
 	private static void setSarakstusUi(boolean wipe) {
 		if (!wipe) {
-			kontaktuSaraksts.setElementi((Programma.dbGetKontaktiObj()));
+			for (int i = 0; i < Programma.dbSarUIam.size(); i++) {
+				meklejamSaraksti.get(i).setElementi(Programma.dbSarUIam.get(i));
+			}
 		} else {
-			kontaktuSaraksts.setElementi();
+			for (int i = 0; i < Programma.dbSarUIam.size(); i++) {
+				meklejamSaraksti.get(i).setElementi();
+			}
 		}
 	}
 	
 	/* db fails */
-	private static void jaunsUi(boolean init) {
+	private static void jaunsUi() {
 		Programma.tuksotDb();
 		setSarakstusUi(false);
 		sledzeUi(true);
 		setLogaNos();
 		
-		if (init) statusaTeksts.setText("Sveicināti!");
-		else statusaTeksts.setText("Izveidota datubāze");
+		statusaTeksts.setText("Izveidota datubāze");
 	}
 	
 	private static void atvertUi() {
@@ -188,7 +189,15 @@ public class GramatvedLogs extends JFrame {
 					ramis = new GramatvedLogs();
 
 					/* db */
-					jaunsUi(true);
+					Programma.tuksotDb();
+					Programma.dbSarUIam.add(Programma.getDb().getDati().getKontakti());
+					Programma.dbSarUIam.add(Programma.getDb().getDati().getSastavdalas());
+					setSarakstusUi(false);
+					sledzeUi(true);
+					setLogaNos();
+				
+					statusaTeksts.setText("Sveicināti!");
+					
 					
 					ramis.setVisible(true);
 				} catch (Exception e) {
@@ -210,8 +219,11 @@ public class GramatvedLogs extends JFrame {
 		izv.addChoosableFileFilter(extFiltrs);
 		izv.setFileFilter(extFiltrs);
 		
+		Programma.dbSarUIam = new ArrayList<ArrayList<DatiemSaraksts>>();
+		
 		/* --------- logs -------------- */
 		atspejojamieUi = new ArrayList<Object>();
+		meklejamSaraksti = new ArrayList<MeklejamSaraksts>();
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setMinimumSize(new Dimension(480, 360));
@@ -371,9 +383,15 @@ public class GramatvedLogs extends JFrame {
 		atspejojamieUi.add(prevTeksts);
 		
 		/* meklējamie */
-		kontaktuSaraksts = new MeklejamSaraksts(prevTeksts);
+		MeklejamSaraksts kontaktuSaraksts = new MeklejamSaraksts(prevTeksts);
 		kontaktuCilne.add(kontaktuSaraksts);
 		atspejojamieUi.add(kontaktuSaraksts);
+		meklejamSaraksti.add(kontaktuSaraksts);
+		
+		MeklejamSaraksts sastavSaraksts = new MeklejamSaraksts(prevTeksts);
+		picuSastavCilne.add(sastavSaraksts);
+		atspejojamieUi.add(sastavSaraksts);
+		meklejamSaraksti.add(sastavSaraksts);
 		
 		/* ------   Notikumi   ----------- */
 		/* Datne -> */
@@ -383,14 +401,14 @@ public class GramatvedLogs extends JFrame {
 				if (Programma.getIzmaina()) {
 					switch(JOptionPane.showConfirmDialog(logaPanelis, "Saglabāt šo datubāzi?")) {
 						case 1: //n
-							jaunsUi(false);
+							jaunsUi();
 							break;
 						case 0: //y
 							sagalbatUi(false);
-							jaunsUi(false);
+							jaunsUi();
 							break;
 					}
-				} else jaunsUi(false);
+				} else jaunsUi();
 			}
 		});
 		
@@ -490,14 +508,24 @@ public class GramatvedLogs extends JFrame {
 						DatiemSaraksts jauns = KontaktuVeidotajs.jaunsKontakts(null); 
 						if (jauns != null) {
 							Programma.dbAddKontakts(jauns);
-							kontaktuSaraksts.pievienotSaraksta(jauns);
+							meklejamSaraksti.get(0).pievienotSaraksta(jauns);
 							statusaTeksts.setText("Izveidoja jaunu kontaktu");
 						};
 						break;
 					}
 					
 					case 2: {		// picas
-						
+						switch (picuCilnes.getSelectedIndex()) {
+							case 0: { // receptes
+								
+								break;
+							}
+
+							case 1: { // sastāvdaļas
+								
+								break;
+							}
+						}
 						break;
 					}
 				}
@@ -513,15 +541,16 @@ public class GramatvedLogs extends JFrame {
 					}
 					
 					case 1: {		// kontakti
-						Kontakts izv = (Kontakts) kontaktuSaraksts.getSelObj();
+						
+						Kontakts izv = (Kontakts) meklejamSaraksti.get(0).getSelObj();
 						
 						if (izv != null) {
 							Kontakts redigets = KontaktuVeidotajs.jaunsKontakts(izv);
 							if (redigets != null) {
-								int idx = kontaktuSaraksts.getSelIdx();
+								int idx = meklejamSaraksti.get(0).getSelIdx();
 								Programma.dbEditKontakts(idx, redigets);
 								
-								kontaktuSaraksts.atjaunotElementu(idx, redigets);
+								meklejamSaraksti.get(0).atjaunotElementu(idx, redigets);
 								statusaTeksts.setText("Rediģēja kontaktu");
 							}
 						} else {
@@ -547,13 +576,13 @@ public class GramatvedLogs extends JFrame {
 					}
 					
 					case 1: {		// kontakti
-						Kontakts izv = (Kontakts) kontaktuSaraksts.getSelObj();
+						Kontakts izv = (Kontakts) meklejamSaraksti.get(0).getSelObj();
 						
 						if (izv != null) {
 							if ( JOptionPane.showConfirmDialog(ramis, "Tiešām dzēst kontaktu?", "Jautājums", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION ) {
-								int idx = kontaktuSaraksts.getSelIdx();
+								int idx = meklejamSaraksti.get(0).getSelIdx();
 								Programma.dbRemoveKontakts(idx);
-								kontaktuSaraksts.nonemElementu(idx);
+								meklejamSaraksti.get(0).nonemElementu(idx);
 							}
 						} else {
 							JOptionPane.showMessageDialog(ramis, "Jāatlasa kontaktu!", "!!!", JOptionPane.WARNING_MESSAGE);
@@ -562,7 +591,17 @@ public class GramatvedLogs extends JFrame {
 					}
 					
 					case 2: {		// picas
-						
+						switch (picuCilnes.getSelectedIndex()) {
+							case 0: { // receptes
+								
+								break;
+							}	
+
+							case 1: { // sastāvdaļas
+							
+								break;
+							}
+						}
 						break;
 					}
 				}
@@ -579,13 +618,23 @@ public class GramatvedLogs extends JFrame {
 					
 					case 1: {		// kontakti
 						JOptionPane.showMessageDialog(ramis, 
-						"Kontaktu skaits: " + kontaktuSaraksts.izmers()
+						"Kontaktu skaits: " + meklejamSaraksti.get(0).izmers()
 						, "Statistika", JOptionPane.INFORMATION_MESSAGE);
 						break;
 					}
 					
 					case 2: {		// picas
+						switch (picuCilnes.getSelectedIndex()) {
+							case 0: { // receptes
+							
+								break;
+							}
+							
+							case 1: { // sastāvdaļas
 						
+								break;
+							}
+						}
 						break;
 					}
 				}
