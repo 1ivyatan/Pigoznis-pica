@@ -93,6 +93,10 @@ public class MeklejamSaraksts extends JPanel {
 		this.atjaunotOut();
 	}
 	
+	public int izmers() {
+		return returnables.size();
+	}
+	
 	public Object getSelObj() {
 		if (returnables.size() < 1) return null;
 		

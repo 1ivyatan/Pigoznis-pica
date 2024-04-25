@@ -569,6 +569,29 @@ public class GramatvedLogs extends JFrame {
 			}
 		});
 		
+		izvInfoPoga.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switch (cilnes.getSelectedIndex()) {
+					case 0: {		// iepirkumi
+						
+						break;
+					}
+					
+					case 1: {		// kontakti
+						JOptionPane.showMessageDialog(ramis, 
+						"Kontaktu skaits: " + kontaktuSaraksts.izmers()
+						, "Statistika", JOptionPane.INFORMATION_MESSAGE);
+						break;
+					}
+					
+					case 2: {		// picas
+						
+						break;
+					}
+				}
+			}
+		});
+		
 		/* loga notikumi */
 		addWindowListener(new WindowAdapter() {
 			@Override

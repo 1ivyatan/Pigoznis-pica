@@ -154,6 +154,7 @@ public class KontaktuVeidotajs extends JDialog {
 			cancelButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					dispose();
+					kontakts = null;
 				}
 			});
 			
