@@ -43,6 +43,10 @@ public class Dati implements Serializable {
 		this.kontakti.set(idx, nk);
 	}
 	
+	public void removeKontaktsIdx(int idx) {
+		this.kontakti.remove(idx);
+	}
+	
 	/* kons */
 	public Dati() {
 		this.kontakti = new ArrayList<Kontakts>();

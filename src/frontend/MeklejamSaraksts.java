@@ -71,6 +71,7 @@ public class MeklejamSaraksts extends JPanel {
 	public void atjaunotElementu(int idx, DatiemSaraksts jaunsElements) {
 		this.returnables.set(idx, jaunsElements);
 		this.lietuNos.set(idx, jaunsElements.nosaukums());
+		this.atjaunotOut();
 	}
 	
 	public void pievienotSaraksta(DatiemSaraksts lieta) {
@@ -80,10 +81,24 @@ public class MeklejamSaraksts extends JPanel {
 		this.filtretieIdxi.add(this.filtretieIdxi.size());
 	}
 	
+	public void nonemElementu(int idx) {
+		this.returnables.remove(idx);
+		this.lietuNos.remove(idx);
+		
+		for (int i = idx; i < filtretieIdxi.size(); i++) {
+			filtretieIdxi.set(i, filtretieIdxi.get(i) - 1);
+		}
+		this.filtretieIdxi.remove(idx);
+		
+		this.atjaunotOut();
+	}
+	
 	public Object getSelObj() {
 		if (returnables.size() < 1) return null;
 		
 		int idx = saraksts.getSelectedIndex();
+		if (idx == -1) return null;
+		
 		return ( returnables.get(filtretieIdxi.get(idx)));
 	}
 	
@@ -162,6 +177,8 @@ public class MeklejamSaraksts extends JPanel {
 		if (this.saraksts.getSelectedValue() != null) {
 			int idx = this.saraksts.getSelectedIndex();
 			this.uiIzvade.setText(( returnables.get(filtretieIdxi.get(idx))).kaVirkne());
+		} else {
+			this.uiIzvade.setText(null);
 		}
 	}
 

@@ -91,10 +91,6 @@ public class Programma {
 	}
 	
 	/* kontakti */
-	public static String[] dbGetKontaktiStr() {
-		return db.getDati().getKontaktiStr();
-	}
-	
 	public static ArrayList<DatiemSaraksts> dbGetKontaktiObj() {
 		ArrayList<DatiemSaraksts> ret = new ArrayList<DatiemSaraksts>();
 		
@@ -112,6 +108,11 @@ public class Programma {
 	
 	public static void dbEditKontakts(int idx, DatiemSaraksts nk) {
 		db.getDati().editKontaktsIdx(idx, (Kontakts)nk);
+		izmaina = true;
+	}
+	
+	public static void dbRemoveKontakts(int idx) {
+		db.getDati().removeKontaktsIdx(idx);
 		izmaina = true;
 	}
 }
