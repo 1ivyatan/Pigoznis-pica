@@ -71,7 +71,8 @@ public class MeklejamSaraksts extends JPanel {
 	public void pievienotSaraksta(DatiemSaraksts lieta) {
 		this.returnables.add(lieta);
 		this.lietuNos.addElement(((DatiemSaraksts) lieta).nosaukums());
-		this.filtretieIdxi.add(this.filtretieIdxi.getLast() + 1);
+		
+		this.filtretieIdxi.add(this.filtretieIdxi.size());
 	}
 	
 	public MeklejamSaraksts(JTextArea izvade) {

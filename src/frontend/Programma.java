@@ -30,11 +30,13 @@ public class Programma {
 	
 	public static void tuksotDb() {
 		db = new Datubaze();
+		izmaina = false;
 	}
 	
 	public static void atvertDb(File fails) throws Exception {
 		try {
 			db = new Datubaze(fails);
+			izmaina = false;
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}

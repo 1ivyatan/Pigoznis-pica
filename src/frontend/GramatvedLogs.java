@@ -109,6 +109,7 @@ public class GramatvedLogs extends JFrame {
 				Programma.atvertDb(izv.getSelectedFile());
 				statusaTeksts.setText("Atvēra datubāzi " + izv.getSelectedFile().getAbsolutePath());
 				setSarakstusUi(false);
+				prevTeksts.setText(null);
 				setLogaNos();
 				sledzeUi(true);
 			} catch (Exception e) {
