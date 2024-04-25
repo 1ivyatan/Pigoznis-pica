@@ -30,10 +30,14 @@ public class MeklejamSaraksts extends JPanel {
 	/* saraksti */
 	private ArrayList<Object> returnables = null;
 	private DefaultListModel<String> lietuNos = null;
-	private int filtretieIdxi[];
+	private ArrayList<Integer> filtretieIdxi = null;
 	
 	private void resetFiltretieIdx() {
-		for (int i = 0; i < filtretieIdxi.length; i++) filtretieIdxi[i] = i;
+		for (int i = 0; i < filtretieIdxi.size(); i++) filtretieIdxi.set(i, i);
+	}
+	
+	private void resetFiltretieIdx(int n) {
+		for (int i = 0; i < n; i++) filtretieIdxi.add(i, i);
 	}
 	
 	/* metodes */
@@ -46,8 +50,8 @@ public class MeklejamSaraksts extends JPanel {
 		this.returnables = lietas;
 
 		this.lietuNos = new DefaultListModel<String>();
-		this.filtretieIdxi = new int[lietas.size()];
-		resetFiltretieIdx();
+		this.filtretieIdxi = new ArrayList<Integer>();
+		resetFiltretieIdx(lietas.size());
 		
 		for (Object i : lietas) {
 			this.lietuNos.addElement(((DatiemSaraksts) i).nosaukums());
@@ -65,7 +69,7 @@ public class MeklejamSaraksts extends JPanel {
 	}
 	
 	public void atjaunotInc(DatiemSaraksts lieta) {
-		System.out.print("jauns!!!");
+		
 	}
 	
 	public MeklejamSaraksts(JTextArea izvade) {
@@ -111,7 +115,7 @@ public class MeklejamSaraksts extends JPanel {
 					for (int i = 0; i < lietuNos.size(); i++) {
 						if (lietuNos.get(i).toLowerCase().contains(ievade)) {
 							rezultati.addElement(lietuNos.get(i));
-							filtretieIdxi[filtraKursors] = i;
+							filtretieIdxi.set(filtraKursors, i);
 							filtraKursors++;
 						}
 					}
@@ -126,7 +130,7 @@ public class MeklejamSaraksts extends JPanel {
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting() && saraksts.getSelectedValue() != null) {
 					int idx = saraksts.getSelectedIndex();
-					uiIzvade.setText(((DatiemSaraksts) returnables.get(filtretieIdxi[idx])).kaVirkne());
+					uiIzvade.setText(((DatiemSaraksts) returnables.get(filtretieIdxi.get(idx))).kaVirkne());
 				}
 			}
 		});
