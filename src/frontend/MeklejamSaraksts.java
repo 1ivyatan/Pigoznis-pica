@@ -42,15 +42,15 @@ public class MeklejamSaraksts extends JPanel {
 		this.saraksts.setEnabled(sledze);
 	}
 	
-	public void setElementi(ArrayList<Object> lietas, String[] lietuNosaukumi) {
+	public void setElementi(ArrayList<Object> lietas) {
 		this.returnables = lietas;
 
 		this.lietuNos = new DefaultListModel<String>();
 		this.filtretieIdxi = new int[lietas.size()];
 		resetFiltretieIdx();
 		
-		for (String i : lietuNosaukumi) {
-			this.lietuNos.addElement(i);
+		for (Object i : lietas) {
+			this.lietuNos.addElement(((DatiemSaraksts) i).nosaukums());
 		}
 		
 		/* ui */
@@ -62,6 +62,10 @@ public class MeklejamSaraksts extends JPanel {
 		
 		this.returnables = null;
 		this.lietuNos = null;
+	}
+	
+	public void atjaunotInc(DatiemSaraksts lieta) {
+		System.out.print("jauns!!!");
 	}
 	
 	public MeklejamSaraksts(JTextArea izvade) {

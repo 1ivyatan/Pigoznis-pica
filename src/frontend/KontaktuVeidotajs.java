@@ -10,9 +10,13 @@ import javax.swing.border.EmptyBorder;
 
 import picerija.Kontakts;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Component;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -100,9 +104,23 @@ public class KontaktuVeidotajs extends JDialog {
 			cancelButton.setActionCommand("Cancel");
 			buttonPane.add(cancelButton);
 			
+			/* notikumi */
 			okButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					kontakts = new Kontakts("pārbaude", "x", "s", "a");
+					dispose();
+				}
+			});
+			
+			cancelButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+				}
+			});
+			
+			addWindowListener(new WindowAdapter() {
+				@Override
+				public void windowClosing(WindowEvent e) {
 					dispose();
 				}
 			});

@@ -45,6 +45,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.AbstractListModel;
 import javax.swing.ListSelectionModel;
 
+import picerija.DatiemSaraksts;
+
 public class GramatvedLogs extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
@@ -81,7 +83,7 @@ public class GramatvedLogs extends JFrame {
 	
 	private static void setSarakstusUi(boolean wipe) {
 		if (!wipe) {
-			kontaktuSaraksts.setElementi((Programma.dbGetKontaktiObj()), Programma.dbGetKontaktiStr());
+			kontaktuSaraksts.setElementi((Programma.dbGetKontaktiObj()));
 		} else {
 			kontaktuSaraksts.setElementi();
 		}
@@ -481,9 +483,9 @@ public class GramatvedLogs extends JFrame {
 					}
 					
 					case 1: {		// kontakti
-						Kontakts jauns = KontaktuVeidotajs.jaunsKontakts(); 
+						DatiemSaraksts jauns = KontaktuVeidotajs.jaunsKontakts(); 
 						if (jauns != null) {
-							
+							kontaktuSaraksts.atjaunotInc(jauns);
 						};
 						break;
 					}

@@ -17,11 +17,15 @@ public class Kontakts extends DatiemSaraksts implements java.io.Serializable {
 	/* metodes */
 	public String kaVirkne() {
 		return (
-			       this.vards + "\n"
+			  this.vards + "\n"
 			+ "Adrese: " + this.adrese + "\n"
 			+ "Tālrunis: " + this.talrunis + "\n\n"
 			+ this.piezime
 		);
+	}
+	
+	public String nosaukums() {
+		return this.getVards();
 	}
 	
 	/* kons */
