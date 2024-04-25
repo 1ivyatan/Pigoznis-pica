@@ -6,18 +6,23 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import picerija.Kontakts;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Component;
+import java.awt.Dimension;
+
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -27,12 +32,9 @@ public class KontaktuVeidotajs extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	
 	private static Kontakts kontakts = null;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-
-	public static Kontakts jaunsKontakts() {
-		KontaktuVeidotajs dialog = new KontaktuVeidotajs();
+	
+	public static Kontakts jaunsKontakts(Kontakts preview) {
+		KontaktuVeidotajs dialog = new KontaktuVeidotajs(preview);
 		dialog.setModal(true);
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		dialog.setVisible(true);
@@ -40,9 +42,14 @@ public class KontaktuVeidotajs extends JDialog {
 		return kontakts;
 	}
 
-	public KontaktuVeidotajs() {
+	public KontaktuVeidotajs(Kontakts prev) {
+		JTextField vardsIevade,
+		adreseIevade,
+		talrunaIevade;
+		JTextArea piezimeIevade;
+		
 		setTitle("Jauns kontakts");
-		setBounds(100, 100, 450, 300);
+		setMinimumSize(new Dimension(225, 250));
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -52,44 +59,50 @@ public class KontaktuVeidotajs extends JDialog {
 		contentPanel.add(vardaPanelis);
 		vardaPanelis.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		vardaPanelis.add(lblNewLabel_1);
+		vardaPanelis.add(new JLabel("Vārds"));
 		
-		textField = new JTextField();
-		vardaPanelis.add(textField);
-		textField.setColumns(10);
+		vardsIevade = new JTextField();
+		vardaPanelis.add(vardsIevade);
+		vardsIevade.setColumns(10);
 		
 		JPanel adresesPanelis = new JPanel();
 		contentPanel.add(adresesPanelis);
 		adresesPanelis.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		adresesPanelis.add(lblNewLabel_2);
+		adresesPanelis.add(new JLabel("Adrese"));
 		
-		textField_1 = new JTextField();
-		adresesPanelis.add(textField_1);
-		textField_1.setColumns(10);
+		adreseIevade = new JTextField();
+		adresesPanelis.add(adreseIevade);
+		adreseIevade.setColumns(10);
 		
 		JPanel talrunaPanelis = new JPanel();
 		contentPanel.add(talrunaPanelis);
 		talrunaPanelis.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		talrunaPanelis.add(lblNewLabel);
+		talrunaPanelis.add(new JLabel("Tālruņa nr."));
 		
-		textField_2 = new JTextField();
-		talrunaPanelis.add(textField_2);
-		textField_2.setColumns(10);
+		talrunaIevade = new JTextField();
+		talrunaPanelis.add(talrunaIevade);
+		talrunaIevade.setColumns(10);
 		
 		JPanel piezimjuPanelis = new JPanel();
 		contentPanel.add(piezimjuPanelis);
 		piezimjuPanelis.setLayout(new BorderLayout(0, 0));
 		
-		JLabel piezimjuTeksts = new JLabel("Piezīme  ");
-		piezimjuPanelis.add(piezimjuTeksts, BorderLayout.WEST);
+		piezimjuPanelis.add(new JLabel("Piezīme  "), BorderLayout.WEST);
 		
-		JTextArea textArea = new JTextArea();
-		piezimjuPanelis.add(textArea, BorderLayout.CENTER);
+		piezimeIevade = new JTextArea();
+		JScrollPane skirstams = new JScrollPane (piezimeIevade, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		
+		piezimjuPanelis.add(skirstams, BorderLayout.CENTER);
+		
+		if (prev != null) {
+			vardsIevade.setText(prev.getVards());
+			adreseIevade.setText(prev.getAdrese());
+			talrunaIevade.setText(prev.getTalrunis());
+			piezimeIevade.setText(prev.getPiezime());
+		}
+		
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -107,7 +120,33 @@ public class KontaktuVeidotajs extends JDialog {
 			/* notikumi */
 			okButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					kontakts = new Kontakts("pārbaude", "x", "s", "a");
+					/* Tukšums? */
+					if (
+						( vardsIevade.getText() == null || vardsIevade.getText().isEmpty() || vardsIevade.getText().isBlank())
+					) {
+						JOptionPane.showMessageDialog(contentPanel, "Jāievada vārds!", "!!!", JOptionPane.WARNING_MESSAGE);
+						return;
+					} else if ( adreseIevade.getText() == null || adreseIevade.getText().isEmpty() || adreseIevade.getText().isBlank()) {
+						JOptionPane.showMessageDialog(contentPanel, "Jāievada adrese!", "!!!", JOptionPane.WARNING_MESSAGE);
+						return;
+					} else if ( talrunaIevade.getText() == null || talrunaIevade.getText().isEmpty() || talrunaIevade.getText().isBlank()) {
+						JOptionPane.showMessageDialog(contentPanel, "Jāievada tālruņa numurs!", "!!!", JOptionPane.WARNING_MESSAGE);
+						return;
+					} else if ( piezimeIevade.getText() == null ) {
+						JOptionPane.showMessageDialog(contentPanel, "Piezīme pēkšņi nevar būt 'null'!", "!!!", JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+					
+					/* pārbaudīs tālruni ar regex!!!! */
+					Pattern numurs = Pattern.compile("^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$", Pattern.CASE_INSENSITIVE);
+					Matcher sakritiba = numurs.matcher(talrunaIevade.getText());
+					
+					if (!sakritiba.find()) {
+						JOptionPane.showMessageDialog(contentPanel, "Nederīgs tālruņa numurs!", "!!!", JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+					
+					kontakts = new Kontakts(vardsIevade.getText(), adreseIevade.getText(), talrunaIevade.getText(), piezimeIevade.getText());
 					dispose();
 				}
 			});
