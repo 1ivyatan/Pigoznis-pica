@@ -55,7 +55,6 @@ public class GramatvedLogs extends JFrame {
 	private static FileNameExtensionFilter extFiltrs;
 	
 	/* saraksti */
-	private static MeklejamSaraksts kontaktuSaraksts; 
 	
 	/* statuss */
 	private static JLabel statusaTeksts;
@@ -77,18 +76,9 @@ public class GramatvedLogs extends JFrame {
 		ramis.setTitle(nos + "Picērija");
 	}
 	
-	private static void setSarakstusUi(boolean wipe) {
-		if (!wipe) {
-			kontaktuSaraksts.setElementi((Programma.dbGetKontaktiObj()), Programma.dbGetKontaktiStr());
-		} else {
-			kontaktuSaraksts.setElementi();
-		}
-	}
-	
 	/* db fails */
 	private static void jaunsUi(boolean init) {
 		Programma.tuksotDb();
-		setSarakstusUi(false);
 		sledzeUi(true);
 		setLogaNos();
 		
@@ -103,7 +93,6 @@ public class GramatvedLogs extends JFrame {
 			try {
 				Programma.atvertDb(izv.getSelectedFile());
 				statusaTeksts.setText("Atvēra datubāzi " + izv.getSelectedFile().getAbsolutePath());
-				setSarakstusUi(false);
 				setLogaNos();
 				sledzeUi(true);
 			} catch (Exception e) {
@@ -149,14 +138,12 @@ public class GramatvedLogs extends JFrame {
 		statusaTeksts.setText("Aizvērta datubāze" + ( (Programma.getDb().getFails() != null) ? " " + Programma.getDb().getFails().getAbsolutePath() : ""));
 		Programma.aizvertDb();
 		sledzeUi(false);
-		setSarakstusUi(true);
 		setLogaNos();
 	}
 	
 	private static void izietUi() {
 		if (Programma.getDb() != null) {
 			sledzeUi(false);
-			setSarakstusUi(true);
 			Programma.aizvertDb();
 		}
 		
@@ -360,11 +347,6 @@ public class GramatvedLogs extends JFrame {
 		prevTeksts.setEditable(false);
 		prevPanelis.add(prevTeksts);
 		atspejojamieUi.add(prevTeksts);
-		
-		/* meklējamie */
-		kontaktuSaraksts = new MeklejamSaraksts();
-		kontaktuCilne.add(kontaktuSaraksts);
-		atspejojamieUi.add(kontaktuSaraksts);
 		
 		/* ------   Notikumi   ----------- */
 		/* Datne -> */

@@ -18,6 +18,12 @@ public class Programma {
 	public static Datubaze getDb() {
 		return db;
 	}
+	
+	/* DB SETERI */
+	public static void dbSetValutasSim(String valuta) {
+		db.getDati().setValutasSim(valuta);
+		izmaina = true;
+	}
 		
 	/* metodes */
 	public static void aizvertDb() {
@@ -73,29 +79,5 @@ public class Programma {
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
-	}
-	
-	/* DB METODES */
-	public static String dbGetValutasSim() {
-		return db.getDati().getValutasSim();
-	}
-	
-	public static String[] dbGetKontaktiStr() {
-		return db.getDati().getKontaktiStr();
-	}
-	
-	public static ArrayList<Object> dbGetKontaktiObj() {
-		ArrayList<Object> ret = new ArrayList<Object>();
-		
-		for (int i = 0; i < db.getDati().getKontakti().size(); i++) {
-			ret.add(db.getDati().getKontakti().get(i));
-		}
-		
-		return ret;
-	}
-	
-	public static void dbSetValutasSim(String valuta) {
-		db.getDati().setValutasSim(valuta);
-		izmaina = true;
 	}
 }

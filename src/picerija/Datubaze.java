@@ -9,22 +9,22 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
 
-
 public class Datubaze {
 	private picerija.Dati db = null;
 	private File fails = null;
 	
-	/* s/getteri */
-	public void setFails(File fails) {
-		this.fails = fails;
-	}
-	
+	/* getteri */
 	public File getFails() {
 		return this.fails;
 	}
 	
 	public Dati getDati() {
 		return this.db;
+	}
+	
+	/* set */
+	public void setFails(File fails) {
+		this.fails = fails;
 	}
 	
 	/* metodes */

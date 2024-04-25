@@ -65,7 +65,7 @@ public class IestatLogs extends JDialog {
 		
 		JTextField valutaVert = new JTextField();
 		valutaVert.setColumns(10);
-		valutaVert.setText(Programma.dbGetValutasSim());
+		valutaVert.setText(Programma.getDb().getDati().getValutasSim());
 		valutaIest.add(valutaVert);
 		
 		JPanel status = new JPanel();

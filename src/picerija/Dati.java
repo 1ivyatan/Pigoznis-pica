@@ -7,21 +7,13 @@ public class Dati implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	/* saraksti */
-	private ArrayList<Kontakts> kontakti;
-	
-	public String[] getKontaktiStr() {
-		String[] ret = new String[this.kontakti.size()];
-		for (int i = 0; i < ret.length; i++) {
-			ret[i] = ((Kontakts) this.kontakti.get(i)).getVards();
-		}
-		return ret;
-	}
+	private ArrayList<DatuVieniba> kontakti;
 	
 	/* mainīgie */
 	private String valutasSim = "EUR";
 	
-	/* s/geteri */
-	public ArrayList<Kontakts> getKontakti() {
+	/* geteri */
+	public ArrayList<DatuVieniba> getKontakti() {
 		return this.kontakti;
 	}
 	
@@ -29,18 +21,19 @@ public class Dati implements Serializable {
 		return this.valutasSim;
 	}
 	
+	/* seteri */
 	public void setValutasSim(String valuta) {
 		this.valutasSim = valuta;
 	}
 	
 	/* kons */
 	public Dati() {
-		this.kontakti = new ArrayList<Kontakts>();
+		this.kontakti = new ArrayList<DatuVieniba>();
 		
 		// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-		this.kontakti.add(new Kontakts("Jaan"));
-		this.kontakti.add(new Kontakts("Pols"));
-		this.kontakti.add(new Kontakts("ttttttttt"));
+		this.kontakti.add(new Kontakts("Jaan", "dd", "dd", "dd"));
+		this.kontakti.add(new Kontakts("paan", "dd", "dd", "dd"));
+		this.kontakti.add(new Kontakts("Ajumu", "dd", "dd", "dd"));
 		// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	}
 }
