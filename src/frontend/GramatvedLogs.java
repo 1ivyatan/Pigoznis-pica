@@ -55,6 +55,7 @@ public class GramatvedLogs extends JFrame {
 	private static FileNameExtensionFilter extFiltrs;
 	
 	/* saraksti */
+	private static MeklejamsSaraksts kontaktuSaraksts = null;
 	
 	/* statuss */
 	private static JLabel statusaTeksts;
@@ -79,6 +80,9 @@ public class GramatvedLogs extends JFrame {
 	/* db fails */
 	private static void jaunsUi(boolean init) {
 		Programma.tuksotDb();
+		
+		kontaktuSaraksts.setElementi(Programma.getDb().getDati().getKontakti());
+		
 		sledzeUi(true);
 		setLogaNos();
 		
@@ -136,7 +140,10 @@ public class GramatvedLogs extends JFrame {
 	
 	private static void aizvertUi() {
 		statusaTeksts.setText("Aizvērta datubāze" + ( (Programma.getDb().getFails() != null) ? " " + Programma.getDb().getFails().getAbsolutePath() : ""));
+		
 		Programma.aizvertDb();
+		
+		kontaktuSaraksts.setElementi(null);
 		sledzeUi(false);
 		setLogaNos();
 	}
@@ -348,6 +355,11 @@ public class GramatvedLogs extends JFrame {
 		prevPanelis.add(prevTeksts);
 		atspejojamieUi.add(prevTeksts);
 		
+		/* meklējamie saraksti */
+		kontaktuSaraksts = new MeklejamsSaraksts(prevTeksts);
+		kontaktuCilne.add(kontaktuSaraksts);
+		atspejojamieUi.add(kontaktuSaraksts);
+		
 		/* ------   Notikumi   ----------- */
 		/* Datne -> */
 		topNavDatneJauns.addActionListener(new ActionListener() {
@@ -447,6 +459,17 @@ public class GramatvedLogs extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(ramis, "Picērija - piegāžu grāmatvedis\n2024-04", "Par", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
+		
+		/* sānu pogas */
+		izvDzestPoga.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Programma.getDb().getDati().nonemtKontaktu( 
+						Programma.getDb().getDati().getKontakti().size() - 1
+					);
+				kontaktuSaraksts.setElementi();
 			}
 		});
 		

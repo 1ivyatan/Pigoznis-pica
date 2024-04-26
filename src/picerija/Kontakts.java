@@ -24,7 +24,9 @@ public class Kontakts extends DatuVieniba implements java.io.Serializable {
 	}
 
 	public String getInfo() {
-		return "1";
+		return this.vards + "\n"
+				+ "Adrese: " + this.adrese + "\n" +
+				  "Numurs: " + numurs + "\n\n" + piezime;
 	}
 	
 	/* kons */

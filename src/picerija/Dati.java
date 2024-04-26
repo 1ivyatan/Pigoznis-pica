@@ -12,6 +12,12 @@ public class Dati implements Serializable {
 	/* mainīgie */
 	private String valutasSim = "EUR";
 	
+	/* kontakti */
+	public void nonemtKontaktu(int idx) {
+		if (kontakti.size() > 0)
+			this.kontakti.remove(idx);
+	}
+	
 	/* geteri */
 	public ArrayList<DatuVieniba> getKontakti() {
 		return this.kontakti;
