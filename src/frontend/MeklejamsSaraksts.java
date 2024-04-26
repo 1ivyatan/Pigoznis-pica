@@ -64,10 +64,12 @@ public class MeklejamsSaraksts extends JPanel {
 	}
 	
 	public void setElementi() {
+		izvade.setText(null);
+		
 		if (this.returnables != null) {
 			DefaultListModel<String> lietuNos = new DefaultListModel<String>();
 			this.returnableIdxi = new ArrayList<Integer>();
-				
+			
 			int c = 0;
 			for (DatuVieniba i : this.returnables) {
 				if (i != null) {
@@ -94,6 +96,16 @@ public class MeklejamsSaraksts extends JPanel {
 		this.mekletajs.setEnabled(enabled);
 	}
 	
+	/* get */
+	public int getSelIdx() {
+		return saraksts.getSelectedIndex();
+	}
+	
+	public DatuVieniba getSelectedDV() {
+		return this.returnables.get(saraksts.getSelectedIndex());
+	}
+	
+	/* kons */
 	public MeklejamsSaraksts(JTextArea izvade) {
 		setLayout(new BorderLayout(0, 0));
 		
@@ -127,7 +139,7 @@ public class MeklejamsSaraksts extends JPanel {
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting() && saraksts.getSelectedValue() != null) {
 					int idx = saraksts.getSelectedIndex();
-					izvade.setText( returnables.get(returnableIdxi.get(idx)).getInfo() );
+					izvade.setText(returnables.get(returnableIdxi.get(idx)).getInfo());
 				}
 		}});
 	}

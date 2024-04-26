@@ -14,6 +14,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.JFileChooser;
 
+import picerija.DatuVieniba;
 import picerija.Kontakts;
 import picerija.Resursi;
 
@@ -466,9 +467,10 @@ public class GramatvedLogs extends JFrame {
 		izvDzestPoga.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				Programma.getDb().getDati().nonemtKontaktu( 
-						Programma.getDb().getDati().getKontakti().size() - 1
-					);
+					Programma.getDb().getDati().getKontakti().size() - 1
+				);
 				kontaktuSaraksts.setElementi();
 			}
 		});
