@@ -98,7 +98,7 @@ public class IestatLogs extends JDialog {
 				} else if (in.length() < 1 || ( in.isBlank() )) {
 					statusTeksts.setText("Valūta: jābūt vērtībai");
 				} else {
-					Programma.dbSetValutasSim(in);
+					Programma.getDb().getDati().setValutasSim(in);;
 					statusTeksts.setText(" ");
 				}
 			}

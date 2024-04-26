@@ -20,10 +20,6 @@ public class Programma {
 	}
 	
 	/* DB SETERI */
-	public static void dbSetValutasSim(String valuta) {
-		db.getDati().setValutasSim(valuta);
-		izmaina = true;
-	}
 		
 	/* metodes */
 	public static void aizvertDb() {
