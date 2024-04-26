@@ -467,11 +467,21 @@ public class GramatvedLogs extends JFrame {
 		izvDzestPoga.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				Programma.getDb().getDati().nonemtKontaktu( 
-					Programma.getDb().getDati().getKontakti().size() - 1
-				);
-				kontaktuSaraksts.setElementi();
+				switch (cilnes.getSelectedIndex()) {
+					case 1: {
+						int sel = kontaktuSaraksts.getSelIdx();
+						if (sel != -1 && 
+							JOptionPane.showConfirmDialog(ramis, "Tiešām dzēst kontaktu?", "Jautājums", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION
+						) {
+							Programma.getDb().getDati().nonemtKontaktu( 
+								kontaktuSaraksts.getSelIdx()
+							);
+							Programma.setIzmaina(true);
+							kontaktuSaraksts.setElementi();
+						}
+						break;
+					}
+				}
 			}
 		});
 		

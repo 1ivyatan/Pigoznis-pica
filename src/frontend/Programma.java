@@ -19,7 +19,10 @@ public class Programma {
 		return db;
 	}
 	
-	/* DB SETERI */
+	/* SETERI */
+	public static void setIzmaina(boolean sw) {
+		izmaina = sw;
+	}
 		
 	/* metodes */
 	public static void aizvertDb() {

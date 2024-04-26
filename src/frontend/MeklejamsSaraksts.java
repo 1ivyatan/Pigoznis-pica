@@ -98,7 +98,9 @@ public class MeklejamsSaraksts extends JPanel {
 	
 	/* get */
 	public int getSelIdx() {
-		return saraksts.getSelectedIndex();
+		if (saraksts != null)
+			return saraksts.getSelectedIndex();
+		else return -1;
 	}
 	
 	public DatuVieniba getSelectedDV() {
