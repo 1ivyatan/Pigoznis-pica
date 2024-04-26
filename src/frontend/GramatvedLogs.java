@@ -464,6 +464,25 @@ public class GramatvedLogs extends JFrame {
 		});
 		
 		/* sānu pogas */
+		izvIzvPoga.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				switch (cilnes.getSelectedIndex()) {
+					case 1: {
+						DatuVieniba jk = KontaktuVeidotajaLogs.jaunsKontakts(null);
+						
+						if (jk != null) {
+							Programma.getDb().getDati().pievienotKontaktu(jk);
+							Programma.setIzmaina(true);
+							kontaktuSaraksts.setElementi();
+						}
+						
+						break;
+					}
+				}
+			}
+		});
+		
 		izvDzestPoga.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -471,7 +490,7 @@ public class GramatvedLogs extends JFrame {
 					case 1: {
 						int sel = kontaktuSaraksts.getSelIdx();
 						if (sel != -1 && 
-							JOptionPane.showConfirmDialog(ramis, "Tiešām dzēst kontaktu?", "Jautājums", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION
+							JOptionPane.showConfirmDialog(ramis, "Tiešām dzēst šo kontaktu '" + kontaktuSaraksts.getSelectedDV().getNosaukums() + "'?", "Jautājums", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION
 						) {
 							Programma.getDb().getDati().nonemtKontaktu( 
 								kontaktuSaraksts.getSelIdx()

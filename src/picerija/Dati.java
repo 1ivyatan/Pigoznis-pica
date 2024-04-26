@@ -18,6 +18,11 @@ public class Dati implements Serializable {
 			this.kontakti.remove(idx);
 	}
 	
+	public void pievienotKontaktu(DatuVieniba jk) {
+		if (jk != null)
+			this.kontakti.add(jk);
+	}
+	
 	/* geteri */
 	public ArrayList<DatuVieniba> getKontakti() {
 		return this.kontakti;
