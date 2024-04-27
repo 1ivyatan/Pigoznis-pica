@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.border.EmptyBorder;
 
 import picerija.DatuVieniba;
 import picerija.Kontakts;
@@ -20,7 +19,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.JTextField;
