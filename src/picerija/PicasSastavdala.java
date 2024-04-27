@@ -35,9 +35,8 @@ public class PicasSastavdala extends DatuVieniba implements java.io.Serializable
 		return this.vards;
 	}
 
-	@Override
 	public String getInfo() {
-		return "ggggggg";
+		return this.vards + "\n" + "Cena: " + this.cena + "\n\n" + this.piezime;
 	}
 
 	public PicasSastavdala(String v, String p, double c) {

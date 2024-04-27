@@ -9,6 +9,7 @@ public class Dati implements Serializable {
 	/* saraksti */
 	private ArrayList<DatuVieniba> kontakti;
 	private ArrayList<DatuVieniba> sastavdalas;
+	private ArrayList<DatuVieniba> picas;
 	
 	/* mainīgie */
 	private String valutasSim = "EUR";
@@ -53,6 +54,26 @@ public class Dati implements Serializable {
 		return this.sastavdalas;
 	}
 	
+	/* picas */
+	public void nonemtPicu(int idx) {
+		if (picas.size() > 0)
+			this.picas.remove(idx);
+	}
+	
+	public void pievienotPicu(DatuVieniba jc) {
+		if (jc != null)
+			this.picas.add(jc);
+	}
+	
+	public void nomainitPicu(int idx, DatuVieniba jc) {
+		if (picas.size() > 0)
+			this.picas.set(idx, jc);
+	}
+	
+	public ArrayList<DatuVieniba> getPicas() {
+		return this.picas;
+	}
+	
 	/* geteri */
 	public String getValutasSim() {
 		return this.valutasSim;
@@ -67,6 +88,7 @@ public class Dati implements Serializable {
 	public Dati() {
 		this.kontakti = new ArrayList<DatuVieniba>();
 		this.sastavdalas = new ArrayList<DatuVieniba>();
+		this.picas = new ArrayList<DatuVieniba>();
 		
 		// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 		this.kontakti.add(new Kontakts("Jaan", "dd", "dd", "dd"));
@@ -76,6 +98,10 @@ public class Dati implements Serializable {
 		this.sastavdalas.add(new PicasSastavdala("Desas", "ggggggg", 1.00));
 		this.sastavdalas.add(new PicasSastavdala("iiiiiiiiiesas", "ggggggg", 1.00));
 		this.sastavdalas.add(new PicasSastavdala("Desas", "ggggggg", 1.00));
+		
+		this.picas.add(new Pica("pica", "asdasddas", 11.0, 25.0, new ArrayList<DatuVieniba>()));
+		this.picas.add(new Pica("pica", "asdasddas", 11.0, 25.0, new ArrayList<DatuVieniba>()));
+		this.picas.add(new Pica("pica", "asdasddas", 11.0, 25.0, new ArrayList<DatuVieniba>()));
 		// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	}
 }

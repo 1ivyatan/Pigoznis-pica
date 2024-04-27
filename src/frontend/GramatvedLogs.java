@@ -60,6 +60,7 @@ public class GramatvedLogs extends JFrame {
 	private static ArrayList<MeklejamsSaraksts> saraksti = null;
 	private static final int SAR_KONTAKTI = 0;
 	private static final int SAR_SASTAVDALAS = 1;
+	private static final int SAR_PICAS = 2;
 	
 	/* statuss */
 	private static JLabel statusaTeksts;
@@ -87,6 +88,7 @@ public class GramatvedLogs extends JFrame {
 		
 		saraksti.get(SAR_KONTAKTI).setElementi(Programma.getDb().getDati().getKontakti());
 		saraksti.get(SAR_SASTAVDALAS).setElementi(Programma.getDb().getDati().getSastavdalas());
+		saraksti.get(SAR_PICAS).setElementi(Programma.getDb().getDati().getPicas());
 		
 		sledzeUi(true);
 		setLogaNos();
@@ -366,13 +368,14 @@ public class GramatvedLogs extends JFrame {
 		/* meklējamie saraksti */ //UISARAKSTI
 		saraksti = new ArrayList<MeklejamsSaraksts>();
 		
-		for (int i = 0; i < 2; i++) { ////////
+		for (int i = 0; i < 3; i++) { ////////
 			saraksti.add(new MeklejamsSaraksts(prevTeksts));
 			atspejojamieUi.add(saraksti.get(i));
 		}
 		
 		kontaktuCilne.add(saraksti.get(SAR_KONTAKTI));
 		picuSastavCilne.add(saraksti.get(SAR_SASTAVDALAS));
+		picuRecepCilne.add(saraksti.get(SAR_PICAS));
 		
 		/* ------   Notikumi   ----------- */
 		/* Datne -> */
@@ -495,7 +498,19 @@ public class GramatvedLogs extends JFrame {
 					
 					case 2: {
 						switch (picuCilnes.getSelectedIndex()) {
-							case 1: {
+							case 0: {  // picas
+								DatuVieniba pc = PicuVeidotajaLogs.jaunaPica(null);
+								
+								if (pc != null) {
+									Programma.getDb().getDati().pievienotPicu(pc);
+									Programma.setIzmaina(true);
+									saraksti.get(SAR_PICAS).setElementi();
+								}
+								
+								break;
+							}
+						
+							case 1: { // sastāvdaļas
 								DatuVieniba jc = SastavdaluVeidotajaLogs.jaunaSastavdala(null);
 								
 								if (jc != null) {

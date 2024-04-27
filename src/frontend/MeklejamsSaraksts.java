@@ -14,6 +14,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import picerija.DatuVieniba;
+import javax.swing.ListSelectionModel;
 
 public class MeklejamsSaraksts extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -66,7 +67,7 @@ public class MeklejamsSaraksts extends JPanel {
 	}
 	
 	public void setElementi() {
-		izvade.setText(null);
+		if (izvade != null) izvade.setText(null);
 		this.saraksts.setSelectedIndex(-1);
 		
 		if (this.returnables != null) {
@@ -121,6 +122,7 @@ public class MeklejamsSaraksts extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		
 		this.saraksts = new JList<String>();
+		saraksts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.mekletajs = new JTextField();
 		this.izvade = izvade;
 		
@@ -150,7 +152,7 @@ public class MeklejamsSaraksts extends JPanel {
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting() && saraksts.getSelectedValue() != null) {
 					int idx = saraksts.getSelectedIndex();
-					izvade.setText(returnables.get(returnableIdxi.get(idx)).getInfo());
+					if (izvade != null) izvade.setText(returnables.get(returnableIdxi.get(idx)).getInfo());
 				}
 		}});
 	}
