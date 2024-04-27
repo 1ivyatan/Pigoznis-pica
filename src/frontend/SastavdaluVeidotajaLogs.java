@@ -33,6 +33,7 @@ public class SastavdaluVeidotajaLogs extends JDialog {
 	private JTextArea piezTeksts;
 	
 	public static DatuVieniba jaunaSastavdala(DatuVieniba preview) {
+		sastavdala = null;
 		SastavdaluVeidotajaLogs dialog = new SastavdaluVeidotajaLogs(preview);
 		
 		dialog.setVisible(true);

@@ -34,6 +34,7 @@ public class KontaktuVeidotajaLogs extends JDialog {
 	private JTextArea piezTeksts;
 	
 	public static DatuVieniba jaunsKontakts(DatuVieniba preview) {
+		kontakts = null;
 		KontaktuVeidotajaLogs dialog = new KontaktuVeidotajaLogs(preview);
 		
 		dialog.setVisible(true);

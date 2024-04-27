@@ -1,6 +1,7 @@
 package frontend;
 
 import java.awt.BorderLayout;
+import javax.swing.JScrollPane;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
@@ -102,19 +103,21 @@ public class MeklejamsSaraksts extends JPanel {
 	
 	/* get */
 	public int getSelIdx() {
-		if (saraksts != null)
+		if (saraksts != null && saraksts.getModel().getSize() > 0)
 			return this.returnableIdxi.get(this.getRealSelIdx());
 		else return -1;
 	}
 	
 	public int getRealSelIdx() {
-		if (saraksts != null)
+		if (saraksts != null && saraksts.getModel().getSize() > 0)
 			return this.saraksts.getSelectedIndex();
 		else return -1;
 	}
 	
 	public DatuVieniba getSelectedDV() {
-		return this.returnables.get(returnableIdxi.get(this.getRealSelIdx()));
+		if (saraksts != null)
+			return this.returnables.get(returnableIdxi.get(this.getRealSelIdx()));
+		else return null;
 	}
 	
 	/* kons */
@@ -126,8 +129,8 @@ public class MeklejamsSaraksts extends JPanel {
 		this.mekletajs = new JTextField();
 		this.izvade = izvade;
 		
-		add(this.saraksts, BorderLayout.CENTER);
 		add(this.mekletajs, BorderLayout.NORTH);
+		add(new JScrollPane(this.saraksts, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED), BorderLayout.CENTER);
 		
 		/* notikumi */
 		this.mekletajs.getDocument().addDocumentListener(new DocumentListener() {

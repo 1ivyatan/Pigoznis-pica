@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 
 import picerija.DatuVieniba;
 import picerija.Pica;
+import picerija.PicasSastavdala;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -38,6 +39,7 @@ public class PicuVeidotajaLogs extends JDialog {
 	private JTextArea piezTeksts;
 	
 	public static DatuVieniba jaunaPica(DatuVieniba preview) {
+		pica = null;
 		PicuVeidotajaLogs dialog = new PicuVeidotajaLogs(preview);
 		
 		dialog.setVisible(true);
@@ -48,7 +50,7 @@ public class PicuVeidotajaLogs extends JDialog {
 		setModal(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		
-		setMinimumSize(new Dimension(400, 400));
+		setMinimumSize(new Dimension(400, 450));
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel poguPanelis = new JPanel();
@@ -101,7 +103,10 @@ public class PicuVeidotajaLogs extends JDialog {
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		sastavdaluPanelis.add(label, BorderLayout.NORTH);
 		
+		/* sastāvdaļas */
+		sastavdalas = new ArrayList<DatuVieniba>();
 		picasSastavdalas = new MeklejamsSaraksts(null);
+		picasSastavdalas.setElementi(sastavdalas);
 		sastavdaluPanelis.add(picasSastavdalas);
 		
 		JPanel sastavPogas = new JPanel();
@@ -118,6 +123,7 @@ public class PicuVeidotajaLogs extends JDialog {
 		
 		JButton sastavImp = new JButton("No datubāzes...");
 		sastavPogas.add(sastavImp);
+		/* ^^^^^^^^^^^^^^^ */
 		
 		JPanel piezPanelis = new JPanel();
 		infPanelis.add(piezPanelis);
@@ -132,10 +138,47 @@ public class PicuVeidotajaLogs extends JDialog {
 			
 		} else {
 			setTitle("Jauna pica");
-			
 		}
 		
 		/* notikumi */
+		/* sastāvdaļas */
+		sastavJauns.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DatuVieniba sastavdala = SastavdaluVeidotajaLogs.jaunaSastavdala(null);
+				
+				if (sastavdala != null) {
+					sastavdalas.add(sastavdala);
+					picasSastavdalas.setElementi();
+				}
+			}
+		});
+		
+		sastavRediget.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int sel = picasSastavdalas.getSelIdx();
+				if (sel != -1) {
+					DatuVieniba js = SastavdaluVeidotajaLogs.jaunaSastavdala( picasSastavdalas.getSelectedDV() );
+					
+					if (js != null) {
+						sastavdalas.set(sel, js);
+						picasSastavdalas.setElementi();
+					}
+				}
+			}
+		});
+		
+		sastavDzest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int sel = picasSastavdalas.getSelIdx();
+				if (sel != -1 && JOptionPane.showConfirmDialog(getContentPane(), "Tiešām dzēst šo sastāvdaļu '" + picasSastavdalas.getSelectedDV().getNosaukums() + "'?", "Jautājums", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					sastavdalas.remove(sel);
+					picasSastavdalas.setElementi();
+				}
+			}
+		});
+		
+		
+		/* saglab. pogas */
 		saglPoga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
