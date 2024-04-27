@@ -483,6 +483,27 @@ public class GramatvedLogs extends JFrame {
 			}
 		});
 		
+		izvRedigetPoga.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				switch (cilnes.getSelectedIndex()) {
+					case 1: {
+						int sel = kontaktuSaraksts.getSelIdx();
+						if (sel != -1) {
+							DatuVieniba jk = KontaktuVeidotajaLogs.jaunsKontakts( kontaktuSaraksts.getSelectedDV() );
+							
+							if (jk != null) {
+								Programma.getDb().getDati().nomainitKontaktu(sel, jk);
+								Programma.setIzmaina(true);
+								kontaktuSaraksts.setElementi();
+							}
+						}
+						break;
+					}
+				}
+			}
+		});
+		
 		izvDzestPoga.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

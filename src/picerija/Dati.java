@@ -23,6 +23,11 @@ public class Dati implements Serializable {
 			this.kontakti.add(jk);
 	}
 	
+	public void nomainitKontaktu(int idx, DatuVieniba jk) {
+		if (kontakti.size() > 0)
+			this.kontakti.set(idx, jk);
+	}
+	
 	/* geteri */
 	public ArrayList<DatuVieniba> getKontakti() {
 		return this.kontakti;

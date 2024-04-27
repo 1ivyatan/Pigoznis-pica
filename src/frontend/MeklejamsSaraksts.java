@@ -29,6 +29,7 @@ public class MeklejamsSaraksts extends JPanel {
 	/* metodes */
 	public void filtretElementus(String filtrs) {
 		DefaultListModel<String> jaunsMod = new DefaultListModel<String>();
+		this.saraksts.setSelectedIndex(-1);
 		int c = 0;
 		
 		for (int i = 0; i < this.returnables.size(); i++) {
@@ -44,6 +45,7 @@ public class MeklejamsSaraksts extends JPanel {
 	/* set */
 	public void setElementi(ArrayList<DatuVieniba> lietas) {
 		this.mekletajs.setText(null);
+		this.saraksts.setSelectedIndex(-1);
 
 		if (lietas != null) {
 			DefaultListModel<String> lietuNos = new DefaultListModel<String>();
@@ -65,6 +67,7 @@ public class MeklejamsSaraksts extends JPanel {
 	
 	public void setElementi() {
 		izvade.setText(null);
+		this.saraksts.setSelectedIndex(-1);
 		
 		if (this.returnables != null) {
 			DefaultListModel<String> lietuNos = new DefaultListModel<String>();
@@ -99,12 +102,18 @@ public class MeklejamsSaraksts extends JPanel {
 	/* get */
 	public int getSelIdx() {
 		if (saraksts != null)
-			return saraksts.getSelectedIndex();
+			return this.returnableIdxi.get(this.getRealSelIdx());
+		else return -1;
+	}
+	
+	public int getRealSelIdx() {
+		if (saraksts != null)
+			return this.saraksts.getSelectedIndex();
 		else return -1;
 	}
 	
 	public DatuVieniba getSelectedDV() {
-		return this.returnables.get(saraksts.getSelectedIndex());
+		return this.returnables.get(returnableIdxi.get(this.getRealSelIdx()));
 	}
 	
 	/* kons */
