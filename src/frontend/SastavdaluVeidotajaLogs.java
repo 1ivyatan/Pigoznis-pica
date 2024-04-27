@@ -48,6 +48,7 @@ public class SastavdaluVeidotajaLogs extends JDialog {
 		
 		JPanel infPanelis = new JPanel();
 		getContentPane().add(infPanelis, BorderLayout.CENTER);
+		infPanelis.setLayout(new BoxLayout(infPanelis, BoxLayout.Y_AXIS));
 		
 		if (preview != null) {
 			setTitle("Rediģēt '" + preview.getNosaukums() + "'");

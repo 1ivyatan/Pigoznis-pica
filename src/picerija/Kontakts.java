@@ -14,6 +14,10 @@ public class Kontakts extends DatuVieniba implements java.io.Serializable {
 	public String getVards() {
 		return this.vards;
 	}
+
+	public String getAdrese() {
+		return this.adrese;
+	}
 	
 	public String getNumurs() {
 		return this.numurs;
