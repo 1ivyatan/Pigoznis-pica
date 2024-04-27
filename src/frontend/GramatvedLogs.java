@@ -16,6 +16,7 @@ import javax.swing.JFileChooser;
 
 import picerija.DatuVieniba;
 import picerija.Kontakts;
+import picerija.PicasSastavdala;
 import picerija.Resursi;
 
 import javax.swing.JMenuBar;
@@ -56,7 +57,9 @@ public class GramatvedLogs extends JFrame {
 	private static FileNameExtensionFilter extFiltrs;
 	
 	/* saraksti */
-	private static MeklejamsSaraksts kontaktuSaraksts = null;
+	private static ArrayList<MeklejamsSaraksts> saraksti = null;
+	private static final int SAR_KONTAKTI = 0;
+	private static final int SAR_SASTAVDALAS = 1;
 	
 	/* statuss */
 	private static JLabel statusaTeksts;
@@ -82,7 +85,8 @@ public class GramatvedLogs extends JFrame {
 	private static void jaunsUi(boolean init) {
 		Programma.tuksotDb();
 		
-		kontaktuSaraksts.setElementi(Programma.getDb().getDati().getKontakti());
+		saraksti.get(SAR_KONTAKTI).setElementi(Programma.getDb().getDati().getKontakti());
+		saraksti.get(SAR_SASTAVDALAS).setElementi(Programma.getDb().getDati().getSastavdalas());
 		
 		sledzeUi(true);
 		setLogaNos();
@@ -144,7 +148,10 @@ public class GramatvedLogs extends JFrame {
 		
 		Programma.aizvertDb();
 		
-		kontaktuSaraksts.setElementi(null);
+		for (int i = 0; i < saraksti.size(); i++) {
+			saraksti.get(i).setElementi(null);
+		}
+		
 		sledzeUi(false);
 		setLogaNos();
 	}
@@ -356,10 +363,16 @@ public class GramatvedLogs extends JFrame {
 		prevPanelis.add(prevTeksts);
 		atspejojamieUi.add(prevTeksts);
 		
-		/* meklējamie saraksti */
-		kontaktuSaraksts = new MeklejamsSaraksts(prevTeksts);
-		kontaktuCilne.add(kontaktuSaraksts);
-		atspejojamieUi.add(kontaktuSaraksts);
+		/* meklējamie saraksti */ //UISARAKSTI
+		saraksti = new ArrayList<MeklejamsSaraksts>();
+		
+		for (int i = 0; i < 2; i++) { ////////
+			saraksti.add(new MeklejamsSaraksts(prevTeksts));
+			atspejojamieUi.add(saraksti.get(i));
+		}
+		
+		kontaktuCilne.add(saraksti.get(SAR_KONTAKTI));
+		picuSastavCilne.add(saraksti.get(SAR_SASTAVDALAS));
 		
 		/* ------   Notikumi   ----------- */
 		/* Datne -> */
@@ -474,9 +487,26 @@ public class GramatvedLogs extends JFrame {
 						if (jk != null) {
 							Programma.getDb().getDati().pievienotKontaktu(jk);
 							Programma.setIzmaina(true);
-							kontaktuSaraksts.setElementi();
+							saraksti.get(SAR_KONTAKTI).setElementi();
 						}
 						
+						break;
+					}
+					
+					case 2: {
+						switch (picuCilnes.getSelectedIndex()) {
+							case 1: {
+								DatuVieniba jc = SastavdaluVeidotajaLogs.jaunaSastavdala(null);
+								
+								if (jc != null) {
+									Programma.getDb().getDati().pievienotSastavdalu(jc);
+									Programma.setIzmaina(true);
+									saraksti.get(SAR_SASTAVDALAS).setElementi();
+								}
+								
+								break;
+							}
+						}
 						break;
 					}
 				}
@@ -488,14 +518,34 @@ public class GramatvedLogs extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				switch (cilnes.getSelectedIndex()) {
 					case 1: {
-						int sel = kontaktuSaraksts.getSelIdx();
+						int sel = saraksti.get(SAR_KONTAKTI).getSelIdx();
 						if (sel != -1) {
-							DatuVieniba jk = KontaktuVeidotajaLogs.jaunsKontakts( kontaktuSaraksts.getSelectedDV() );
+							DatuVieniba jk = KontaktuVeidotajaLogs.jaunsKontakts( saraksti.get(SAR_KONTAKTI).getSelectedDV() );
 							
 							if (jk != null) {
 								Programma.getDb().getDati().nomainitKontaktu(sel, jk);
 								Programma.setIzmaina(true);
-								kontaktuSaraksts.setElementi();
+								saraksti.get(SAR_KONTAKTI).setElementi();
+							}
+						}
+						break;
+					}
+					
+					
+					case 2: {
+						switch (picuCilnes.getSelectedIndex()) {
+							case 1: {
+								int sel = saraksti.get(SAR_SASTAVDALAS).getSelIdx();
+								if (sel != -1) {
+									DatuVieniba js = SastavdaluVeidotajaLogs.jaunaSastavdala( saraksti.get(SAR_SASTAVDALAS).getSelectedDV() );
+									
+									if (js != null) {
+										Programma.getDb().getDati().nomainitSastavdalu(sel, js);
+										Programma.setIzmaina(true);
+										saraksti.get(SAR_SASTAVDALAS).setElementi();
+									}
+								}
+								break;
 							}
 						}
 						break;
@@ -509,15 +559,34 @@ public class GramatvedLogs extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				switch (cilnes.getSelectedIndex()) {
 					case 1: {
-						int sel = kontaktuSaraksts.getSelIdx();
+						int sel = saraksti.get(SAR_KONTAKTI).getSelIdx();
 						if (sel != -1 && 
-							JOptionPane.showConfirmDialog(ramis, "Tiešām dzēst šo kontaktu '" + kontaktuSaraksts.getSelectedDV().getNosaukums() + "'?", "Jautājums", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION
+							JOptionPane.showConfirmDialog(ramis, "Tiešām dzēst šo kontaktu '" + saraksti.get(SAR_KONTAKTI).getSelectedDV().getNosaukums() + "'?", "Jautājums", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION
 						) {
 							Programma.getDb().getDati().nonemtKontaktu( 
-								kontaktuSaraksts.getSelIdx()
+									saraksti.get(SAR_KONTAKTI).getSelIdx()
 							);
 							Programma.setIzmaina(true);
-							kontaktuSaraksts.setElementi();
+							saraksti.get(SAR_KONTAKTI).setElementi();
+						}
+						break;
+					}
+					
+					case 2: {
+						switch (picuCilnes.getSelectedIndex()) {
+							case 1: {
+								int sel = saraksti.get(SAR_SASTAVDALAS).getSelIdx();
+								if (sel != -1 && 
+									JOptionPane.showConfirmDialog(ramis, "Tiešām dzēst šo sastāvdaļu '" + saraksti.get(SAR_SASTAVDALAS).getSelectedDV().getNosaukums() + "'?", "Jautājums", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION
+								) {
+									Programma.getDb().getDati().nonemtSastavdalu( 
+											saraksti.get(SAR_SASTAVDALAS).getSelIdx()
+									);
+									Programma.setIzmaina(true);
+									saraksti.get(SAR_SASTAVDALAS).setElementi();
+								}
+								break;
+							}
 						}
 						break;
 					}
