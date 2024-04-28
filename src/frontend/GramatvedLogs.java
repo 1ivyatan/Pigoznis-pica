@@ -488,6 +488,19 @@ public class GramatvedLogs extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				switch (cilnes.getSelectedIndex()) {
+					case 0: {
+						switch (pirkumuCilnes.getSelectedIndex()) {
+							case 0: {
+								DatuVieniba jp = PirkumuVeidotajaLogs.jaunsPirkums(null);
+								
+								if (jp != null) {
+									
+								}
+							}
+						}
+						break;
+					}
+				
 					case 1: {
 						DatuVieniba jk = KontaktuVeidotajaLogs.jaunsKontakts(null);
 						

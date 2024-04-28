@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Pica extends DatuVieniba implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private String vards, piezime;
-	private double cena, diametrsCm, totalCena;
+	private double cena, diametrsCm, baseCena;
 	private ArrayList<DatuVieniba> sastavdalas;
 	
 	@Override
@@ -17,8 +17,8 @@ public class Pica extends DatuVieniba implements java.io.Serializable {
 	public String getInfo() {
 		String ret = 
 			this.vards + "\n" +
-			"Kopējā cena: " + this.totalCena + "\n" +
-			"Cena: " + this.cena + "\n" +
+			"Kopējā cena: " + this.cena + "\n" +
+			"Cena: " + this.baseCena + "\n" +
 			"Diametrs: " + this.diametrsCm + "\n\n ---- Sastāvdaļas ---\nNos.\t\t\tCena\n"
 		;
 		
@@ -46,8 +46,8 @@ public class Pica extends DatuVieniba implements java.io.Serializable {
 		return this.cena;
 	}
 	
-	public double getTotalCena() {
-		return totalCena;
+	public double getBaseCena() {
+		return this.baseCena;
 	}
 	
 	public double getDiametrsCm() {
@@ -59,12 +59,12 @@ public class Pica extends DatuVieniba implements java.io.Serializable {
 	}
 	
 	/* set */
-	private void setTotalCena() {
-		this.totalCena = cena;
+	private void setCena() {
+		this.cena = baseCena;
 		
 		if (this.sastavdalas != null && !this.sastavdalas.isEmpty()) {
 			for (int i = 0; i < sastavdalas.size(); i++) {
-				this.totalCena += ((PicasSastavdala) sastavdalas.get(i)).getCena();
+				this.cena += ((PicasSastavdala) sastavdalas.get(i)).getCena();
 			}
 		}
 	}
@@ -77,8 +77,9 @@ public class Pica extends DatuVieniba implements java.io.Serializable {
 		this.piezime = piezime;
 	}
 	
-	public void setCena(double cena) {
-		this.cena = cena;
+	public void setBaseCena(double cena) {
+		this.baseCena = cena;
+		setCena();
 	}
 	
 	public void setDiametrsCm(double diametrscm) {
@@ -87,17 +88,17 @@ public class Pica extends DatuVieniba implements java.io.Serializable {
 	
 	public void setSastavdalas(ArrayList<DatuVieniba> sastavdalas) {
 		this.sastavdalas = sastavdalas;
-		this.setTotalCena();
+		this.setCena();
 	}
 	
 	/* kons */
-	public Pica(String vards, String piezime, double cena, double diametrsCm, ArrayList<DatuVieniba> sastav) {
+	public Pica(String vards, String piezime, double baseCena, double diametrsCm, ArrayList<DatuVieniba> sastav) {
 		this.vards = vards;
 		this.piezime = piezime;
-		this.cena = cena;
+		this.baseCena = baseCena;
 		this.diametrsCm = diametrsCm;
 		this.sastavdalas = sastav;
-		this.setTotalCena();
+		this.setCena();
 	}
 	
 	public DatuVieniba copy() {

@@ -15,7 +15,7 @@ public class Dati implements Serializable {
 	private ArrayList<DatuVieniba> pirkumuVest;
 	
 	/* mainīgie */
-	private String valutasSim = "EUR";
+	private String valutasSim = "€";
 	private String mervienibasSim = "cm";
 	
 	/* kontakti */
