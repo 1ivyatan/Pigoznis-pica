@@ -30,6 +30,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 
 import java.awt.FlowLayout;
+import java.awt.Insets;
+
 import javax.swing.border.BevelBorder;
 import javax.swing.JSeparator;
 import java.awt.Component;
@@ -363,6 +365,7 @@ public class GramatvedLogs extends JFrame {
 		JTextArea prevTeksts = new JTextArea();
 		prevTeksts.setTabSize(4);
 		prevTeksts.setEditable(false);
+		prevTeksts.setMargin(new Insets(5, 5, 5, 5));
 		prevPanelis.add(new JScrollPane(prevTeksts, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
 		atspejojamieUi.add(prevTeksts);
 		
@@ -550,6 +553,20 @@ public class GramatvedLogs extends JFrame {
 					
 					case 2: {
 						switch (picuCilnes.getSelectedIndex()) {
+							case 0: {
+								int sel = saraksti.get(SAR_PICAS).getSelIdx();
+								if (sel != -1) {
+									DatuVieniba js = PicuVeidotajaLogs.jaunaPica( saraksti.get(SAR_PICAS).getSelectedDV() );
+									
+									if (js != null) {
+										Programma.getDb().getDati().nomainitPicu(sel, js);
+										Programma.setIzmaina(true);
+										saraksti.get(SAR_PICAS).setElementi();
+									}
+								}
+								break;
+							}
+							
 							case 1: {
 								int sel = saraksti.get(SAR_SASTAVDALAS).getSelIdx();
 								if (sel != -1) {
@@ -590,6 +607,20 @@ public class GramatvedLogs extends JFrame {
 					
 					case 2: {
 						switch (picuCilnes.getSelectedIndex()) {
+							case 0: {
+								int sel = saraksti.get(SAR_PICAS).getSelIdx();
+								if (sel != -1 && 
+										JOptionPane.showConfirmDialog(ramis, "Tiešām dzēst šo picu? '" + saraksti.get(SAR_PICAS).getSelectedDV().getNosaukums() + "'?", "Jautājums", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION
+								) {
+									Programma.getDb().getDati().nonemtPicu( 
+										saraksti.get(SAR_PICAS).getSelIdx()
+									);
+									Programma.setIzmaina(true);
+									saraksti.get(SAR_PICAS).setElementi();
+								}
+								break;
+							}
+							
 							case 1: {
 								int sel = saraksti.get(SAR_SASTAVDALAS).getSelIdx();
 								if (sel != -1 && 
