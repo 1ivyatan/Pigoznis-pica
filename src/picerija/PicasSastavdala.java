@@ -44,4 +44,8 @@ public class PicasSastavdala extends DatuVieniba implements java.io.Serializable
 		this.piezime = p;
 		this.cena = c;
 	}
+	
+	public DatuVieniba copy() {
+		return new PicasSastavdala(this.vards, this.piezime, this.cena);
+	}
 }

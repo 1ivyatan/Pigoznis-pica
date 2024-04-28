@@ -93,7 +93,7 @@ public class KontaktuVeidotajaLogs extends JDialog {
 		piezPanelis.add(new JLabel(" Piezīme    "), BorderLayout.WEST);
 		
 		piezTeksts = new JTextArea();
-		piezPanelis.add(new JScrollPane(piezTeksts, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS), BorderLayout.CENTER);
+		piezPanelis.add(new JScrollPane(piezTeksts, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED), BorderLayout.CENTER);
 		
 		if (preview != null) {
 			setTitle("Rediģēt '" + preview.getNosaukums() + "'");

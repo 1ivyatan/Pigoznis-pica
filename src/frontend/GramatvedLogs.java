@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
@@ -362,7 +363,7 @@ public class GramatvedLogs extends JFrame {
 		JTextArea prevTeksts = new JTextArea();
 		prevTeksts.setTabSize(4);
 		prevTeksts.setEditable(false);
-		prevPanelis.add(prevTeksts);
+		prevPanelis.add(new JScrollPane(prevTeksts, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
 		atspejojamieUi.add(prevTeksts);
 		
 		/* meklējamie saraksti */ //UISARAKSTI

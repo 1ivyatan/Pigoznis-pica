@@ -40,4 +40,8 @@ public class Kontakts extends DatuVieniba implements java.io.Serializable {
 		this.numurs = numurs; 
 		this.piezime = piezime;
 	}
+
+	public DatuVieniba copy() {
+		return new Kontakts(this.vards, this.adrese, this.numurs, this.piezime);
+	}
 }

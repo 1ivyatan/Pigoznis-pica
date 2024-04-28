@@ -40,6 +40,7 @@ public class PicuVeidotajaLogs extends JDialog {
 	
 	public static DatuVieniba jaunaPica(DatuVieniba preview) {
 		pica = null;
+		sastavdalas = null;
 		PicuVeidotajaLogs dialog = new PicuVeidotajaLogs(preview);
 		
 		dialog.setVisible(true);
@@ -106,7 +107,6 @@ public class PicuVeidotajaLogs extends JDialog {
 		/* sastāvdaļas */
 		sastavdalas = new ArrayList<DatuVieniba>();
 		picasSastavdalas = new MeklejamsSaraksts(null);
-		picasSastavdalas.setElementi(sastavdalas);
 		sastavdaluPanelis.add(picasSastavdalas);
 		
 		JPanel sastavPogas = new JPanel();
@@ -131,14 +131,21 @@ public class PicuVeidotajaLogs extends JDialog {
 		piezPanelis.add(new JLabel(" Piezīme    "), BorderLayout.WEST);
 		
 		piezTeksts = new JTextArea();
-		piezPanelis.add(new JScrollPane(piezTeksts, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS), BorderLayout.CENTER);
+		piezPanelis.add(new JScrollPane(piezTeksts, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED), BorderLayout.CENTER);
 		
 		if (preview != null) {
 			setTitle("Rediģēt '" + preview.getNosaukums() + "'");
-			
+			nosTeksts.setText(((Pica) preview).getVards());
+			diametrsTeksts.setText(((Pica) preview).getDiametrsCm() + "");
+			cenuTeksts.setText(((Pica) preview).getCena() + "");
+			piezTeksts.setText(((Pica) preview).getPiezime());
+
+			sastavdalas = ((Pica)preview).getSastavdalas();
 		} else {
 			setTitle("Jauna pica");
 		}
+		
+		picasSastavdalas.setElementi(sastavdalas);
 		
 		/* notikumi */
 		/* sastāvdaļas */
@@ -157,7 +164,7 @@ public class PicuVeidotajaLogs extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				int sel = picasSastavdalas.getSelIdx();
 				if (sel != -1) {
-					DatuVieniba js = SastavdaluVeidotajaLogs.jaunaSastavdala( picasSastavdalas.getSelectedDV() );
+					DatuVieniba js = SastavdaluVeidotajaLogs.jaunaSastavdala( picasSastavdalas.getSelectedDV().copy() );
 					
 					if (js != null) {
 						sastavdalas.set(sel, js);
@@ -177,11 +184,67 @@ public class PicuVeidotajaLogs extends JDialog {
 			}
 		});
 		
+		sastavImp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DatuVieniba sel = SastavdaluVeidotajaLogs.noDatubazes();
+				
+				if (sel != null) {
+					sastavdalas.add(sel);
+					picasSastavdalas.setElementi();
+				}
+			}
+		});
 		
 		/* saglab. pogas */
 		saglPoga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				if (nosTeksts.getText() == null || nosTeksts.getText().isEmpty() || nosTeksts.getText().isBlank()) {
+					JOptionPane.showMessageDialog(getContentPane(), "Jāievada vārds!", "!!!", JOptionPane.WARNING_MESSAGE);
+					return;
+				} else if (diametrsTeksts.getText() == null || diametrsTeksts.getText().isEmpty() || diametrsTeksts.getText().isBlank()) {
+					JOptionPane.showMessageDialog(getContentPane(), "Jāievada diametrs!", "!!!", JOptionPane.WARNING_MESSAGE);
+					return;
+				} else if (cenuTeksts.getText() == null || cenuTeksts.getText().isEmpty() || cenuTeksts.getText().isBlank()) {
+					JOptionPane.showMessageDialog(getContentPane(), "Jāievada cena!", "!!!", JOptionPane.WARNING_MESSAGE);
+					return;
+				} else if (piezTeksts.getText() == null) {
+					JOptionPane.showMessageDialog(getContentPane(), "Piezīme pēkšņi nevar būt 'null'!", "!!!", JOptionPane.WARNING_MESSAGE);
+					return;
+				} else if (sastavdalas == null || sastavdalas.isEmpty()) {
+					JOptionPane.showMessageDialog(getContentPane(), "Jāievada sastāvdaļas!", "!!!", JOptionPane.WARNING_MESSAGE);
+					return;
+				} else {
+					double ievDm = 0, ievCena = 0;
+					
+					/* diametrs */
+					try {
+						ievDm = Double.parseDouble(diametrsTeksts.getText());
+						if (Double.isNaN(ievDm)) {
+							JOptionPane.showMessageDialog(getContentPane(), "Nederīgs diametrs!", "!!!", JOptionPane.WARNING_MESSAGE);
+							return;
+						}
+						ievDm = (double) Math.round(ievDm * 100) / 100;
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(getContentPane(), ex.getMessage(), "Tas nav diametrs!", JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+					
+					/* cena */
+					try {
+						ievCena = Double.parseDouble(cenuTeksts.getText());
+						if (Double.isNaN(ievCena)) {
+							JOptionPane.showMessageDialog(getContentPane(), "Nederīga cena", "!!!", JOptionPane.WARNING_MESSAGE);
+							return;
+						}
+						ievCena = (double) Math.round(ievCena * 100) / 100;
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(getContentPane(), ex.getMessage(), "Tā nav cena!", JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+					
+					pica = new Pica(nosTeksts.getText(), piezTeksts.getText(), ievCena, ievDm, sastavdalas);
+					dispose();
+				}
 			}
 		});
 		

@@ -23,6 +23,7 @@ import java.awt.Dimension;
 
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
+import javax.swing.JRadioButton;
 
 public class SastavdaluVeidotajaLogs extends JDialog {
 	private static final long serialVersionUID = 1L;
@@ -32,12 +33,66 @@ public class SastavdaluVeidotajaLogs extends JDialog {
 	private JTextField cenuTeksts;
 	private JTextArea piezTeksts;
 	
+	public static DatuVieniba noDatubazes() {
+		SastavdaluVeidotajaLogs dialog = new SastavdaluVeidotajaLogs();
+		dialog.setVisible(true);
+		return sastavdala;
+	}
+	
 	public static DatuVieniba jaunaSastavdala(DatuVieniba preview) {
 		sastavdala = null;
 		SastavdaluVeidotajaLogs dialog = new SastavdaluVeidotajaLogs(preview);
 		
 		dialog.setVisible(true);
 		return sastavdala;
+	}
+	
+	public SastavdaluVeidotajaLogs() {
+		setModal(true);
+		setMinimumSize(new Dimension(400, 250));
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		
+		/* UI */
+		setTitle("No datubāzes...");
+		JTextArea priekshsakt = new JTextArea();
+		getContentPane().add(new JScrollPane(priekshsakt, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED), BorderLayout.CENTER);
+		
+		MeklejamsSaraksts sar = new MeklejamsSaraksts(priekshsakt);
+		JPanel izveletajs = new JPanel();
+		izveletajs.setLayout(new BorderLayout(0, 0));
+		izveletajs.add(sar);
+		getContentPane().add(izveletajs, BorderLayout.WEST);
+		
+		JPanel pogupanelis = new JPanel();
+		FlowLayout fl_pogupanelis = (FlowLayout) pogupanelis.getLayout();
+		fl_pogupanelis.setAlignment(FlowLayout.RIGHT);
+		getContentPane().add(pogupanelis, BorderLayout.SOUTH);
+		
+		JButton saglPoga = new JButton("Pievienot");
+		pogupanelis.add(saglPoga);
+		
+		JButton atceltPoga = new JButton("Atcelt");
+		pogupanelis.add(atceltPoga);
+		
+		sar.setElementi(Programma.getDb().getDati().getSastavdalas());
+		
+		/* notikumi */
+		saglPoga.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DatuVieniba sel = sar.getSelectedDV();
+				
+				if (sel != null) {
+					sastavdala = sel;
+					dispose();
+				}
+			}
+		});
+		
+		atceltPoga.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 	}
 	
 	public SastavdaluVeidotajaLogs(DatuVieniba preview) {
