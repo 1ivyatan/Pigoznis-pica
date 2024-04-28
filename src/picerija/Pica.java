@@ -15,7 +15,22 @@ public class Pica extends DatuVieniba implements java.io.Serializable {
 
 	@Override
 	public String getInfo() {
-		return "asd";
+		String ret = 
+			this.vards + "\n" +
+			"Kopējā cena: " + this.totalCena + "\n" +
+			"Cena: " + this.cena + "\n" +
+			"Diametrs: " + this.diametrsCm + "\n\n ---- Sastāvdaļas ---\nNos.\t\t\tCena\n"
+		;
+		
+		for (DatuVieniba i : sastavdalas) {
+			ret += ((PicasSastavdala) i).getVards() + "\t\t" + ((PicasSastavdala) i).getCena() + "\n";
+		}
+		
+		ret +=
+			"\n ---- Piezīme ---\n" + this.piezime
+		;
+		
+		return ret;
 	}
 	
 	/* get */

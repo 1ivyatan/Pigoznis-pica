@@ -495,6 +495,7 @@ public class GramatvedLogs extends JFrame {
 							Programma.getDb().getDati().pievienotKontaktu(jk);
 							Programma.setIzmaina(true);
 							saraksti.get(SAR_KONTAKTI).setElementi();
+							statusaTeksts.setText("Pievienoja kontaktu");
 						}
 						
 						break;
@@ -509,6 +510,7 @@ public class GramatvedLogs extends JFrame {
 									Programma.getDb().getDati().pievienotPicu(pc);
 									Programma.setIzmaina(true);
 									saraksti.get(SAR_PICAS).setElementi();
+									statusaTeksts.setText("Pievienoja picu");
 								}
 								
 								break;
@@ -521,6 +523,7 @@ public class GramatvedLogs extends JFrame {
 									Programma.getDb().getDati().pievienotSastavdalu(jc);
 									Programma.setIzmaina(true);
 									saraksti.get(SAR_SASTAVDALAS).setElementi();
+									statusaTeksts.setText("Pievienoja sastāvdaļu");
 								}
 								
 								break;
@@ -545,7 +548,10 @@ public class GramatvedLogs extends JFrame {
 								Programma.getDb().getDati().nomainitKontaktu(sel, jk);
 								Programma.setIzmaina(true);
 								saraksti.get(SAR_KONTAKTI).setElementi();
+								statusaTeksts.setText("Rediģēja kontaktu");
 							}
+						} else {
+							JOptionPane.showMessageDialog(ramis, "Jāatlasa kontaktu!", "!!!", JOptionPane.WARNING_MESSAGE);
 						}
 						break;
 					}
@@ -562,7 +568,10 @@ public class GramatvedLogs extends JFrame {
 										Programma.getDb().getDati().nomainitPicu(sel, js);
 										Programma.setIzmaina(true);
 										saraksti.get(SAR_PICAS).setElementi();
+										statusaTeksts.setText("Rediģēja picu");
 									}
+								} else {
+									JOptionPane.showMessageDialog(ramis, "Jāatlasa picu!", "!!!", JOptionPane.WARNING_MESSAGE);
 								}
 								break;
 							}
@@ -576,7 +585,10 @@ public class GramatvedLogs extends JFrame {
 										Programma.getDb().getDati().nomainitSastavdalu(sel, js);
 										Programma.setIzmaina(true);
 										saraksti.get(SAR_SASTAVDALAS).setElementi();
+										statusaTeksts.setText("Rediģēja sastāvdaļu");
 									}
+								} else {
+									JOptionPane.showMessageDialog(ramis, "Jāatlasa sastāvdaļu!", "!!!", JOptionPane.WARNING_MESSAGE);
 								}
 								break;
 							}
@@ -593,14 +605,17 @@ public class GramatvedLogs extends JFrame {
 				switch (cilnes.getSelectedIndex()) {
 					case 1: {
 						int sel = saraksti.get(SAR_KONTAKTI).getSelIdx();
-						if (sel != -1 && 
-							JOptionPane.showConfirmDialog(ramis, "Tiešām dzēst šo kontaktu '" + saraksti.get(SAR_KONTAKTI).getSelectedDV().getNosaukums() + "'?", "Jautājums", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION
-						) {
-							Programma.getDb().getDati().nonemtKontaktu( 
-									saraksti.get(SAR_KONTAKTI).getSelIdx()
-							);
-							Programma.setIzmaina(true);
-							saraksti.get(SAR_KONTAKTI).setElementi();
+						if (sel != -1) {
+							if (JOptionPane.showConfirmDialog(ramis, "Tiešām dzēst šo kontaktu '" + saraksti.get(SAR_KONTAKTI).getSelectedDV().getNosaukums() + "'?", "Jautājums", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+								Programma.getDb().getDati().nonemtKontaktu( 
+										saraksti.get(SAR_KONTAKTI).getSelIdx()
+								);
+								Programma.setIzmaina(true);
+								saraksti.get(SAR_KONTAKTI).setElementi();
+								statusaTeksts.setText("Noņēma kontaktu");
+							}
+						} else {
+							JOptionPane.showMessageDialog(ramis, "Jāatlasa kontaktu!", "!!!", JOptionPane.WARNING_MESSAGE);
 						}
 						break;
 					}
@@ -609,28 +624,34 @@ public class GramatvedLogs extends JFrame {
 						switch (picuCilnes.getSelectedIndex()) {
 							case 0: {
 								int sel = saraksti.get(SAR_PICAS).getSelIdx();
-								if (sel != -1 && 
-										JOptionPane.showConfirmDialog(ramis, "Tiešām dzēst šo picu? '" + saraksti.get(SAR_PICAS).getSelectedDV().getNosaukums() + "'?", "Jautājums", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION
-								) {
-									Programma.getDb().getDati().nonemtPicu( 
-										saraksti.get(SAR_PICAS).getSelIdx()
-									);
-									Programma.setIzmaina(true);
-									saraksti.get(SAR_PICAS).setElementi();
+								if (sel != -1) {
+									if (JOptionPane.showConfirmDialog(ramis, "Tiešām dzēst šo picu? '" + saraksti.get(SAR_PICAS).getSelectedDV().getNosaukums() + "'?", "Jautājums", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+										Programma.getDb().getDati().nonemtPicu( 
+												saraksti.get(SAR_PICAS).getSelIdx()
+											);
+										Programma.setIzmaina(true);
+										saraksti.get(SAR_PICAS).setElementi();
+										statusaTeksts.setText("Noņēma picu");
+									}
+								} else {
+									JOptionPane.showMessageDialog(ramis, "Jāatlasa picu!", "!!!", JOptionPane.WARNING_MESSAGE);
 								}
 								break;
 							}
 							
 							case 1: {
 								int sel = saraksti.get(SAR_SASTAVDALAS).getSelIdx();
-								if (sel != -1 && 
-									JOptionPane.showConfirmDialog(ramis, "Tiešām dzēst šo sastāvdaļu '" + saraksti.get(SAR_SASTAVDALAS).getSelectedDV().getNosaukums() + "'?", "Jautājums", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION
-								) {
-									Programma.getDb().getDati().nonemtSastavdalu( 
-											saraksti.get(SAR_SASTAVDALAS).getSelIdx()
-									);
-									Programma.setIzmaina(true);
-									saraksti.get(SAR_SASTAVDALAS).setElementi();
+								if (sel != -1) {
+									if (JOptionPane.showConfirmDialog(ramis, "Tiešām dzēst šo sastāvdaļu '" + saraksti.get(SAR_SASTAVDALAS).getSelectedDV().getNosaukums() + "'?", "Jautājums", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+										Programma.getDb().getDati().nonemtSastavdalu( 
+												saraksti.get(SAR_SASTAVDALAS).getSelIdx()
+										);
+										Programma.setIzmaina(true);
+										saraksti.get(SAR_SASTAVDALAS).setElementi();
+										statusaTeksts.setText("Noņēma sastāvdaļu");
+									}
+								} else {
+									JOptionPane.showMessageDialog(ramis, "Jāatlasa sastāvdaļu!", "!!!", JOptionPane.WARNING_MESSAGE);
 								}
 								break;
 							}

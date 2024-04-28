@@ -103,7 +103,7 @@ public class MeklejamsSaraksts extends JPanel {
 	
 	/* get */
 	public int getSelIdx() {
-		if (saraksts != null && saraksts.getModel().getSize() > 0)
+		if (saraksts != null && saraksts.getModel().getSize() > 0 && this.getRealSelIdx() != -1)
 			return this.returnableIdxi.get(this.getRealSelIdx());
 		else return -1;
 	}
