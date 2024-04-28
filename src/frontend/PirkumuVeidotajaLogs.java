@@ -42,7 +42,7 @@ public class PirkumuVeidotajaLogs extends JDialog {
 
 	public PirkumuVeidotajaLogs(DatuVieniba preview) { 
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		setMinimumSize(new Dimension(480, 360));
+		setMinimumSize(new Dimension(580, 360));
 		
 		JPanel poguPanelis = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) poguPanelis.getLayout();
@@ -59,12 +59,12 @@ public class PirkumuVeidotajaLogs extends JDialog {
 		getContentPane().add(cekuPanelis, BorderLayout.CENTER);
 		cekuPanelis.setLayout(new BorderLayout(0, 0));
 		
-		JPanel kontaktaLogs = new JPanel();
-		cekuPanelis.add(kontaktaLogs, BorderLayout.WEST);
-		kontaktaLogs.setLayout(new BorderLayout(0, 0));
+		JPanel kontaktuPanelis = new JPanel();
+		cekuPanelis.add(kontaktuPanelis, BorderLayout.WEST);
+		kontaktuPanelis.setLayout(new BorderLayout(0, 0));
 		
 		Box konTxti = Box.createVerticalBox();
-		kontaktaLogs.add(konTxti, BorderLayout.NORTH);
+		kontaktuPanelis.add(konTxti, BorderLayout.NORTH);
 		
 		JPanel konTitle = new JPanel();
 		konTxti.add(konTitle);
@@ -104,7 +104,7 @@ public class PirkumuVeidotajaLogs extends JDialog {
 		konPogas.add(konPogaNoDb);
 		
 		Box optTxti = Box.createVerticalBox();
-		kontaktaLogs.add(optTxti, BorderLayout.SOUTH);
+		kontaktuPanelis.add(optTxti, BorderLayout.SOUTH);
 		
 		JPanel optTxtPanelis = new JPanel();
 		optTxti.add(optTxtPanelis);
@@ -121,6 +121,78 @@ public class PirkumuVeidotajaLogs extends JDialog {
 		gatavaChkbx.setFont(new Font("Tahoma", Font.BOLD, 11));
 		gatavaChkbx.setAlignmentX(Component.CENTER_ALIGNMENT);
 		optTxti.add(gatavaChkbx);
+		
+		JPanel picuPanelis = new JPanel();
+		cekuPanelis.add(picuPanelis, BorderLayout.CENTER);
+		picuPanelis.setLayout(new BorderLayout(0, 0));
+		
+		JPanel picuPanN = new JPanel();
+		picuPanelis.add(picuPanN, BorderLayout.CENTER);
+		picuPanN.setLayout(new BorderLayout(0, 0));
+		
+		JLabel picuPanTxt = new JLabel("Preces");
+		picuPanTxt.setFont(new Font("Tahoma", Font.BOLD, 11));
+		picuPanTxt.setHorizontalAlignment(SwingConstants.CENTER);
+		picuPanN.add(picuPanTxt, BorderLayout.NORTH);
+		
+		JPanel picuPanPicas = new JPanel();
+		picuPanN.add(picuPanPicas, BorderLayout.CENTER);
+		
+		JPanel picuPanPogas = new JPanel();
+		picuPanN.add(picuPanPogas, BorderLayout.SOUTH);
+		
+		JButton ppJaunsPoga = new JButton("Izveidot");
+		picuPanPogas.add(ppJaunsPoga);
+		
+		JButton ppRedPoga = new JButton("Rediģēt");
+		picuPanPogas.add(ppRedPoga);
+		
+		JButton ppDzestPoga = new JButton("Dzēst");
+		picuPanPogas.add(ppDzestPoga);
+		
+		JButton ppDbPoga = new JButton("No datubāzes");
+		picuPanPogas.add(ppDbPoga);
+		
+		JPanel picuPanCena = new JPanel();
+		picuPanelis.add(picuPanCena, BorderLayout.SOUTH);
+		
+		JLabel cenaLbl = new JLabel("Kopējā cena:");
+		cenaLbl.setFont(new Font("Tahoma", Font.BOLD, 11));
+		picuPanCena.add(cenaLbl);
+		
+		JPanel panel = new JPanel();
+		picuPanCena.add(panel);
+		
+		Box verticalBox = Box.createVerticalBox();
+		panel.add(verticalBox);
+		
+		JPanel precuKopCenPanelis = new JPanel();
+		verticalBox.add(precuKopCenPanelis);
+		
+		JLabel pkcpNosLbl = new JLabel("Preču kop. cena");
+		pkcpNosLbl.setFont(new Font("Tahoma", Font.BOLD, 11));
+		precuKopCenPanelis.add(pkcpNosLbl);
+		
+		JLabel pkcpCenuLbl = new JLabel(" ");
+		precuKopCenPanelis.add(pkcpCenuLbl);
+		
+		JPanel piegCenaPanelis = new JPanel();
+		verticalBox.add(piegCenaPanelis);
+		
+		JLabel pcpNosLbl = new JLabel("Piegādes cena");
+		pcpNosLbl.setFont(new Font("Tahoma", Font.BOLD, 11));
+		piegCenaPanelis.add(pcpNosLbl);
+		
+		JLabel pcpCenuLbl = new JLabel(" ");
+		piegCenaPanelis.add(pcpCenuLbl);
+		
+		JPanel kopaCenaPanelis = new JPanel();
+		kopaCenaPanelis.setAlignmentX(Component.LEFT_ALIGNMENT);
+		verticalBox.add(kopaCenaPanelis);
+		
+		JLabel kopaCenaLbl = new JLabel(" ");
+		kopaCenaLbl.setFont(new Font("Tahoma", Font.BOLD, 11));
+		kopaCenaPanelis.add(kopaCenaLbl);
 		
 	}
 
