@@ -84,7 +84,7 @@ public class PicuVeidotajaLogs extends JDialog {
 		diametrsTeksts = new JTextField();
 		diametrsPanelis.add(diametrsTeksts);
 		diametrsTeksts.setColumns(10);
-		diametrsPanelis.add(new JLabel("cm"));
+		diametrsPanelis.add(new JLabel(Programma.getDb().getDati().getMervienibasSim()));
 		
 		JPanel cenuPanelis = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) cenuPanelis.getLayout();

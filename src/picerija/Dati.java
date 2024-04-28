@@ -10,9 +10,13 @@ public class Dati implements Serializable {
 	private ArrayList<DatuVieniba> kontakti;
 	private ArrayList<DatuVieniba> sastavdalas;
 	private ArrayList<DatuVieniba> picas;
+
+	private ArrayList<DatuVieniba> pirkumi;
+	private ArrayList<DatuVieniba> pirkumuVest;
 	
 	/* mainīgie */
 	private String valutasSim = "EUR";
+	private String mervienibasSim = "cm";
 	
 	/* kontakti */
 	public void nonemtKontaktu(int idx) {
@@ -79,9 +83,17 @@ public class Dati implements Serializable {
 		return this.valutasSim;
 	}
 	
+	public String getMervienibasSim() {
+		return this.mervienibasSim;
+	}
+	
 	/* seteri */
 	public void setValutasSim(String valuta) {
 		this.valutasSim = valuta;
+	}
+
+	public void setMervienibasSim(String m) {
+		this.mervienibasSim = m;
 	}
 	
 	/* kons */

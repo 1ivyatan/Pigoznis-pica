@@ -27,10 +27,6 @@ public class IestatLogs extends JDialog {
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		dialog.setVisible(true);
 	}
-
-	/**
-	 * Create the dialog.
-	 */
 	
 	public IestatLogs() {
 		setLocationRelativeTo(null);
@@ -43,7 +39,7 @@ public class IestatLogs extends JDialog {
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setMinimumSize(new Dimension(320, 180));
+		setMinimumSize(new Dimension(340, 180));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		
 		/* UI */
@@ -60,13 +56,22 @@ public class IestatLogs extends JDialog {
 		JPanel valutaIest = new JPanel();
 		iestPanel.add(valutaIest);
 		
-		JLabel valutaNos = new JLabel("Valūta");
-		valutaIest.add(valutaNos);
+		valutaIest.add(new JLabel("Valūta"));
 		
 		JTextField valutaVert = new JTextField();
 		valutaVert.setColumns(10);
 		valutaVert.setText(Programma.getDb().getDati().getValutasSim());
 		valutaIest.add(valutaVert);
+		
+		JPanel mervIest = new JPanel();
+		mervIest.add(new JLabel("Mērvienība"));
+		
+		JTextField mervVert = new JTextField();
+		mervVert.setColumns(15);
+		mervVert.setText(Programma.getDb().getDati().getMervienibasSim());
+		mervIest.add(mervVert);
+		
+		iestPanel.add(mervIest);
 		
 		JPanel status = new JPanel();
 		contentPanel.add(status, BorderLayout.SOUTH);
@@ -99,6 +104,36 @@ public class IestatLogs extends JDialog {
 					statusTeksts.setText("Valūta: jābūt vērtībai");
 				} else {
 					Programma.getDb().getDati().setValutasSim(in);;
+					statusTeksts.setText(" ");
+				}
+			}
+		});
+		
+		mervVert.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				atjaunotMervienubu();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				atjaunotMervienubu();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				atjaunotMervienubu();
+			}
+			
+			private void atjaunotMervienubu() {
+				String in = mervVert.getText();
+				
+				if (in.length() > 10) {
+					statusTeksts.setText("Mērvienība: rakstzīmju skaitam jābut ne vairāk kā 20");
+				} else if (in.length() < 1 || ( in.isBlank() )) {
+					statusTeksts.setText("Mērvienība: jābūt vērtībai");
+				} else {
+					Programma.getDb().getDati().setMervienibasSim(in);;
 					statusTeksts.setText(" ");
 				}
 			}
