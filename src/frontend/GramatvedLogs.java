@@ -601,6 +601,11 @@ public class GramatvedLogs extends JFrame {
 								}
 								break;
 							}
+							
+							case 1: {
+								JOptionPane.showMessageDialog(ramis, "Nevar rediģēt!", "!!!", JOptionPane.WARNING_MESSAGE);
+								break;
+							}
 						}
 						break;
 					}
@@ -669,6 +674,41 @@ public class GramatvedLogs extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				switch (cilnes.getSelectedIndex()) {
+					case 0: {
+						switch (pirkumuCilnes.getSelectedIndex()) {
+							case 0: {
+								int sel = saraksti.get(SAR_PIRKUMI).getSelIdx();
+								if (sel != -1) {
+									if (JOptionPane.showConfirmDialog(ramis, "Tiešām dzēst šo pirkumu? '" + saraksti.get(SAR_PIRKUMI).getSelectedDV().getNosaukums() + "'?", "Jautājums", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+										Programma.getDb().getDati().nonemtPasut(sel);
+										Programma.setIzmaina(true);
+										saraksti.get(SAR_PIRKUMI).setElementi();
+										statusaTeksts.setText("Nodzēsa pasūtījumu");
+									}
+								} else {
+									JOptionPane.showMessageDialog(ramis, "Jāatlasa pasūtījumu!", "!!!", JOptionPane.WARNING_MESSAGE);
+								}
+								break;
+							}
+							
+							case 1: {
+								int sel = saraksti.get(SAR_PIRKUMU_VEST).getSelIdx();
+								if (sel != -1) {
+									if (JOptionPane.showConfirmDialog(ramis, "Tiešām dzēst šo pirkumu? '" + saraksti.get(SAR_PIRKUMU_VEST).getSelectedDV().getNosaukums() + "'?", "Jautājums", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+										Programma.getDb().getDati().nonemtPasutVest(sel);
+										Programma.setIzmaina(true);
+										saraksti.get(SAR_PIRKUMU_VEST).setElementi();
+										statusaTeksts.setText("Nodzēsa pasūtījumu");
+									}
+								} else {
+									JOptionPane.showMessageDialog(ramis, "Jāatlasa pasūtījumu!", "!!!", JOptionPane.WARNING_MESSAGE);
+								}
+								break;
+							}
+						}
+						break;
+					}
+				
 					case 1: {
 						int sel = saraksti.get(SAR_KONTAKTI).getSelIdx();
 						if (sel != -1) {

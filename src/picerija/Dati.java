@@ -160,19 +160,5 @@ public class Dati implements Serializable {
 		this.picas = new ArrayList<DatuVieniba>();
 		this.pirkumi = new ArrayList<DatuVieniba>();
 		this.pirkumuVest = new ArrayList<DatuVieniba>();
-		
-		// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-		this.kontakti.add(new Kontakts("Jaan", "dd", "dd", "dd"));
-		this.kontakti.add(new Kontakts("paan", "dd", "dd", "dd"));
-		this.kontakti.add(new Kontakts("Ajumu", "dd", "dd", "dd"));
-		
-		this.sastavdalas.add(new PicasSastavdala("Desas", "ggggggg", 1.00));
-		this.sastavdalas.add(new PicasSastavdala("iiiiiiiiiesas", "ggggggg", 1.00));
-		this.sastavdalas.add(new PicasSastavdala("Desas", "ggggggg", 1.00));
-		
-		this.picas.add(new Pica("pica", "asdasddas", 11.0, 25.0, new ArrayList<DatuVieniba>()));
-		this.picas.add(new Pica("pica", "asdasddas", 11.0, 25.0, new ArrayList<DatuVieniba>()));
-		this.picas.add(new Pica("pica", "asdasddas", 11.0, 25.0, new ArrayList<DatuVieniba>()));
-		// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	}
 }
