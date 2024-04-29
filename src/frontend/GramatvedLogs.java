@@ -112,8 +112,15 @@ public class GramatvedLogs extends JFrame {
 			try {
 				Programma.atvertDb(izv.getSelectedFile());
 				statusaTeksts.setText("Atvēra datubāzi " + izv.getSelectedFile().getAbsolutePath());
+				
 				setLogaNos();
 				sledzeUi(true);
+				
+				saraksti.get(SAR_KONTAKTI).setElementi(Programma.getDb().getDati().getKontakti());
+				saraksti.get(SAR_SASTAVDALAS).setElementi(Programma.getDb().getDati().getSastavdalas());
+				saraksti.get(SAR_PICAS).setElementi(Programma.getDb().getDati().getPicas());
+				saraksti.get(SAR_PIRKUMI).setElementi(Programma.getDb().getDati().getPasut());
+				saraksti.get(SAR_PIRKUMU_VEST).setElementi(Programma.getDb().getDati().getPasutVest());
 			} catch (Exception e) {
 				statusaTeksts.setText("Nevarēja atvērt datubāzi " + izv.getSelectedFile().getAbsolutePath());
 				JOptionPane.showMessageDialog(logaPanelis, e.getMessage(), "Nevarēja atvērt datubāzi", JOptionPane.ERROR_MESSAGE);
@@ -312,10 +319,6 @@ public class GramatvedLogs extends JFrame {
 		JButton izvDzestPoga = new JButton("Dzēst");
 		izvDzestInfoPanelis.add(izvDzestPoga);
 		atspejojamieUi.add(izvDzestPoga);
-		
-		JButton izvInfoPoga = new JButton("Informācija");
-		izvDzestInfoPanelis.add(izvInfoPoga);
-		atspejojamieUi.add(izvInfoPoga);
 		
 		JPanel cilnIzvelne = new JPanel();
 		izvPanelis.add(cilnIzvelne, BorderLayout.CENTER);
@@ -765,13 +768,6 @@ public class GramatvedLogs extends JFrame {
 						break;
 					}
 				}
-			}
-		});
-		
-		izvInfoPoga.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
 			}
 		});
 		

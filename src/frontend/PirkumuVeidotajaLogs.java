@@ -260,7 +260,7 @@ public class PirkumuVeidotajaLogs extends JDialog {
 			piegadeUzAdrChkbx.setSelected( ((Pirkums)preview).getPiegadeUzAdresi() );
 			gatavaChkbx.setSelected( ((Pirkums)preview).getGatavs() );
 			
-			piegCenaPanelis.setVisible(false);
+			piegCenaPanelis.setVisible(((Pirkums)preview).getPiegadeUzAdresi());
 		} else {
 			setTitle("Jauns pasūtījums");
 		}
