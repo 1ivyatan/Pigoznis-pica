@@ -1,27 +1,21 @@
 package frontend;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 import picerija.DatuVieniba;
 import picerija.Kontakts;
 import picerija.Pica;
 import picerija.Pirkums;
 
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -32,7 +26,6 @@ import java.util.regex.Pattern;
 import java.awt.Component;
 import javax.swing.SwingConstants;
 import java.awt.Font;
-import java.awt.GridLayout;
 import javax.swing.Box;
 import javax.swing.JCheckBox;
 

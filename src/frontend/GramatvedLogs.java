@@ -768,6 +768,13 @@ public class GramatvedLogs extends JFrame {
 			}
 		});
 		
+		izvInfoPoga.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
 		/* loga notikumi */
 		addWindowListener(new WindowAdapter() {
 			@Override

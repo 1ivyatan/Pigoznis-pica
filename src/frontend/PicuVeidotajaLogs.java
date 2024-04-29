@@ -13,7 +13,6 @@ import javax.swing.JScrollPane;
 
 import picerija.DatuVieniba;
 import picerija.Pica;
-import picerija.PicasSastavdala;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -24,7 +23,6 @@ import java.awt.Dimension;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
-import java.awt.Font;
 
 public class PicuVeidotajaLogs extends JDialog {
 	private static final long serialVersionUID = 1L;

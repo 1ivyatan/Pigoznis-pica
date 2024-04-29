@@ -23,7 +23,6 @@ import java.awt.Dimension;
 
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
-import javax.swing.JRadioButton;
 
 public class SastavdaluVeidotajaLogs extends JDialog {
 	private static final long serialVersionUID = 1L;
