@@ -64,6 +64,7 @@ public class GramatvedLogs extends JFrame {
 	private static final int SAR_KONTAKTI = 0;
 	private static final int SAR_SASTAVDALAS = 1;
 	private static final int SAR_PICAS = 2;
+	private static final int SAR_PIRKUMI = 3;
 	
 	/* statuss */
 	private static JLabel statusaTeksts;
@@ -92,6 +93,7 @@ public class GramatvedLogs extends JFrame {
 		saraksti.get(SAR_KONTAKTI).setElementi(Programma.getDb().getDati().getKontakti());
 		saraksti.get(SAR_SASTAVDALAS).setElementi(Programma.getDb().getDati().getSastavdalas());
 		saraksti.get(SAR_PICAS).setElementi(Programma.getDb().getDati().getPicas());
+		saraksti.get(SAR_PIRKUMI).setElementi(Programma.getDb().getDati().getPasut());
 		
 		sledzeUi(true);
 		setLogaNos();
@@ -333,6 +335,7 @@ public class GramatvedLogs extends JFrame {
 		pirkumuCilnes.addTab("Gaidošie", null, pasutCilne, null);
 		pasutCilne.setLayout(new CardLayout(0, 0));
 		
+		
 		JPanel pasutVestCilne = new JPanel();
 		pirkumuCilnes.addTab("Vēsture", null, pasutVestCilne, null);
 		pasutVestCilne.setLayout(new CardLayout(0, 0));
@@ -372,7 +375,7 @@ public class GramatvedLogs extends JFrame {
 		/* meklējamie saraksti */ //UISARAKSTI
 		saraksti = new ArrayList<MeklejamsSaraksts>();
 		
-		for (int i = 0; i < 3; i++) { ////////
+		for (int i = 0; i < 4; i++) { ////////
 			saraksti.add(new MeklejamsSaraksts(prevTeksts));
 			atspejojamieUi.add(saraksti.get(i));
 		}
@@ -380,6 +383,7 @@ public class GramatvedLogs extends JFrame {
 		kontaktuCilne.add(saraksti.get(SAR_KONTAKTI));
 		picuSastavCilne.add(saraksti.get(SAR_SASTAVDALAS));
 		picuRecepCilne.add(saraksti.get(SAR_PICAS));
+		pasutCilne.add(saraksti.get(SAR_PIRKUMI));
 		
 		/* ------   Notikumi   ----------- */
 		/* Datne -> */
@@ -494,7 +498,10 @@ public class GramatvedLogs extends JFrame {
 								DatuVieniba jp = PirkumuVeidotajaLogs.jaunsPirkums(null);
 								
 								if (jp != null) {
-									
+									Programma.getDb().getDati().pievienotPasut(jp);
+									Programma.setIzmaina(true);
+									saraksti.get(SAR_PIRKUMI).setElementi();
+									statusaTeksts.setText("Pievienoja pasūtījumu");
 								}
 							}
 						}

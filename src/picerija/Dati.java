@@ -79,6 +79,44 @@ public class Dati implements Serializable {
 		return this.picas;
 	}
 	
+	/* pasūtījumi */
+	public void nonemtPasut(int idx) {
+		if (pirkumi.size() > 0)
+			this.pirkumi.remove(idx);
+	}
+	
+	public void pievienotPasut(DatuVieniba jp) {
+		if (jp != null)
+			this.pirkumi.add(jp);
+	}
+	
+	public void nomainitPasut(int idx, DatuVieniba jp) {
+		if (pirkumi.size() > 0)
+			this.pirkumi.set(idx, jp);
+	}
+	
+	public ArrayList<DatuVieniba> getPasut() {
+		return this.pirkumi;
+	}
+	
+	/* pasūtījumi */
+	public void nonemtPasutVest(int idx) {
+		if (pirkumuVest.size() > 0)
+			this.pirkumuVest.remove(idx);
+	}
+	
+	public void uzPasutVest(int idx) {
+		if (-1 < idx && idx < this.pirkumi.size()) {
+			DatuVieniba parv = this.pirkumi.get(idx);
+			this.pirkumuVest.add(parv);
+			this.pirkumi.remove(idx);
+		}
+	}
+	
+	public ArrayList<DatuVieniba> getPasutVest() {
+		return this.pirkumuVest;
+	}
+	
 	/* geteri */
 	public double getPiegadesCena() {
 		return this.piegadesCena;
@@ -110,6 +148,8 @@ public class Dati implements Serializable {
 		this.kontakti = new ArrayList<DatuVieniba>();
 		this.sastavdalas = new ArrayList<DatuVieniba>();
 		this.picas = new ArrayList<DatuVieniba>();
+		this.pirkumi = new ArrayList<DatuVieniba>();
+		this.pirkumuVest = new ArrayList<DatuVieniba>();
 		
 		// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 		this.kontakti.add(new Kontakts("Jaan", "dd", "dd", "dd"));

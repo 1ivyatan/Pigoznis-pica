@@ -218,6 +218,8 @@ public class PirkumuVeidotajaLogs extends JDialog {
 			}
 		});
 		
+		/* preces */
+		
 	}
 
 }
