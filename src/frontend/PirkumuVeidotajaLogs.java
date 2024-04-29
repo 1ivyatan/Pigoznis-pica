@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 
 import picerija.DatuVieniba;
 import picerija.Kontakts;
+import picerija.Pica;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -25,6 +26,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.awt.Component;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -38,12 +41,47 @@ public class PirkumuVeidotajaLogs extends JDialog {
 	/* mainīgie */
 	private static DatuVieniba pirkums = null;
 	private static ArrayList<DatuVieniba> preces = null;
+	private double totCena = 0.0, precuCena = 0.0;
 	
 	/* ievade */
 	/* kontakta inf. */
 	private JTextField konVardTxt;
 	private JTextField konAdrTxt;
 	private JTextField konTalrTxt;
+	
+	/* ui */
+	private JCheckBox piegadeUzAdrChkbx;
+	private JLabel pkcpCenuLbl;
+	private JLabel kopaCenaLbl;
+	
+	private void setCenasUi() {
+		prepPrecuCena();
+		prepTotCena();
+		
+		pkcpCenuLbl.setText(precuCena + " " + Programma.getDb().getDati().getValutasSim());
+		kopaCenaLbl.setText(totCena + " " + Programma.getDb().getDati().getValutasSim());
+	}
+	
+	/* vars */
+	private void prepPrecuCena() {
+		precuCena = 0;
+		
+		if (preces != null) {
+			for (DatuVieniba i : preces) {
+				precuCena += ((Pica) i).getCena();
+			}
+		}
+	}
+	
+	private void prepTotCena() {
+		totCena =  ((piegadeUzAdrChkbx.isSelected()) ? Programma.getDb().getDati().getPiegadesCena() : 0)   + 0;
+		
+		if (preces != null) {
+			for (DatuVieniba i : preces) {
+				totCena += ((Pica) i).getCena();
+			}
+		}
+	}
 	
 	public static DatuVieniba jaunsPirkums(DatuVieniba preview) {
 		pirkums = null;
@@ -132,7 +170,7 @@ public class PirkumuVeidotajaLogs extends JDialog {
 		optTxtLbl.setFont(new Font("Tahoma", Font.BOLD, 11));
 		optTxtPanelis.add(optTxtLbl);
 		
-		JCheckBox piegadeUzAdrChkbx = new JCheckBox("Piegāde uz adr.");
+		piegadeUzAdrChkbx = new JCheckBox("Piegāde uz adr.", true);
 		piegadeUzAdrChkbx.setAlignmentX(Component.CENTER_ALIGNMENT);
 		optTxti.add(piegadeUzAdrChkbx);
 		
@@ -189,7 +227,7 @@ public class PirkumuVeidotajaLogs extends JDialog {
 		pkcpNosLbl.setFont(new Font("Tahoma", Font.BOLD, 11));
 		precuKopCenPanelis.add(pkcpNosLbl);
 		
-		JLabel pkcpCenuLbl = new JLabel(" ");
+		pkcpCenuLbl = new JLabel(" ");
 		precuKopCenPanelis.add(pkcpCenuLbl);
 		
 		JPanel piegCenaPanelis = new JPanel();
@@ -206,7 +244,7 @@ public class PirkumuVeidotajaLogs extends JDialog {
 		kopaCenaPanelis.setAlignmentX(Component.LEFT_ALIGNMENT);
 		verticalBox.add(kopaCenaPanelis);
 		
-		JLabel kopaCenaLbl = new JLabel(" ");
+		kopaCenaLbl = new JLabel(" ");
 		kopaCenaLbl.setFont(new Font("Tahoma", Font.BOLD, 11));
 		kopaCenaPanelis.add(kopaCenaLbl);
 		
@@ -214,6 +252,14 @@ public class PirkumuVeidotajaLogs extends JDialog {
 		MeklejamsSaraksts msPreces = new MeklejamsSaraksts(null);
 		msPreces.setElementi(preces);
 		picuPanN.add(msPreces, BorderLayout.CENTER);
+		
+		if (preview != null) {
+			
+		} else {
+			setTitle("Jauns pasūtījums");
+		}
+		
+		setCenasUi();
 		
 		/* notikumi */
 		
@@ -240,6 +286,8 @@ public class PirkumuVeidotajaLogs extends JDialog {
 				if (pica != null) {
 					preces.add(pica);
 					msPreces.setElementi();
+					
+					setCenasUi();
 				}
 			}
 		});
@@ -254,6 +302,8 @@ public class PirkumuVeidotajaLogs extends JDialog {
 					if (js != null) {
 						preces.set(sel, js);
 						msPreces.setElementi();
+						
+						setCenasUi();
 					}
 				}
 			}
@@ -267,6 +317,8 @@ public class PirkumuVeidotajaLogs extends JDialog {
 				if (sel != -1 && JOptionPane.showConfirmDialog(getContentPane(), "Tiešām dzēst šo preci '" + msPreces.getSelectedDV().getNosaukums() + "'?", "Jautājums", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					preces.remove(sel);
 					msPreces.setElementi();
+					
+					setCenasUi();
 				}
 			}
 		});
@@ -279,8 +331,21 @@ public class PirkumuVeidotajaLogs extends JDialog {
 				if (sel != null) {
 					preces.add(sel);
 					msPreces.setElementi();
+					
+					setCenasUi();
 				}
 			}
+		});
+		
+		/* papildiest */
+		piegadeUzAdrChkbx.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				piegCenaPanelis.setVisible(piegadeUzAdrChkbx.isSelected());
+				setCenasUi();
+			}
+			
 		});
 		
 		/* iziešana */
@@ -298,6 +363,39 @@ public class PirkumuVeidotajaLogs extends JDialog {
 				if (JOptionPane.showConfirmDialog(getContentPane(), "Tiešām aizvērsi?!", "Pagaidi!", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					dispose();
 				}
+			}
+		});
+		
+		saglPoga.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				/* kontakts */
+				if (konVardTxt.getText() == null || konVardTxt.getText().isEmpty() || konVardTxt.getText().isBlank()) {
+					JOptionPane.showMessageDialog(getContentPane(), "Saņēmējs: jāievada vārds!", "!!!", JOptionPane.WARNING_MESSAGE);
+					return;
+				} else if (konAdrTxt.getText() == null || konAdrTxt.getText().isEmpty() || konAdrTxt.getText().isBlank()) {
+					JOptionPane.showMessageDialog(getContentPane(), "Saņēmējs: jāievada adrese!", "!!!", JOptionPane.WARNING_MESSAGE);
+					return;
+				} else if (konTalrTxt.getText() == null || konTalrTxt.getText().isEmpty() || konTalrTxt.getText().isBlank()) {
+					JOptionPane.showMessageDialog(getContentPane(), "Saņēmējs: jāievada tālruņa numurs!", "!!!", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				
+				Pattern numurs = Pattern.compile("^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$", Pattern.CASE_INSENSITIVE);
+				Matcher sakritiba = numurs.matcher(konTalrTxt.getText());
+				
+				if (!sakritiba.find()) {
+					JOptionPane.showMessageDialog(getContentPane(), "Saņēmējs: nederīgs tālruņa numurs!", "!!!", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				
+				/* preces */
+				if (preces != null && preces.isEmpty()) {
+					JOptionPane.showMessageDialog(getContentPane(), "Preces: jābūt precēm!", "!!!", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				
+				//pirkums = new Pirkums(new Kontakts(konVardTxt.getText(), konAdrTxt.getText(), konTalrTxt.getText(), ""), preces, );
 			}
 		});
 	}

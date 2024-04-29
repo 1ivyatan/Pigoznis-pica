@@ -65,6 +65,7 @@ public class GramatvedLogs extends JFrame {
 	private static final int SAR_SASTAVDALAS = 1;
 	private static final int SAR_PICAS = 2;
 	private static final int SAR_PIRKUMI = 3;
+	private static final int SAR_PIRKUMU_VEST = 4;
 	
 	/* statuss */
 	private static JLabel statusaTeksts;
@@ -94,6 +95,7 @@ public class GramatvedLogs extends JFrame {
 		saraksti.get(SAR_SASTAVDALAS).setElementi(Programma.getDb().getDati().getSastavdalas());
 		saraksti.get(SAR_PICAS).setElementi(Programma.getDb().getDati().getPicas());
 		saraksti.get(SAR_PIRKUMI).setElementi(Programma.getDb().getDati().getPasut());
+		saraksti.get(SAR_PIRKUMU_VEST).setElementi(Programma.getDb().getDati().getPasutVest());
 		
 		sledzeUi(true);
 		setLogaNos();
@@ -375,7 +377,7 @@ public class GramatvedLogs extends JFrame {
 		/* meklējamie saraksti */ //UISARAKSTI
 		saraksti = new ArrayList<MeklejamsSaraksts>();
 		
-		for (int i = 0; i < 4; i++) { ////////
+		for (int i = 0; i < 5; i++) {
 			saraksti.add(new MeklejamsSaraksts(prevTeksts));
 			atspejojamieUi.add(saraksti.get(i));
 		}
@@ -384,6 +386,7 @@ public class GramatvedLogs extends JFrame {
 		picuSastavCilne.add(saraksti.get(SAR_SASTAVDALAS));
 		picuRecepCilne.add(saraksti.get(SAR_PICAS));
 		pasutCilne.add(saraksti.get(SAR_PIRKUMI));
+		pasutVestCilne.add(saraksti.get(SAR_PIRKUMU_VEST));
 		
 		/* ------   Notikumi   ----------- */
 		/* Datne -> */

@@ -13,11 +13,12 @@ public class Dati implements Serializable {
 
 	private ArrayList<DatuVieniba> pirkumi;
 	private ArrayList<DatuVieniba> pirkumuVest;
+	private int piegSk = 0;
 	
 	/* mainīgie */
 	private String valutasSim = "€";
 	private String mervienibasSim = "cm";
-	private double piegadesCena = 4.0;
+	private double piegadesCena = 4.0; 
 	
 	/* kontakti */
 	public void nonemtKontaktu(int idx) {
@@ -115,6 +116,14 @@ public class Dati implements Serializable {
 	
 	public ArrayList<DatuVieniba> getPasutVest() {
 		return this.pirkumuVest;
+	}
+
+	public int getPiegSk() {
+		return this.piegSk;
+	}
+	
+	public void piegSkPlus() {
+		this.piegSk++;
 	}
 	
 	/* geteri */
