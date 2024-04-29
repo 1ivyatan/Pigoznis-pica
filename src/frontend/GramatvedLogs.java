@@ -511,6 +511,7 @@ public class GramatvedLogs extends JFrame {
 										saraksti.get(SAR_PIRKUMI).setElementi();
 									}
 									
+									Programma.getDb().getDati().piegSkPlus();
 									Programma.setIzmaina(true);
 									statusaTeksts.setText("Pievienoja pasūtījumu");
 								}
@@ -576,6 +577,34 @@ public class GramatvedLogs extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				switch (cilnes.getSelectedIndex()) {
+					case 0: {
+						switch (pirkumuCilnes.getSelectedIndex()) {
+							case 0: {
+								int sel = saraksti.get(SAR_PIRKUMI).getSelIdx();
+								if (sel != -1) {
+									DatuVieniba rp = PirkumuVeidotajaLogs.jaunsPirkums( saraksti.get(SAR_PIRKUMI).getSelectedDV() );
+									Programma.getDb().getDati().nomainitPasut(sel, rp);
+									
+									if (rp != null) {
+										
+										if (((Pirkums)rp).getGatavs()) {
+											Programma.getDb().getDati().uzPasutVest( saraksti.get(SAR_PIRKUMI).getSelIdx() );
+											saraksti.get(SAR_PIRKUMU_VEST).setElementi();
+										}
+										saraksti.get(SAR_PIRKUMI).setElementi();
+										
+										Programma.setIzmaina(true);
+										statusaTeksts.setText("Rediģēja pasūtījumu");
+									}
+								} else {
+									JOptionPane.showMessageDialog(ramis, "Jāatlasa pasūtījumu!", "!!!", JOptionPane.WARNING_MESSAGE);
+								}
+								break;
+							}
+						}
+						break;
+					}
+				
 					case 1: {
 						int sel = saraksti.get(SAR_KONTAKTI).getSelIdx();
 						if (sel != -1) {

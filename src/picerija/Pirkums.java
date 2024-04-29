@@ -12,6 +12,7 @@ public class Pirkums extends DatuVieniba implements java.io.Serializable {
 	private String nosaukums;
 	private double cena, piegCena;
 	private boolean gatavs, piegadeUzAdresi;
+	private int pirkNo;
 	
 	/* get */
 	public ArrayList<DatuVieniba> getPreces() {
@@ -44,6 +45,10 @@ public class Pirkums extends DatuVieniba implements java.io.Serializable {
 	
 	public String getInfo() {
 		return "kssks";
+	}
+	
+	public int getNo() {
+		return this.pirkNo;
 	}
 	
 	/* set */
@@ -94,6 +99,7 @@ public class Pirkums extends DatuVieniba implements java.io.Serializable {
 		
 		LocalDateTime datums = LocalDateTime.now();
 		this.nosaukums = "#" + no + " - " + datums;
+		this.pirkNo = no;
 		
 		this.setCena();
 	}

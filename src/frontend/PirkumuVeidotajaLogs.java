@@ -256,7 +256,18 @@ public class PirkumuVeidotajaLogs extends JDialog {
 		picuPanN.add(msPreces, BorderLayout.CENTER);
 		
 		if (preview != null) {
+			setTitle("Rediģēt '" + preview.getNosaukums() + "'");
 			
+			konVardTxt.setText( ((Kontakts) ((Pirkums)preview).getSanemejs()).getVards() );
+			konAdrTxt.setText( ((Kontakts) ((Pirkums)preview).getSanemejs()).getAdrese() );
+			konTalrTxt.setText( ((Kontakts) ((Pirkums)preview).getSanemejs()).getNumurs() );
+			
+			preces = ((Pirkums)preview).getPreces();
+			
+			piegadeUzAdrChkbx.setSelected( ((Pirkums)preview).getPiegadeUzAdresi() );
+			gatavaChkbx.setSelected( ((Pirkums)preview).getGatavs() );
+			
+			piegCenaPanelis.setVisible(false);
 		} else {
 			setTitle("Jauns pasūtījums");
 		}
@@ -397,9 +408,8 @@ public class PirkumuVeidotajaLogs extends JDialog {
 						return;
 					}
 					
-					pirkums = new Pirkums(new Kontakts(konVardTxt.getText(), konAdrTxt.getText(), konTalrTxt.getText(), ""), preces, gatavaChkbx.isSelected(), piegadeUzAdrChkbx.isSelected(), Programma.getDb().getDati().getPiegSk());
-					Programma.getDb().getDati().piegSkPlus();
-					
+					if (preview != null) pirkums = new Pirkums(new Kontakts(konVardTxt.getText(), konAdrTxt.getText(), konTalrTxt.getText(), ""), preces, gatavaChkbx.isSelected(), piegadeUzAdrChkbx.isSelected(), ((Pirkums) preview).getNo());
+					else pirkums = new Pirkums(new Kontakts(konVardTxt.getText(), konAdrTxt.getText(), konTalrTxt.getText(), ""), preces, gatavaChkbx.isSelected(), piegadeUzAdrChkbx.isSelected(), Programma.getDb().getDati().getPiegSk());
 					dispose();					
 				}
 			}
