@@ -51,7 +51,7 @@ public class SastavdaluVeidotajaLogs extends JDialog {
 	public SastavdaluVeidotajaLogs() {
 		setModal(true);
 		setMinimumSize(new Dimension(400, 250));
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		//setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		
 		/* UI */
 		setTitle("No datubāzes...");

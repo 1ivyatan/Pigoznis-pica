@@ -18,6 +18,7 @@ import javax.swing.JFileChooser;
 import picerija.DatuVieniba;
 import picerija.Kontakts;
 import picerija.PicasSastavdala;
+import picerija.Pirkums;
 import picerija.Resursi;
 
 import javax.swing.JMenuBar;
@@ -502,10 +503,23 @@ public class GramatvedLogs extends JFrame {
 								
 								if (jp != null) {
 									Programma.getDb().getDati().pievienotPasut(jp);
+									
+									if (((Pirkums)jp).getGatavs()) {
+										Programma.getDb().getDati().uzPasutVest( Programma.getDb().getDati().getPasut().size() - 1 );
+										saraksti.get(SAR_PIRKUMU_VEST).setElementi();
+									} else {
+										saraksti.get(SAR_PIRKUMI).setElementi();
+									}
+									
 									Programma.setIzmaina(true);
-									saraksti.get(SAR_PIRKUMI).setElementi();
 									statusaTeksts.setText("Pievienoja pasūtījumu");
 								}
+								break;
+							}
+							
+							case 1: {
+								JOptionPane.showMessageDialog(ramis, "Jāpievieno kāds pasūtījums!");
+								break;
 							}
 						}
 						break;

@@ -109,6 +109,7 @@ public class Dati implements Serializable {
 	public void uzPasutVest(int idx) {
 		if (-1 < idx && idx < this.pirkumi.size()) {
 			DatuVieniba parv = this.pirkumi.get(idx);
+			((Pirkums)parv).setGatavs(true);
 			this.pirkumuVest.add(parv);
 			this.pirkumi.remove(idx);
 		}

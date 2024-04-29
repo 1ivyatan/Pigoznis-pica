@@ -13,6 +13,7 @@ import javax.swing.border.EmptyBorder;
 import picerija.DatuVieniba;
 import picerija.Kontakts;
 import picerija.Pica;
+import picerija.Pirkums;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -86,6 +87,7 @@ public class PirkumuVeidotajaLogs extends JDialog {
 	public static DatuVieniba jaunsPirkums(DatuVieniba preview) {
 		pirkums = null;
 		preces = null;
+		
 		PirkumuVeidotajaLogs dialog = new PirkumuVeidotajaLogs(preview);
 		
 		dialog.setVisible(true);
@@ -100,6 +102,7 @@ public class PirkumuVeidotajaLogs extends JDialog {
 		/* ui */
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		setMinimumSize(new Dimension(580, 360));
+		setModal(true);
 		
 		JPanel poguPanelis = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) poguPanelis.getLayout();
@@ -174,7 +177,7 @@ public class PirkumuVeidotajaLogs extends JDialog {
 		piegadeUzAdrChkbx.setAlignmentX(Component.CENTER_ALIGNMENT);
 		optTxti.add(piegadeUzAdrChkbx);
 		
-		JCheckBox gatavaChkbx = new JCheckBox("Pabeigt piegādi");
+		JCheckBox gatavaChkbx = new JCheckBox("Pabeigt piegādi", false);
 		gatavaChkbx.setFont(new Font("Tahoma", Font.BOLD, 11));
 		gatavaChkbx.setAlignmentX(Component.CENTER_ALIGNMENT);
 		optTxti.add(gatavaChkbx);
@@ -250,7 +253,6 @@ public class PirkumuVeidotajaLogs extends JDialog {
 		
 		/* preces */
 		MeklejamsSaraksts msPreces = new MeklejamsSaraksts(null);
-		msPreces.setElementi(preces);
 		picuPanN.add(msPreces, BorderLayout.CENTER);
 		
 		if (preview != null) {
@@ -258,7 +260,8 @@ public class PirkumuVeidotajaLogs extends JDialog {
 		} else {
 			setTitle("Jauns pasūtījums");
 		}
-		
+
+		msPreces.setElementi(preces);
 		setCenasUi();
 		
 		/* notikumi */
@@ -379,23 +382,26 @@ public class PirkumuVeidotajaLogs extends JDialog {
 				} else if (konTalrTxt.getText() == null || konTalrTxt.getText().isEmpty() || konTalrTxt.getText().isBlank()) {
 					JOptionPane.showMessageDialog(getContentPane(), "Saņēmējs: jāievada tālruņa numurs!", "!!!", JOptionPane.WARNING_MESSAGE);
 					return;
+				} else {
+					Pattern numurs = Pattern.compile("^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$", Pattern.CASE_INSENSITIVE);
+					Matcher sakritiba = numurs.matcher(konTalrTxt.getText());
+					
+					if (!sakritiba.find()) {
+						JOptionPane.showMessageDialog(getContentPane(), "Saņēmējs: nederīgs tālruņa numurs!", "!!!", JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+					
+					/* preces */
+					if (preces != null && preces.isEmpty()) {
+						JOptionPane.showMessageDialog(getContentPane(), "Preces: jābūt precēm!", "!!!", JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+					
+					pirkums = new Pirkums(new Kontakts(konVardTxt.getText(), konAdrTxt.getText(), konTalrTxt.getText(), ""), preces, gatavaChkbx.isSelected(), piegadeUzAdrChkbx.isSelected(), Programma.getDb().getDati().getPiegSk());
+					Programma.getDb().getDati().piegSkPlus();
+					
+					dispose();					
 				}
-				
-				Pattern numurs = Pattern.compile("^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$", Pattern.CASE_INSENSITIVE);
-				Matcher sakritiba = numurs.matcher(konTalrTxt.getText());
-				
-				if (!sakritiba.find()) {
-					JOptionPane.showMessageDialog(getContentPane(), "Saņēmējs: nederīgs tālruņa numurs!", "!!!", JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				
-				/* preces */
-				if (preces != null && preces.isEmpty()) {
-					JOptionPane.showMessageDialog(getContentPane(), "Preces: jābūt precēm!", "!!!", JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				
-				//pirkums = new Pirkums(new Kontakts(konVardTxt.getText(), konAdrTxt.getText(), konTalrTxt.getText(), ""), preces, );
 			}
 		});
 	}

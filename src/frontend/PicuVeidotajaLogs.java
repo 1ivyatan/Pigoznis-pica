@@ -41,8 +41,10 @@ public class PicuVeidotajaLogs extends JDialog {
 	public static DatuVieniba noDatubazes() {
 		pica = null;
 		sastavdalas = null;
+		
 		PicuVeidotajaLogs dialog = new PicuVeidotajaLogs();
 		dialog.setVisible(true);
+		
 		return pica;
 	}
 	
