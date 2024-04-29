@@ -21,6 +21,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.Component;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -33,6 +34,7 @@ public class PirkumuVeidotajaLogs extends JDialog {
 	
 	/* mainīgie */
 	private static DatuVieniba pirkums = null;
+	private static ArrayList<DatuVieniba> preces = null;
 	
 	/* ievade */
 	/* kontakta inf. */
@@ -42,6 +44,7 @@ public class PirkumuVeidotajaLogs extends JDialog {
 	
 	public static DatuVieniba jaunsPirkums(DatuVieniba preview) {
 		pirkums = null;
+		preces = null;
 		PirkumuVeidotajaLogs dialog = new PirkumuVeidotajaLogs(preview);
 		
 		dialog.setVisible(true);
@@ -49,6 +52,10 @@ public class PirkumuVeidotajaLogs extends JDialog {
 	}
 
 	public PirkumuVeidotajaLogs(DatuVieniba preview) { 
+		/* prep */
+		preces = new ArrayList<DatuVieniba>();
+		
+		/* ui */
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		setMinimumSize(new Dimension(580, 360));
 		
@@ -143,9 +150,6 @@ public class PirkumuVeidotajaLogs extends JDialog {
 		picuPanTxt.setHorizontalAlignment(SwingConstants.CENTER);
 		picuPanN.add(picuPanTxt, BorderLayout.NORTH);
 		
-		JPanel picuPanPicas = new JPanel();
-		picuPanN.add(picuPanPicas, BorderLayout.CENTER);
-		
 		JPanel picuPanPogas = new JPanel();
 		picuPanN.add(picuPanPogas, BorderLayout.SOUTH);
 		
@@ -201,6 +205,11 @@ public class PirkumuVeidotajaLogs extends JDialog {
 		JLabel kopaCenaLbl = new JLabel(" ");
 		kopaCenaLbl.setFont(new Font("Tahoma", Font.BOLD, 11));
 		kopaCenaPanelis.add(kopaCenaLbl);
+		
+		/* preces */
+		MeklejamsSaraksts msPreces = new MeklejamsSaraksts(null);
+		msPreces.setElementi(preces);
+		picuPanN.add(msPreces, BorderLayout.CENTER);
 		
 		/* notikumi */
 		
