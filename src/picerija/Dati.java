@@ -17,6 +17,7 @@ public class Dati implements Serializable {
 	/* mainīgie */
 	private String valutasSim = "€";
 	private String mervienibasSim = "cm";
+	private double piegadesCena = 4.0;
 	
 	/* kontakti */
 	public void nonemtKontaktu(int idx) {
@@ -79,6 +80,10 @@ public class Dati implements Serializable {
 	}
 	
 	/* geteri */
+	public double getPiegadesCena() {
+		return this.piegadesCena;
+	}
+	
 	public String getValutasSim() {
 		return this.valutasSim;
 	}
@@ -88,6 +93,10 @@ public class Dati implements Serializable {
 	}
 	
 	/* seteri */
+	public void setPiegadesCena(double cena) {
+		this.piegadesCena = cena;
+	}
+	
 	public void setValutasSim(String valuta) {
 		this.valutasSim = valuta;
 	}
