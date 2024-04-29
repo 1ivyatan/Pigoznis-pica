@@ -11,12 +11,16 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import picerija.DatuVieniba;
+import picerija.Kontakts;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Component;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -27,7 +31,11 @@ import javax.swing.JCheckBox;
 public class PirkumuVeidotajaLogs extends JDialog {
 	private static final long serialVersionUID = 1L;
 	
+	/* mainīgie */
 	private static DatuVieniba pirkums = null;
+	
+	/* ievade */
+	/* kontakta inf. */
 	private JTextField konVardTxt;
 	private JTextField konAdrTxt;
 	private JTextField konTalrTxt;
@@ -193,6 +201,22 @@ public class PirkumuVeidotajaLogs extends JDialog {
 		JLabel kopaCenaLbl = new JLabel(" ");
 		kopaCenaLbl.setFont(new Font("Tahoma", Font.BOLD, 11));
 		kopaCenaPanelis.add(kopaCenaLbl);
+		
+		/* notikumi */
+		
+		/* saņēmējs */
+		konPogaNoDb.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DatuVieniba sel = KontaktuVeidotajaLogs.noDatubazes();
+				
+				if (sel != null) {
+					konVardTxt.setText(((Kontakts) sel).getVards());
+					konAdrTxt.setText(((Kontakts) sel).getAdrese());
+					konTalrTxt.setText(((Kontakts) sel).getNumurs());
+				}
+			}
+		});
 		
 	}
 

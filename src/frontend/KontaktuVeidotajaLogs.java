@@ -33,12 +33,66 @@ public class KontaktuVeidotajaLogs extends JDialog {
 	private JTextField numTeksts;
 	private JTextArea piezTeksts;
 	
+	public static DatuVieniba noDatubazes() {
+		kontakts = null;
+		KontaktuVeidotajaLogs dialog = new KontaktuVeidotajaLogs();
+		dialog.setVisible(true);
+		return kontakts;
+	}
+	
 	public static DatuVieniba jaunsKontakts(DatuVieniba preview) {
 		kontakts = null;
 		KontaktuVeidotajaLogs dialog = new KontaktuVeidotajaLogs(preview);
 		
 		dialog.setVisible(true);
 		return kontakts;
+	}
+	
+	public KontaktuVeidotajaLogs() {
+		setModal(true);
+		setMinimumSize(new Dimension(400, 250));
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setTitle("No datubāzes...");
+		
+		JTextArea priekshsakt = new JTextArea();
+		getContentPane().add(new JScrollPane(priekshsakt, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED), BorderLayout.CENTER);
+		
+		MeklejamsSaraksts sar = new MeklejamsSaraksts(priekshsakt);
+		JPanel izveletajs = new JPanel();
+		izveletajs.setLayout(new BorderLayout(0, 0));
+		izveletajs.add(sar);
+		getContentPane().add(izveletajs, BorderLayout.WEST);
+		
+		JPanel pogupanelis = new JPanel();
+		FlowLayout fl_pogupanelis = (FlowLayout) pogupanelis.getLayout();
+		fl_pogupanelis.setAlignment(FlowLayout.RIGHT);
+		getContentPane().add(pogupanelis, BorderLayout.SOUTH);
+		
+		JButton saglPoga = new JButton("Pievienot");
+		pogupanelis.add(saglPoga);
+		
+		JButton atceltPoga = new JButton("Atcelt");
+		pogupanelis.add(atceltPoga);
+		
+		sar.setElementi(Programma.getDb().getDati().getKontakti());
+		
+		/* notikumi */
+		saglPoga.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DatuVieniba sel = sar.getSelectedDV();
+				
+				if (sel != null) {
+					kontakts = sel;
+					dispose();
+				}
+			}
+		});
+		
+		atceltPoga.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 	}
 	
 	public KontaktuVeidotajaLogs(DatuVieniba preview) {

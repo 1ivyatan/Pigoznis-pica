@@ -125,7 +125,9 @@ public class MeklejamsSaraksts extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		
 		this.saraksts = new JList<String>();
-		saraksts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		this.saraksts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		this.saraksts.setFixedCellWidth(100);
+		
 		this.mekletajs = new JTextField();
 		this.izvade = izvade;
 		

@@ -34,6 +34,7 @@ public class SastavdaluVeidotajaLogs extends JDialog {
 	private JTextArea piezTeksts;
 	
 	public static DatuVieniba noDatubazes() {
+		sastavdala = null;
 		SastavdaluVeidotajaLogs dialog = new SastavdaluVeidotajaLogs();
 		dialog.setVisible(true);
 		return sastavdala;
