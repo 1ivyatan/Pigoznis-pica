@@ -73,9 +73,18 @@ public class IestatLogs extends JDialog {
 		
 		iestPanel.add(mervIest);
 		
+		JPanel piegIest = new JPanel();
+		piegIest.add(new JLabel("Piegādes cena"));
+		
+		JTextField piegVert = new JTextField();
+		piegVert.setColumns(10);
+		piegVert.setText(Programma.getDb().getDati().getPiegadesCena() + "");
+		piegIest.add(piegVert);
+		
+		iestPanel.add(piegIest);
+		
 		JPanel status = new JPanel();
 		contentPanel.add(status, BorderLayout.SOUTH);
-		
 		status.add(statusTeksts);
 		
 		/* notikumi */
@@ -135,6 +144,44 @@ public class IestatLogs extends JDialog {
 				} else {
 					Programma.getDb().getDati().setMervienibasSim(in);;
 					statusTeksts.setText(" ");
+				}
+			}
+		});
+		
+		piegVert.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				atjaunotPiegCenu();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				atjaunotPiegCenu();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				atjaunotPiegCenu();
+			}
+			
+			private void atjaunotPiegCenu() {
+				String in = piegVert.getText();
+				
+				if (in.length() < 1 || in.isBlank() || !in.matches("^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$")) {
+					statusTeksts.setText("Piegādes cena: tā nav cena");
+				} else {
+					try {
+						double piegncena = Double.parseDouble(in);
+						
+						if (Double.isNaN(piegncena)) {
+							throw new Exception();
+						} else {
+							Programma.getDb().getDati().setPiegadesCena((double) Math.round(piegncena * 100) / 100);
+							statusTeksts.setText(" ");
+						}
+					} catch (Exception e) {
+						statusTeksts.setText("Piegādes cena: tā nav cena");
+					}
 				}
 			}
 		});

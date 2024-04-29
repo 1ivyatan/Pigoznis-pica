@@ -183,7 +183,7 @@ public class PirkumuVeidotajaLogs extends JDialog {
 		pcpNosLbl.setFont(new Font("Tahoma", Font.BOLD, 11));
 		piegCenaPanelis.add(pcpNosLbl);
 		
-		JLabel pcpCenuLbl = new JLabel(" ");
+		JLabel pcpCenuLbl = new JLabel(Programma.getDb().getDati().getPiegadesCena() + " " + Programma.getDb().getDati().getValutasSim());
 		piegCenaPanelis.add(pcpCenuLbl);
 		
 		JPanel kopaCenaPanelis = new JPanel();

@@ -42,6 +42,10 @@ public class Pirkums extends DatuVieniba implements java.io.Serializable {
 		return this.nosaukums;
 	}
 	
+	public String getInfo() {
+		return "kssks";
+	}
+	
 	/* set */
 	public void setPreces(ArrayList<DatuVieniba> jp) {
 		if (this.gatavs) return;
@@ -107,11 +111,5 @@ public class Pirkums extends DatuVieniba implements java.io.Serializable {
 	
 	public DatuVieniba copy() {
 		return new Pirkums(this);
-	}
-
-	@Override
-	public String getInfo() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
