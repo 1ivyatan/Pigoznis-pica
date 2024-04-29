@@ -15,12 +15,15 @@ import picerija.Kontakts;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.awt.Component;
 import javax.swing.SwingConstants;
@@ -51,7 +54,8 @@ public class PirkumuVeidotajaLogs extends JDialog {
 		return pirkums;
 	}
 
-	public PirkumuVeidotajaLogs(DatuVieniba preview) { 
+	public PirkumuVeidotajaLogs(DatuVieniba preview) {
+		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); 
 		/* prep */
 		preces = new ArrayList<DatuVieniba>();
 		
@@ -228,7 +232,74 @@ public class PirkumuVeidotajaLogs extends JDialog {
 		});
 		
 		/* preces */
+		ppJaunsPoga.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DatuVieniba pica = PicuVeidotajaLogs.jaunaPica(null);
+				
+				if (pica != null) {
+					preces.add(pica);
+					msPreces.setElementi();
+				}
+			}
+		});
 		
+		ppRedPoga.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int sel = msPreces.getSelIdx();
+				if (sel != -1) {
+					DatuVieniba js = PicuVeidotajaLogs.jaunaPica( msPreces.getSelectedDV().copy() );
+					
+					if (js != null) {
+						preces.set(sel, js);
+						msPreces.setElementi();
+					}
+				}
+			}
+		});
+		
+		ppDzestPoga.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int sel = msPreces.getSelIdx();
+				
+				if (sel != -1 && JOptionPane.showConfirmDialog(getContentPane(), "Tiešām dzēst šo preci '" + msPreces.getSelectedDV().getNosaukums() + "'?", "Jautājums", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					preces.remove(sel);
+					msPreces.setElementi();
+				}
+			}
+		});
+		
+		ppDbPoga.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DatuVieniba sel = PicuVeidotajaLogs.noDatubazes();
+				
+				if (sel != null) {
+					preces.add(sel);
+					msPreces.setElementi();
+				}
+			}
+		});
+		
+		/* iziešana */
+		atceltPoga.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (JOptionPane.showConfirmDialog(getContentPane(), "Tiešām aizvērsi?!", "Pagaidi!", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					dispose();
+				}
+			}
+		});
+		
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				if (JOptionPane.showConfirmDialog(getContentPane(), "Tiešām aizvērsi?!", "Pagaidi!", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					dispose();
+				}
+			}
+		});
 	}
 
 }

@@ -102,6 +102,6 @@ public class Pica extends DatuVieniba implements java.io.Serializable {
 	}
 	
 	public DatuVieniba copy() {
-		return new Pica(this.vards, this.piezime, this.cena, this.diametrsCm, new ArrayList<DatuVieniba>(this.sastavdalas));
+		return new Pica(this.vards, this.piezime, this.baseCena, this.diametrsCm, new ArrayList<DatuVieniba>(this.sastavdalas));
 	}
 }
