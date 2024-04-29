@@ -44,7 +44,26 @@ public class Pirkums extends DatuVieniba implements java.io.Serializable {
 	}
 	
 	public String getInfo() {
-		return "kssks";
+		String ret = "Pirkums " + this.nosaukums + "\n\n" +
+			"Izdarīts: " + ((this.gatavs) ? "jā" : "nē") + "\n" +
+			"Piegāde uz adresi: " + ((this.piegadeUzAdresi) ? "jā" : "nē") + "\n\n" + 
+			"---------- Saņēmējs ----------\n" +
+			"Vārds: " + ((Kontakts)sanemejs).getVards() + "\n" +
+			"Adrese: " + ((Kontakts)sanemejs).getAdrese() + "\n" +
+			"Tālruņa nr.: " + ((Kontakts)sanemejs).getNumurs() + "\n\n" +
+			"---------- Preces ----------\n"
+		;
+		
+		for (int i = 0; i < preces.size(); i++) {
+			ret += ((Pica)preces.get(i)).getVards() + "    " + ((Pica)preces.get(i)).getCena() + "\n";
+		}
+		
+		ret += "\n---------- Cena ----------\n";
+		
+		if (piegadeUzAdresi) ret += "Piegāde    " + this.piegCena + "\n";
+		ret += "Kopējā    " + this.cena + "\n";
+		
+		return ret;
 	}
 	
 	public int getNo() {
@@ -90,7 +109,7 @@ public class Pirkums extends DatuVieniba implements java.io.Serializable {
 	}
 	
 	/* kons */
-	public Pirkums(DatuVieniba sanemejaKontakts, ArrayList<DatuVieniba> preces, boolean gatavs, boolean piegade, int no) {
+	public Pirkums(DatuVieniba sanemejaKontakts, ArrayList<DatuVieniba> preces, boolean gatavs, boolean piegade, int no, double piegCena) {
 		this.gatavs = gatavs;
 		this.piegadeUzAdresi = piegade;
 		
@@ -100,6 +119,8 @@ public class Pirkums extends DatuVieniba implements java.io.Serializable {
 		LocalDateTime datums = LocalDateTime.now();
 		this.nosaukums = "#" + no + " - " + datums;
 		this.pirkNo = no;
+		
+		this.piegCena = piegCena;
 		
 		this.setCena();
 	}

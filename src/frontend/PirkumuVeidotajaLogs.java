@@ -401,8 +401,8 @@ public class PirkumuVeidotajaLogs extends JDialog {
 						return;
 					}
 					
-					if (preview != null) pirkums = new Pirkums(new Kontakts(konVardTxt.getText(), konAdrTxt.getText(), konTalrTxt.getText(), ""), preces, gatavaChkbx.isSelected(), piegadeUzAdrChkbx.isSelected(), ((Pirkums) preview).getNo());
-					else pirkums = new Pirkums(new Kontakts(konVardTxt.getText(), konAdrTxt.getText(), konTalrTxt.getText(), ""), preces, gatavaChkbx.isSelected(), piegadeUzAdrChkbx.isSelected(), Programma.getDb().getDati().getPiegSk());
+					if (preview != null) pirkums = new Pirkums(new Kontakts(konVardTxt.getText(), konAdrTxt.getText(), konTalrTxt.getText(), ""), preces, gatavaChkbx.isSelected(), piegadeUzAdrChkbx.isSelected(), ((Pirkums) preview).getNo(), Programma.getDb().getDati().getPiegadesCena());
+					else pirkums = new Pirkums(new Kontakts(konVardTxt.getText(), konAdrTxt.getText(), konTalrTxt.getText(), ""), preces, gatavaChkbx.isSelected(), piegadeUzAdrChkbx.isSelected(), Programma.getDb().getDati().getPiegSk(), Programma.getDb().getDati().getPiegadesCena());
 					dispose();					
 				}
 			}
