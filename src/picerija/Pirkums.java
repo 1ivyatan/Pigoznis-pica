@@ -89,7 +89,6 @@ public class Pirkums extends DatuVieniba implements java.io.Serializable {
 	}
 	
 	public void setCena() {
-		if (this.gatavs) return;
 		if (this.piegadeUzAdresi) this.cena = this.piegCena;
 		else this.cena = 0;
 		
