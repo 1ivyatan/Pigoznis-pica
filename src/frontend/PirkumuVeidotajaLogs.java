@@ -65,16 +65,20 @@ public class PirkumuVeidotajaLogs extends JDialog {
 				precuCena += ((Pica) i).getCena();
 			}
 		}
+		
+		precuCena = (double) Math.round(precuCena * 100) / 100;
 	}
 	
 	private void prepTotCena() {
-		totCena =  ((piegadeUzAdrChkbx.isSelected()) ? Programma.getDb().getDati().getPiegadesCena() : 0)   + 0;
+		totCena =  ((piegadeUzAdrChkbx.isSelected()) ? Programma.getDb().getDati().getPiegadesCena() : 0);
 		
 		if (preces != null) {
 			for (DatuVieniba i : preces) {
 				totCena += ((Pica) i).getCena();
 			}
 		}
+		
+		precuCena = (double) Math.round(totCena * 100) / 100;
 	}
 	
 	public static DatuVieniba jaunsPirkums(DatuVieniba preview) {

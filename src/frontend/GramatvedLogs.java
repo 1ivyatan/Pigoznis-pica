@@ -111,19 +111,22 @@ public class GramatvedLogs extends JFrame {
 		if (rez == JFileChooser.APPROVE_OPTION) {
 			try {
 				Programma.atvertDb(izv.getSelectedFile());
-				statusaTeksts.setText("Atvēra datubāzi " + izv.getSelectedFile().getAbsolutePath());
 				
-				setLogaNos();
-				sledzeUi(true);
+				//System.out.println(Programma.getDb().getDati().getSastavdalas() != null);
 				
 				saraksti.get(SAR_KONTAKTI).setElementi(Programma.getDb().getDati().getKontakti());
 				saraksti.get(SAR_SASTAVDALAS).setElementi(Programma.getDb().getDati().getSastavdalas());
 				saraksti.get(SAR_PICAS).setElementi(Programma.getDb().getDati().getPicas());
 				saraksti.get(SAR_PIRKUMI).setElementi(Programma.getDb().getDati().getPasut());
 				saraksti.get(SAR_PIRKUMU_VEST).setElementi(Programma.getDb().getDati().getPasutVest());
+				
+				statusaTeksts.setText("Atvēra datubāzi " + izv.getSelectedFile().getAbsolutePath());
+				setLogaNos();
+				sledzeUi(true);
 			} catch (Exception e) {
 				statusaTeksts.setText("Nevarēja atvērt datubāzi " + izv.getSelectedFile().getAbsolutePath());
 				JOptionPane.showMessageDialog(logaPanelis, e.getMessage(), "Nevarēja atvērt datubāzi", JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
 			}
 		}
 	}
