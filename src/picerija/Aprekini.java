@@ -11,7 +11,7 @@ public class Aprekini {
 			return false;
 		}			
 		
-		if (Double.isNaN(num) || num < 0) return false;
+		if (Double.isNaN(num) || apalotUzFloat2(num) < 0) return false;
 		
 		return true;
 	}
