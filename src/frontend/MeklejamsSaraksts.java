@@ -67,6 +67,10 @@ public class MeklejamsSaraksts extends JPanel {
 		}
 	}
 	
+	public void deselect() {
+		saraksts.clearSelection();
+	}
+	
 	public void setElementi() {
 		if (izvade != null) izvade.setText(null);
 		this.saraksts.setSelectedIndex(-1);

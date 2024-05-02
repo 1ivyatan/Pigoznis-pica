@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.JFileChooser;
@@ -344,7 +346,6 @@ public class GramatvedLogs extends JFrame {
 		JPanel pasutCilne = new JPanel();
 		pirkumuCilnes.addTab("Gaidošie", null, pasutCilne, null);
 		pasutCilne.setLayout(new CardLayout(0, 0));
-		
 		
 		JPanel pasutVestCilne = new JPanel();
 		pirkumuCilnes.addTab("Vēsture", null, pasutVestCilne, null);
@@ -774,6 +775,36 @@ public class GramatvedLogs extends JFrame {
 				}
 			}
 		});
+		
+		/* hackfix */
+		cilnes.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				for (int i = 0; i < saraksti.size(); i++) {
+					saraksti.get(i).deselect();
+				}
+			}
+		});
+		
+		pirkumuCilnes.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				for (int i = 0; i < saraksti.size(); i++) {
+					saraksti.get(i).deselect();
+				}
+			}
+		});
+		
+		picuCilnes.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				for (int i = 0; i < saraksti.size(); i++) {
+					saraksti.get(i).deselect();
+				}
+			}
+		});
+		
+		/* ^^ hackfix BEIGAS */
 		
 		/* loga notikumi */
 		addWindowListener(new WindowAdapter() {
