@@ -167,21 +167,13 @@ public class SastavdaluVeidotajaLogs extends JDialog {
 				} else {
 					/* pārbaudam cenu */
 					try {
-						Pattern numurs = Pattern.compile("^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$", Pattern.CASE_INSENSITIVE);
-						Matcher sakritiba = numurs.matcher(cenuTeksts.getText());
-						
-						if (!sakritiba.find()) {
-							JOptionPane.showMessageDialog(getContentPane(), "Nederīga cena", "!!!", JOptionPane.WARNING_MESSAGE);
+						double nc = picerija.Aprekini.apalotUzFloat2(cenuTeksts.getText());
+						if (nc == -1) {
+							JOptionPane.showMessageDialog(getContentPane(), "Nepareiza cena!", "!!!", JOptionPane.WARNING_MESSAGE);
 							return;
 						}
 						
-						double nc = Double.parseDouble(cenuTeksts.getText());
-						if (Double.isNaN(nc)) {
-							JOptionPane.showMessageDialog(getContentPane(), "Nederīga cena", "!!!", JOptionPane.WARNING_MESSAGE);
-							return;
-						}
-						
-						sastavdala = new PicasSastavdala(nosTeksts.getText(), piezTeksts.getText(), (double) Math.round(nc * 100) / 100);
+						sastavdala = new PicasSastavdala(nosTeksts.getText(), piezTeksts.getText(), nc);
 						dispose();
 					} catch (Exception ex) {
 						JOptionPane.showMessageDialog(getContentPane(), ex.getMessage(), "Tā nav cena!", JOptionPane.WARNING_MESSAGE);

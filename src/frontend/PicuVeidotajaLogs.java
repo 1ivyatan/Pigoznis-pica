@@ -269,32 +269,13 @@ public class PicuVeidotajaLogs extends JDialog {
 					JOptionPane.showMessageDialog(getContentPane(), "Jāievada sastāvdaļas!", "!!!", JOptionPane.WARNING_MESSAGE);
 					return;
 				} else {
-					double ievDm = 0, ievCena = 0;
+					double ievDm = picerija.Aprekini.apalotUzFloat2(diametrsTeksts.getText()), 
+						   ievCena = picerija.Aprekini.apalotUzFloat2(cenuTeksts.getText());
 					
-					/* diametrs */
-					try {
-						ievDm = Double.parseDouble(diametrsTeksts.getText());
-						if (Double.isNaN(ievDm)) {
-							JOptionPane.showMessageDialog(getContentPane(), "Nederīgs diametrs!", "!!!", JOptionPane.WARNING_MESSAGE);
-							return;
-						}
-						ievDm = (double) Math.round(ievDm * 100) / 100;
-					} catch (Exception ex) {
-						JOptionPane.showMessageDialog(getContentPane(), ex.getMessage(), "Tas nav diametrs!", JOptionPane.WARNING_MESSAGE);
-						return;
-					}
-					
-					/* cena */
-					try {
-						ievCena = Double.parseDouble(cenuTeksts.getText());
-						if (Double.isNaN(ievCena)) {
-							JOptionPane.showMessageDialog(getContentPane(), "Nederīga cena", "!!!", JOptionPane.WARNING_MESSAGE);
-							return;
-						}
-						ievCena = (double) Math.round(ievCena * 100) / 100;
-					} catch (Exception ex) {
-						JOptionPane.showMessageDialog(getContentPane(), ex.getMessage(), "Tā nav cena!", JOptionPane.WARNING_MESSAGE);
-						return;
+					if (ievDm == -1) {
+						JOptionPane.showMessageDialog(getContentPane(), "Nepareizs diametrs!", "!!!", JOptionPane.WARNING_MESSAGE);
+					} else if (ievCena == -1) {
+						JOptionPane.showMessageDialog(getContentPane(), "Nepareiza cena!", "!!!", JOptionPane.WARNING_MESSAGE);
 					}
 					
 					pica = new Pica(nosTeksts.getText(), piezTeksts.getText(), ievCena, ievDm, sastavdalas);
