@@ -11,7 +11,7 @@ public class Aprekini {
 			return false;
 		}			
 		
-		if (Double.isNaN(num)) return false;
+		if (Double.isNaN(num) || num < 0) return false;
 		
 		return true;
 	}

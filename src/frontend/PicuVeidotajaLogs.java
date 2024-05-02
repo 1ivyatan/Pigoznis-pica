@@ -274,8 +274,10 @@ public class PicuVeidotajaLogs extends JDialog {
 					
 					if (ievDm == -1) {
 						JOptionPane.showMessageDialog(getContentPane(), "Nepareizs diametrs!", "!!!", JOptionPane.WARNING_MESSAGE);
+						return;
 					} else if (ievCena == -1) {
 						JOptionPane.showMessageDialog(getContentPane(), "Nepareiza cena!", "!!!", JOptionPane.WARNING_MESSAGE);
+						return;
 					}
 					
 					pica = new Pica(nosTeksts.getText(), piezTeksts.getText(), ievCena, ievDm, sastavdalas);
